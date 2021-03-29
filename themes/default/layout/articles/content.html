@@ -1,0 +1,77 @@
+<div class="col-md-8 no-padding-right no-padding-left" style="margin-bottom: 20px;">
+	<div class="articles-content">
+		<div class="subscriptions-list author-list articles-container">
+			<h3 class="recent-articles">{{LANG recent_articles}}
+				<?php if ($pt->config->all_create_articles == 'on') { ?>
+					<a href="{{LINK create_article}}" class="btn btn-main pull-right" data-load="?link1=create_article">{{LANG create_article}} </a><div class="clear"></div>
+				<?php } ?>
+			</h3>
+			{{POSTS}}
+		</div>
+		<?php if ($pt->posts_count > 0) { ?>
+			<div class="watch-video-show-more desc" data-type="articles" onclick="PT_LoadPost('{{CATEGORY}}',this);">
+             {{LANG show_more}}
+			</div>
+		<?php } ?>
+	</div>
+</div>
+<div class="col-md-4">
+	<div class="article-categories">
+		<div class="width-100">
+			<form class="form search-articles-form" method="post" action="">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="{{LANG search_articles}}" name="q">
+					<button type="submit">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+					</button>
+				</div>
+			</form>
+		</div>
+
+		<h4>{{LANG categories}}</h4>
+		<div class="pt_categories">
+			<ul>
+				<?php foreach ($pt->categories as $cat_id => $category): ?>
+					<?php if ($pt->category == $cat_id): ?>
+						<li class="active">
+							<a href="<?php echo PT_Link("articles/category/$cat_id") ?>"  data-load="?link1=articles&category_id=<?php echo($cat_id) ?>">
+								<span><?php echo $category; ?></span>
+							</a>
+						</li>
+					<?php else: ?>
+						<li>
+							<a href="<?php echo PT_Link("articles/category/$cat_id") ?>" data-load="?link1=articles&category_id=<?php echo($cat_id) ?>">
+								<span><?php echo $category; ?></span>
+							</a>
+						</li>
+					<?php endif; ?>
+				<?php endforeach; ?>
+			</ul>
+			<div class="clear"></div>
+		</div>
+		<div class="ads-placment">{{WATCH_SIDEBAR_AD}}</div>
+		<br>
+		
+		<h4>{{LANG most_popular}}</h4>
+		<div>
+			{{POPULAR_POSTS}}
+			<div class="clear"></div>
+		</div>
+	</div>  
+</div>
+
+<script>
+   jQuery(document).ready(function($) {
+      $('.search-articles-form').submit(function(event) {
+         var query = $(this).find('input').val();
+         if (!query){
+            $(this).find('input').addClass('danger-field-border');
+            return false;
+         }
+         else if(query.length > 50){
+            $(this).find('input').addClass('danger-field-border');
+            return false;
+         }
+      });
+   });
+</script>

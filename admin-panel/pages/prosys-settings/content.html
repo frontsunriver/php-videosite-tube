@@ -1,0 +1,128 @@
+<div class="container-fluid">
+    <div>
+        <h3>Settings</h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="#">Pro System</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Settings</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- Vertical Layout -->
+    <div class="row">
+        <div class="col-lg-8 col-md-8 ">
+            <div class="card">
+                <div class="card-body">
+					<button class="btn btn-danger pull-right" onclick="PT_RemoveSubscriptions('expired',this);">Cancel Expired Subscriptions</button>
+                    <h6 class="card-title">Pro System Settings</h6>
+                    <div class="clearfix"></div>
+                    <div class="prosys-settings-alert"></div>
+                    <div class="alert alert-warning">
+                        <i class="fa fa-fw fa-exclamation-triangle"></i> <strong>Note:</strong> To enable recurring payments, please follow the steps below, and use the link listed.
+                            <br>
+                            Link: {{CONFIG site_url}}/pro.php
+                            <br>
+                            <a href="{{CONFIG site_url}}/upload/step1.png" target="_blank">Step1</a>
+                            <br>
+                            <a href="{{CONFIG site_url}}/upload/step2.png" target="_blank">Step2</a>
+                      </div>
+                    <form class="prosys-settings" method="POST">
+                        <label for="go_pro">Pro system</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="go_pro" id="go_pro-enabled" value="on" <?php echo ($pt->config->go_pro == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="go_pro-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="go_pro" id="go_pro-disabled" value="off" <?php echo ($pt->config->go_pro == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="go_pro-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        
+                        <label for="recurring_payment">Recurring Payment</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="recurring_payment" id="recurring_payment-enabled" value="on" <?php echo ($pt->config->recurring_payment == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="recurring_payment-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="recurring_payment" id="recurring_payment-disabled" value="off" <?php echo ($pt->config->recurring_payment == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label"l for="recurring_payment-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Free users import limit</label>
+                                <input type="number" id="user_max_import" name="user_max_import" class="form-control" value="{{CONFIG user_max_import}}">
+                                
+                            </div>
+                        </div>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Pro Package Price</label>
+                                <input type="number" id="pro_pkg_price" name="pro_pkg_price" class="form-control" value="{{CONFIG pro_pkg_price}}">
+                                
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <!-- #END# Vertical Layout -->
+<script>
+
+
+function PT_RemoveSubscriptions(type,self){
+    if (!type || type != 'expired' || !self){
+        return false;
+    }
+
+    else if(type == 'expired'){
+        $(self).text("{{LANG please_wait}}").attr('disabled', 'true');
+        $.ajax({
+            url: '{{LINK aj/go_pro/remove_expired}}',
+            type: 'GET',
+            dataType: 'json'
+        })
+        .done(function() {
+            $('.payment-settings-alert').html('<i class="fa fa-check"></i> Expired Subscriptions was deleted successfully!');
+            setTimeout(function () {
+                $('.payment-settings-alert').empty();
+            }, 2000);
+            $(self).text('Cancel Expired Subscriptions').removeAttr('disabled');
+        })
+        .fail(function() {
+            console.log("error");
+        })
+    }
+}
+
+$(function() {
+    var form_prosys_settings = $('form.prosys-settings');
+
+    form_prosys_settings.ajaxForm({
+        url: '{{LINK aj/ap/save-settings}}',
+        beforeSend: function() {
+            form_prosys_settings.find('button[type="submit"]').text("{{LANG please_wait}}");
+        },
+        success: function(data) {
+            if (data.status == 200) {
+            	form_prosys_settings.find('button[type="submit"]').text('Save');
+            	$('.prosys-settings-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Sub Category successfully added</div>');
+            	setTimeout(function () {
+            		$('.prosys-settings-alert').empty();
+            	}, 2000);
+            }
+        }
+    });
+});
+</script>

@@ -1,0 +1,110 @@
+<div class="container-fluid">
+    <div>
+        <h3>Push Notifications Settings</h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="#">Mobile & API Settings</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Push Notifications Settings</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- Vertical Layout -->
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Push Notifications Settings</h6>
+                    <div>This system allows your script to send push notifications to any application who uses our API.<br> To get started, <a href="https://onesignal.com/" target="_blank">Register Here</a>.</div>
+                    <br>
+                    <div class="form_api_settings-alert"></div>
+                    <form class="api-settings" method="POST">
+                        <label for="push">Push Notifications System</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="push" id="push-enabled" value="1" <?php echo ($pt->config->push == 1) ? 'checked': '';?>>
+                                <label class="form-check-label" for="push-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="push" id="push-disabled" value="0" <?php echo ($pt->config->push == 0) ? 'checked': '';?>>
+                                <label class="form-check-label" for="push-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <br>
+                        <span class="help-block">Need Help? <a href="https://documentation.onesignal.com/v3.0/docs/setup" target="_blank">Read The Documentation</a></span>
+                        <br>
+                        <br>
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect" id="reset-api-key">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Push Notifications Settings</h6>
+                    <div class="form_push_settings-alert"></div>
+                    <form class="push-settings" method="POST">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">OneSignal APP ID</label>
+                                <input type="text" id="push_id" name="push_id" class="form-control" value="<?php echo $pt->config->push_id;?>">
+                                
+                            </div>
+                        </div>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">REST API Key</label>
+                                <input type="text" id="push_key" name="push_key" class="form-control" value="<?php echo $pt->config->push_key;?>">
+                                
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!-- #END# Vertical Layout -->
+<script>
+    var form_api_settings = $('form.api-settings');
+    var form_push_settings = $('form.push-settings');
+
+
+    form_api_settings.ajaxForm({
+        url: '{{LINK aj/ap/save-settings}}',
+        beforeSend: function() {
+            form_api_settings.find('.waves-effect').text("{{LANG please_wait}}");
+        },
+        success: function(data) {
+            if (data.status == 200) {
+                form_api_settings.find('.waves-effect').text('Save');
+                $('.form_api_settings-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Settings updated successfully</div>');
+                setTimeout(function () {
+                    $('.form_api_settings-alert').empty();
+                }, 2000);
+            }
+        }
+    });
+
+    form_push_settings.ajaxForm({
+        url: '{{LINK aj/ap/save-settings}}',
+        beforeSend: function() {
+            form_push_settings.find('.waves-effect').text("{{LANG please_wait}}");
+        },
+        success: function(data) {
+            if (data.status == 200) {
+                form_push_settings.find('.waves-effect').text('Save');
+                $('.form_push_settings-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Settings updated successfully</div>');
+                setTimeout(function () {
+                    $('.form_push_settings-alert').empty();
+                }, 2000);
+            }
+        }
+    });
+</script>

@@ -1,0 +1,38 @@
+<div class="login_page">
+	<div class="login-page">
+		<div class="login-form">
+			<form action="{{LINK reset-password/{{CODE}}}}" method="POST">
+				<h4>{{LANG reset_password}}</h4>
+				<p></p>
+				<div class="errors form-group">{{ERRORS}}</div>
+				<div class="errors success form-group">{{SUCCESS}}</div>
+				<div class="pp_mat_input">
+					<input type="password" name="password" id="password" placeholder="{{LANG password}}" required value="" autofocus>
+					<label for="password">{{LANG password}}</label>
+				</div>
+				<div class="pp_mat_input">
+					<input type="password" name="re-password" id="re-password" placeholder="{{LANG confirm_password}}" required value="">
+					<label for="re-password">{{LANG confirm_password}}</label>
+				</div>
+				<div class="login_signup_combo">
+					<div class="signup__">
+						<a class="dec" href="{{LINK login}}">{{LANG login_}}</a>
+					</div>
+					<div class="login__">
+						<input type="submit" class="btn btn-main button" value="{{LANG change_password}}">
+					</div>
+				</div>
+			</form>
+		</div>    
+	</div>
+</div>
+<script>
+$(function() {
+	$('.button').on('click', function () {
+		if ($('#password').val() && $('#re-password').val()) {
+			$(this).val("{{LANG please_wait}}");
+		}
+	});
+});
+</script>
+<style>body {background: -webkit-linear-gradient(top left, #{{COLOR1}} 0%, #{{COLOR2}} 100%);background: linear-gradient(to bottom right, #{{COLOR1}} 0%, #{{COLOR2}} 100%);}</style>

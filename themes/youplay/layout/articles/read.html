@@ -1,0 +1,377 @@
+<div class="read-content col-md-8 no-padding-both">     
+	<div class="read-article-container">
+		<div class="read-article-head">
+      <?php if (IS_LOGGED) { ?>
+      <?php if ($pt->user_article->user_id == $pt->user->id && !PT_IsAdmin() && !$pt->user_article->active) { ?>
+        <div class="alert alert-warning">
+          <i class="fa fa-fw fa-exclamation-triangle"></i> {{LANG reviewed_article}}
+        </div>
+      <?php } ?>
+      <?php } ?>
+			<a class="postCategory" href="{{LINK articles/category/{{CATEGORY_ID}}}}" data-load="?link1=articles&category_id={{CATEGORY_ID}}" class="inherit"><h5>{{CATEGORY_NAME}}</h5></a>
+            <h1>{{TITLE}}</h1>    
+		</div>
+		<div class="read-article-description">
+			<article>{{DESC}}</article>
+		</div>
+		<div class="read-article-meta">
+			<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> {{TIME}}</span>
+			<span class="middot">·</span>
+			<span>{{VIEWS}} {{LANG views}} </span>
+      <?php if ($pt->user_article->active || PT_IsAdmin()) { ?>
+			<span class="pull-right">
+                  <span onclick="PT_LikePost(this,'up');" data-post-likes="{{LIKES}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up {{LIKED}}"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg> <span>{{LIKES}}</span>
+                  </span>
+                  <span onclick="PT_LikePost(this,'down');" data-post-dislikes="{{DIS_LIKES}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-down {{DIS_LIKED}}"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg> <span>{{DIS_LIKES}}</span>
+                  </span>
+			</span>
+      <?php } ?>
+		</div>
+		<?php if ($pt->user_article->active || PT_IsAdmin()) { ?>
+		<div class="read-article-share">
+			<ul>
+				<li class="bold">{{LANG share_to}}:</li>
+				<li class="share-post-btn" data-toggle="tooltip" title="Facebook">
+					<a href="https://www.facebook.com/sharer.php?u={{POST_ENCODED_URL}}" target="_blank">
+						<div class="btn-share">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="feather feather-facebook" fill="#337ab7"><path d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M18,5H15.5A3.5,3.5 0 0,0 12,8.5V11H10V14H12V21H15V14H18V11H15V9A1,1 0 0,1 16,8H18V5Z"></path></svg>
+						</div>
+					</a>
+				</li>
+				<li class="share-post-btn" data-toggle="tooltip" title="Twitter">
+					<a href="http://twitter.com/intent/tweet?text={{TITLE}}&url={{POST_ENCODED_URL}}" target="_blank">
+						<div class="btn-share">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="feather feather-twitter" fill="#55acee"><path d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M17.71,9.33C18.19,8.93 18.75,8.45 19,7.92C18.59,8.13 18.1,8.26 17.56,8.33C18.06,7.97 18.47,7.5 18.68,6.86C18.16,7.14 17.63,7.38 16.97,7.5C15.42,5.63 11.71,7.15 12.37,9.95C9.76,9.79 8.17,8.61 6.85,7.16C6.1,8.38 6.75,10.23 7.64,10.74C7.18,10.71 6.83,10.57 6.5,10.41C6.54,11.95 7.39,12.69 8.58,13.09C8.22,13.16 7.82,13.18 7.44,13.12C7.81,14.19 8.58,14.86 9.9,15C9,15.76 7.34,16.29 6,16.08C7.15,16.81 8.46,17.39 10.28,17.31C14.69,17.11 17.64,13.95 17.71,9.33Z"></path></svg>
+						</div>
+					</a>
+				</li>
+				<li class="share-post-btn" data-toggle="tooltip" title="Google+">
+					<a href="https://plus.google.com/share?url={{POST_ENCODED_URL}}" target="_blank">
+						<div class="btn-share">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="feather feather-google" fill="#d9534f"><path d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M19.5,12H18V10.5H17V12H15.5V13H17V14.5H18V13H19.5V12M9.65,11.36V12.9H12.22C12.09,13.54 11.45,14.83 9.65,14.83C8.11,14.83 6.89,13.54 6.89,12C6.89,10.46 8.11,9.17 9.65,9.17C10.55,9.17 11.13,9.56 11.45,9.88L12.67,8.72C11.9,7.95 10.87,7.5 9.65,7.5C7.14,7.5 5.15,9.5 5.15,12C5.15,14.5 7.14,16.5 9.65,16.5C12.22,16.5 13.96,14.7 13.96,12.13C13.96,11.81 13.96,11.61 13.89,11.36H9.65Z"></path></svg>
+						</div>
+					</a>
+				</li>
+				<li class="share-post-btn" data-toggle="tooltip" title="LinkedIn">
+					<a href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{POST_ENCODED_URL}}" target="_blank">
+						<div class="btn-share">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="feather feather-facebook" fill="#007bb6"><path d="M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H19M18.5,18.5V13.2A3.26,3.26 0 0,0 15.24,9.94C14.39,9.94 13.4,10.46 12.92,11.24V10.13H10.13V18.5H12.92V13.57C12.92,12.8 13.54,12.17 14.31,12.17A1.4,1.4 0 0,1 15.71,13.57V18.5H18.5M6.88,8.56A1.68,1.68 0 0,0 8.56,6.88C8.56,5.95 7.81,5.19 6.88,5.19A1.69,1.69 0 0,0 5.19,6.88C5.19,7.81 5.95,8.56 6.88,8.56M8.27,18.5V10.13H5.5V18.5H8.27Z"></path></svg>
+						</div>
+					</a>
+				</li>
+				<li class="share-post-btn" data-toggle="tooltip" title="Pinterest">
+					<a href="http://pinterest.com/pin/create/button/?url={{POST_ENCODED_URL}}" target="_blank">
+						<div class="btn-share">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="feather feather-facebook" fill="#cb2027"><path d="M13,16.2C12.2,16.2 11.43,15.86 10.88,15.28L9.93,18.5L9.86,18.69L9.83,18.67C9.64,19 9.29,19.2 8.9,19.2C8.29,19.2 7.8,18.71 7.8,18.1C7.8,18.05 7.81,18 7.81,17.95H7.8L7.85,17.77L9.7,12.21C9.7,12.21 9.5,11.59 9.5,10.73C9.5,9 10.42,8.5 11.16,8.5C11.91,8.5 12.58,8.76 12.58,9.81C12.58,11.15 11.69,11.84 11.69,12.81C11.69,13.55 12.29,14.16 13.03,14.16C15.37,14.16 16.2,12.4 16.2,10.75C16.2,8.57 14.32,6.8 12,6.8C9.68,6.8 7.8,8.57 7.8,10.75C7.8,11.42 8,12.09 8.34,12.68C8.43,12.84 8.5,13 8.5,13.2A1,1 0 0,1 7.5,14.2C7.13,14.2 6.79,14 6.62,13.7C6.08,12.81 5.8,11.79 5.8,10.75C5.8,7.47 8.58,4.8 12,4.8C15.42,4.8 18.2,7.47 18.2,10.75C18.2,13.37 16.57,16.2 13,16.2M20,2H4C2.89,2 2,2.89 2,4V20A2,2 0 0,0 4,22H20A2,2 0 0,0 22,20V4C22,2.89 21.1,2 20,2Z"></path></svg>
+						</div>
+					</a>
+				</li>
+				<li data-toggle="tooltip" title="Shares">
+					<a href="javascript:void(0);">
+						<div class="btn-share">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share" style="width: 19px;height: 19px;"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+						</div> 
+						<span id="post-shares">{{SHARED}}</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+    <?php } ?>
+		
+		<div class="read-article-text">
+            {{TEXT}}
+		</div>
+         
+		<div class="read-article-comments-container">
+			<div class="comments-content content">
+				<div class="comments-header">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> {{LANG comments}} {{COMMENTS_COUNT}}
+				</div>
+        <?php if ($pt->user_article->active || PT_IsAdmin()) { ?>
+				<form class="form submit-article-commet">
+					<div class="w100 pt_blogcomm_combo">
+						<?php if (IS_LOGGED): ?>
+						<img class="avatar" src="{{ME avatar}}" alt="{{ME name}} avatar" />
+						<?php endif; ?>
+						<textarea name="text" class="form-control" placeholder="{{LANG write_your_comment}}"></textarea>
+
+                        <button class="btn pull-right btn-main" type="submit" data-toggle="tooltip" title="{{LANG publish}}">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </button>
+                    </div>
+				</form>
+				<hr>
+				<div class="user-comments width-100" id="post-comments" style="
+    margin-top: 20px;
+">
+                  {{COMMENTS}}
+				</div>
+
+				<?php if ($pt->count_cmt > 0): ?>
+					<div class="watch-video-show-more load-comments">
+                     {{LANG show_more}}
+					</div>
+				<?php endif; ?>
+        <?php } ?>
+			</div>
+		</div>    
+	</div>
+	<div class="clear"></div>
+</div>
+<div class="col-md-4">
+  <div class="ads-placment">{{WATCH_SIDEBAR_AD}}</div>
+	<div class="read-article-sidebar read-content">
+		<div class="ra-sidebar-head">
+			<h4><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M19,7H9V5H19M15,15H9V13H15M19,11H9V9H19M20,2H8A2,2 0 0,0 6,4V16A2,2 0 0,0 8,18H20A2,2 0 0,0 22,16V4A2,2 0 0,0 20,2M4,6H2V20A2,2 0 0,0 4,22H18V20H4V6Z"></path></svg> {{LANG categories}}</h4>
+		</div>
+		<div class="article-categories">
+			<div class="pt_categories">
+				<ul>
+					<?php foreach ($pt->categories as $cat_id => $category): ?>
+						<?php if ($pt->category == $cat_id): ?>
+							<li class="active">
+								<a href="<?php echo PT_Link("articles/category/$cat_id") ?>" data-load="?link1=articles&category_id=<?php echo($cat_id) ?>"><span><?php echo $category; ?></span></a>
+							</li>
+						<?php else: ?>
+							<li>
+								<a href="<?php echo PT_Link("articles/category/$cat_id") ?>" data-load="?link1=articles&category_id=<?php echo($cat_id) ?>"><span><?php echo $category; ?></span></a>
+							</li>
+						<?php endif; ?>
+					<?php endforeach; ?>
+				</ul>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	<div class="read-article-sidebar read-content">
+		<div class="ra-sidebar-head">
+			<h4><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M19,7H9V5H19M15,15H9V13H15M19,11H9V9H19M20,2H8A2,2 0 0,0 6,4V16A2,2 0 0,0 8,18H20A2,2 0 0,0 22,16V4A2,2 0 0,0 20,2M4,6H2V20A2,2 0 0,0 4,22H18V20H4V6Z"></path></svg> {{LANG related_articles}}</h4>
+		</div>
+		<div class="ra-sidebar-body"> 
+         {{RELATED_ARTICLES}}
+		</div>
+	</div>
+	<div class="read-article-sidebar read-content">
+		<div class="ra-sidebar-head">
+			<h4><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" style="margin-top: -4px;"><path fill="currentColor" d="M17,10.5V7A1,1 0 0,0 16,6H4A1,1 0 0,0 3,7V17A1,1 0 0,0 4,18H16A1,1 0 0,0 17,17V13.5L21,17.5V6.5L17,10.5Z"></path></svg> {{LANG related_videos}}</h4>
+		</div>
+		<div class="ra-sidebar-body"> 
+         {{RELATED_VIDEOS}}
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+
+<script>
+  jQuery(window).ready(function($) {
+      $.fn.scrollTo = function (speed) {
+        if (typeof(speed) === 'undefined')
+            speed = 500;
+
+        $('html, body').animate({
+            scrollTop: ($(this).offset().top - 100)
+        }, speed);
+
+        return $(this);
+      };
+
+      <?php if (!empty($_GET['cl']) && is_numeric($_GET['cl'])): ?>
+        if ($('#comment-<?php echo($_GET['cl']); ?>').length) {
+          var comment = $('#comment-<?php echo($_GET['cl']); ?>');
+          comment.scrollTo().find('p').addClass('active');
+          PT_Delay(function(){
+            comment.find('p').removeClass('active')
+          },2000);
+        }
+      <?php elseif(!empty($_GET['rl']) && is_numeric($_GET['rl'])): ?>
+        if ($('#reply-<?php echo($_GET['rl']); ?>').length) {
+          var reply  = $('#reply-<?php echo($_GET['rl']); ?>');
+          reply.scrollTo().find('p').addClass('active');
+          PT_Delay(function(){
+            reply.find('p').removeClass('active');
+          },2000);
+        }
+      <?php endif; ?>
+  });
+
+  jQuery(document).ready(function($) {
+      $('.share-post-btn a').click(function(event) {
+        $.ajax({
+          url: '{{LINK aj/main/share}}',
+          type: 'POST',
+          dataType: 'json',
+          data: {post_id: '{{ID}}'},
+        })
+        .done(function(data) {
+          if (data.status == 200) {
+            $('#post-shares').text(data.shared);
+          }
+        })
+        .fail(function() {
+          console.log("error");
+        })
+      });
+
+      $(".load-comments").click(function(event) {
+        var self    = $(this);
+        var last_id = ($(".article-comments").length > 0) ? $(".article-comments:last").attr('data-id') : 0;
+        $.ajax({
+          url: '{{LINK aj/load-more-comments}}',
+          type: 'POST',
+          dataType: 'json',
+          data: {last_id: last_id,post_id:'{{ID}}'},
+        })
+        .done(function(data) {
+          if (data.status == 200) {
+            $('#post-comments').append(data.comments);
+          }
+          else{
+            self.text(data.message);
+          }
+        })
+        .fail(function() {
+          console.log("error");
+        })
+      });
+
+      var post = '{{ID}}';
+      var form = $(".submit-article-commet");
+      var hash = $('.main_session').val();
+      $(".submit-article-commet").ajaxForm({
+          url: '{{LINK aj/add-comment}}',
+          type:'POST',
+          data:{post_id:'{{ID}}',hash:hash},
+          beforeSend: function() {
+            var query = form.find('textarea').val();
+
+            if (!query){
+               form.find('textarea').addClass('danger-field-border');
+               return false;
+            }
+
+            else if(query.length > 600){
+               form.find('textarea').addClass('danger-field-border');
+               return false;
+            }
+
+            else if (!$('#main-container').attr('data-logged') && $('#main-url').val()) {
+              window.location.href = PT_Ajax_Requests_File() + 'login?to=' + $('#main-url').val();
+              return false;
+            }
+          },
+          success: function(data) {
+            if (data.status == 200) {
+               if ($('.user-comments').find('.no-comments-found').length > 0) {
+                  $('.user-comments').html(data.comment);
+               }
+
+               else{
+                  $('.user-comments').prepend(data.comment);
+               }               
+               
+               form.find('textarea').val('');
+               form.find('textarea').removeClass('danger-field-border');
+            } 
+            else {
+               swal(
+                 'Error!',
+                 'Something went wrong.Please try again later!',
+                 'error'
+               );
+            }
+          }
+      });
+  });
+
+  function PT_DeleteComment(id) {
+      if (!$('#main-container').attr('data-logged') && $('#main-url').val()) {
+        window.location.href = PT_Ajax_Requests_File() + 'login?to=' + $('#main-url').val();
+        return false;
+      }
+
+      swal({
+        title: "{{LANG confirmation}}",
+        text: "{{LANG delete_confirmation}}",
+        type: "warning",
+        confirmButtonText:"{{LANG yes_del}}",
+        cancelButtonText:"{{LANG cancel}}",
+        showCancelButton:true,
+      })
+      .then(function(willDelete){
+         if (willDelete) {
+            if (!id) { return false; }
+
+            $('#comment-' + id).slideUp('fast');
+            $.post('{{LINK aj/delete-comment}}', {id: id});
+         }
+         else {
+            swal.close();
+         }
+      },
+      function(){
+         //pass
+      });      
+  }
+
+  function PT_LikePost(self,type){
+    if (!self || (type != 'up' && type != 'down')){
+      return false;
+    }
+
+    else if (!$('#main-container').attr('data-logged') && $('#main-url').val()) {
+      window.location.href = PT_Ajax_Requests_File() + 'login?to=' + $('#main-url').val();
+      return false;
+    }
+
+    var self = $(self);
+    $.ajax({
+      url: '{{LINK aj/like-system/}}' + type,
+      type: 'POST',
+      dataType: 'json',
+      data: {post_id: '{{ID}}'}
+    })
+    .done(function(data) {
+      if (data.status == 200 && type == 'up' && data.code == 1){
+        self.find('span').text((data.up));
+        $('[data-post-dislikes]').find('span').text((data.down));
+        self.find('svg.feather').addClass('active');
+        self.siblings().find('svg.feather').removeClass('active');
+        
+      }
+
+      else if (data.status == 200 && type == 'up' && data.code == 0){
+        self.find('span').text((data.up));
+        $('[data-post-dislikes]').find('span').text((data.down));
+        self.find('svg.feather').removeClass('active');
+        self.siblings().find('svg.feather').removeClass('active');
+      }
+
+      else if (data.status == 200 && type == 'down' && data.code == 1){
+        self.find('span').text((data.down));
+        self.find('svg.feather').addClass('active');
+        $('[data-post-likes]').find('span').text((data.up));
+        self.siblings().find('svg.feather').removeClass('active');
+      }
+
+      else if (data.status == 200 && type == 'down' && data.code == 0){
+        self.find('span').text((data.down));
+        self.find('svg.feather').removeClass('active');
+        $('[data-post-likes]').find('span').text((data.up));
+        self.siblings().find('i').removeClass('active');
+      }
+
+      else{
+        swal(
+           'Error!',
+           'Something went wrong.Please try again later!',
+           'error'
+         );
+      }
+    })
+    .fail(function() {
+      console.log("error");
+    })
+  }
+</script>

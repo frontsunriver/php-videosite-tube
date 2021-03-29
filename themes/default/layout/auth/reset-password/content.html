@@ -1,0 +1,70 @@
+l<div class="container login-page">
+    <div class="login-form">
+    	<form action="{{LINK reset-password/{{CODE}}}}" method="POST">
+    	    <h4>{{LANG reset_password}}</h4>
+    	    <div class="errors form-group">{{ERRORS}}</div>
+    	    <div class="errors success form-group">{{SUCCESS}}</div>
+			<div class="form-group">
+				<input type="password" name="password" id="password" placeholder="{{LANG password}}" required value="">
+			</div>
+			<div class="form-group">
+				<input type="password" name="re-password" id="re-password" placeholder="{{LANG confirm_password}}" required value="">
+			</div>
+			<div class="form-group">
+				<input type="submit" class="button" value ="{{LANG change_password}}">
+			</div>
+			<div class="new-here text-center">
+				{{LANG got_your_password}} <a class="dec" href="{{LINK login}}">{{LANG login_}}</a>
+			</div>
+		</form>
+    </div>    
+</div>
+<ul class="bg-bubbles">
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+</ul>
+<script>
+$(function() {
+	$('.button').on('click', function () {
+		if ($('#password').val() && $('#re-password').val()) {
+			$(this).val("{{LANG please_wait}}");
+		}
+	});
+});
+</script>
+<style>
+.bg-bubbles {
+  background: -webkit-linear-gradient(top left, #{{COLOR1}} 0%, #{{COLOR2}} 100%);
+  background: linear-gradient(to bottom right, #{{COLOR1}} 0%, #{{COLOR2}} 100%);
+}
+.login-form input[type=submit] {
+	color: #{{COLOR1}} !important;
+}
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #fff;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #fff;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #fff;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #fff;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color:    #fff;
+}
+</style>

@@ -1,0 +1,45 @@
+<div class="col-md-12">
+	<div class="articles-content">
+		<div class="subscriptions-list author-list articles-container">
+			<h3 class="recent-articles">{{LANG recent_articles}}
+
+			<div class="article-categories">
+				<div>
+				<form class="form search-articles-form" method="post" action="">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="{{LANG search_articles}}" name="q">
+					<button type="submit">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+					</button>
+				</div>
+			</form>
+			</div></div>
+			<?php if ($pt->config->all_create_articles == 'on') { ?>
+					<a href="{{LINK create_article}}" class="btn btn-main pull-right" data-load="?link1=create_article">{{LANG create_article}} </a><div class="clear"></div>
+				<?php } ?>
+			</h3>
+			{{POSTS}}
+		</div>
+		<?php if ($pt->posts_count > 0) { ?>
+			<div class="watch-video-show-more desc" data-type="articles" onclick="PT_LoadPost('{{CATEGORY}}',this);">
+             {{LANG show_more}}
+			</div>
+		<?php } ?>
+	</div>
+</div>
+
+<script>
+   jQuery(document).ready(function($) {
+      $('.search-articles-form').submit(function(event) {
+         var query = $(this).find('input').val();
+         if (!query){
+            $(this).find('input').addClass('danger-field-border');
+            return false;
+         }
+         else if(query.length > 50){
+            $(this).find('input').addClass('danger-field-border');
+            return false;
+         }
+      });
+   });
+</script>

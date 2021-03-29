@@ -1,0 +1,145 @@
+<link rel="stylesheet" href="{{CONFIG theme_url}}/css/night-mode.css">
+<style>body {background: #08090f !important;}.navbar-fixed-top, #get-notifications, .navbar-fixed-top ul.navbar-nav > li, .dropdown-menu, .dropdown-menu > li, .pt_language_select:before {background: #12141E !important;}.pt_footer .container-fluid, footer .footer-container, .footer-container .footer-links ul li, .pt_foot_lang > li {background: #12141E !important;}nav.navbar-findcond .search-header input {background-color: #08090f !important;}.navbar.navbar-findcond.navbar-default.second-header-layout {border-top: 2px solid #25293d !important;background: #12141E !important;}.navbar.navbar-findcond.navbar-default.second-header-layout ul.nav.navbar-nav li {background: #12141E !important;}nav.navbar-findcond ul.dropdown-menu > li > a:hover {background: #25283a !important;}hr {border-color: #25293d !important;}.yp_side_drawer, .yp_side_drawer ul.sections, .yp_side_drawer ul.sections li {
+    background: #12141E !important;
+}
+.yp_side_drawer ul.sections {
+	border-color: #25293d !important;
+}
+.dropdown-menu.notfi-dropdown h5, ul.notfi-dropdown ul#notifications-list li.notifications-list, ul.notfi-dropdown ul#notifications-list li.no-notifications {
+   background: #12141e !important;border-color: #25293d !important;
+}
+.second-header-layout li.active > a {
+    background: #171a25 !important;
+}
+ul.dropdown-menu > li > a:hover {
+	background: #25283a !important;
+}
+.pagination li a {border-color: #25293d !important;}
+.showing_nav, .pagination, .pagination>li {
+    background: #08090f !important;
+}
+.pt_footer .container-fluid {border: 0;}
+ul.notfi-dropdown {
+    border-color: #25293d !important;
+}
+.dropdown-menu.notfi-dropdown h5, ul.notfi-dropdown ul#notifications-list li.notifications-list {
+    background: #12141e !important;border-color: #25293d !important;
+}
+</style>
+<div class="vid_move_filtr" id="filter_settings">
+	<div class="container">
+      	<form class="search_filter_form pt_forms" method="GET" action="{{LINK movies}}">
+			<div class="mov_filtr_cont">
+				<p class="pull-left term">Search Term:</p>
+				<input type="text" class="form-control" id="search-bar" name="keyword" placeholder="{{LANG movies_page_search}}" autocomplete="off" value="<?php echo(!empty($_GET['keyword']) ? $_GET['keyword'] : '') ?>">
+				<div class="pt_mv_page_selct_holdr">
+				<div class="selects-container">
+					<p>{{LANG rating}}</p>
+					<input type="number" id="rating" name="rating" class="form-control" min="1" max="10" step="0.1" placeholder="{{LANG rating}}" value="<?php echo(!empty($_GET['rating']) ? $_GET['rating'] : '') ?>">
+				</div>
+				<div class="selects-container">
+					<p>{{LANG release}}</p>
+					<input id="release" name="release" type="number" placeholder="{{LANG release}}" class="form-control input-md"  min="1960" max="<?php echo date('Y') ?>" value="<?php echo(!empty($_GET['release']) ? $_GET['release'] : '') ?>">
+				</div>
+				<div class="selects-container">
+					<p>{{LANG country}}</p>
+					<select class="form-control show-tick" id="country" name="country">
+						<?php foreach ($countries_name as $key => $value) { $selected = (!empty($_GET['country']) && $_GET['country'] == $key) ? 'selected' : '';  ?>
+							<option value="<?php echo $key; ?>" <?php echo $selected?>><?php echo $value; ?></option>
+						<?php  } ?>
+					</select>
+				</div>
+				<div class="selects-container">
+					<p>{{LANG category}}</p>
+					<select class="form-control show-tick" id="category_" name="category_">
+						<option value="all" <?php echo !empty($_GET['category_']) && $_GET['category_'] == 'all' ? 'selected' : '' ?>>{{LANG all}}</option>
+						<?php foreach ($pt->movies_categories as $key => $category) { $selected = (!empty($_GET['category_']) && $_GET['category_'] == $key) ? 'selected' : '';  ?>
+							<option value="<?php echo $key; ?>" <?php echo $selected?>><?php echo $category; ?></option>
+						<?php  } ?>
+					</select>
+				</div>
+				</div>
+			</div>
+			<input type="hidden" name="page_id" value="1" id="page_id">
+			<div class="last-sett-btn">
+				<button id="submit" class="btn btn-main setting-panel-mdbtn">{{LANG search}}</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class="pt_movie_margin">
+	<div class="">
+		<?php if ($pt->total_pages > 0) { ?>
+		<div class="upload-head">
+			<h3 class="text-center"><span><svg class="feather feather-film" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg></span> {{LANG movies}}</h3>
+			<div class="clear"></div>
+		</div>
+		<?php } ?>
+		<div class="subscriptions-list">
+			<div class="row author-list pt_movie_list">
+				{{VIDEOS}}
+			</div>
+			<?php if ($pt->total_pages > 1) { ?>
+			<div>
+				<hr>
+				<div class="pull-left showing_pages">
+		        	<?php echo "Showing $pt->page_number out of " . $pt->total_pages; ?>
+		        </div>
+		        <div class="pull-right">
+		        	<nav class="showing_nav">
+		                <ul class="pagination">
+		                	<li>
+		                        <a href="javascript:void(0)" class="waves-effect" title='First Page' onclick="GoToPage(1)">
+		                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-left"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
+		                        </a>
+		                    </li>
+		                    <?php if ($pt->page_number > 1) {  ?>
+		                    <li>
+		                        <a href="javascript:void(0)" onclick="GoToPage(<?php echo($pt->page_number - 1) ?>)" class="waves-effect" title='Previous Page'>
+		                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg>
+		                        </a>
+		                    </li>
+		                    <?php  } ?>
+		                    <?php 
+		                    $nums = 0;
+		                    $nums_pages = ($pt->page_number > 3) ? ($pt->page_number - 3) : $pt->page_number;
+		                    for ($i=$nums_pages; $i <= $pt->total_pages; $i++) { 
+		                    	if ($nums < 4) {
+		                    	?>
+		                    	<li class="<?php echo ($pt->page_number == $i) ? 'active' : ''; ?>"><a href="javascript:void(0)" onclick="GoToPage(<?php echo($i); ?>)" class="waves-effect"><?php echo $i ?></a></li>
+		                    	<?php
+		                    	}
+		                    	$nums++;
+		                    }
+		                    ?>
+		                    <?php if ($pt->total_pages > $pt->page_number) { ?>
+		                    <li>
+		                        <a href="javascript:void(0)" onclick="GoToPage(<?php echo ($pt->page_number + 1); ?>)" class="waves-effect" title="Next Page">
+		                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+		                        </a>
+		                    </li>
+		                    <?php } ?>
+		                    <li>
+		                        <a href="javascript:void(0)" onclick="GoToPage(<?php echo($pt->total_pages) ?>)" class="waves-effect" title='Last Page'>
+		                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+		                        </a>
+		                    </li>
+		                </ul>
+		            </nav>
+		        </div>
+			</div>
+		        
+        <?php } ?>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+</div>
+<br>
+<script type="text/javascript">
+function GoToPage(page_id) {
+	$('#page_id').val(page_id)
+	$('#submit').click();
+}
+</script>

@@ -1,0 +1,49 @@
+<tr id="list-{{ID}}" data_selected="{{ID}}">
+	<td><input type="checkbox" id="check-data-{{ID}}" class="delete-checkbox filled-in"><label for="check-data-{{ID}}"></label></td>
+	<td>
+		<span>
+			{{ID}}
+		</span>
+	</td>
+	<td>
+		<span>
+			{{USERNAME}}
+		</span>
+	</td>
+	<td>
+		<address>
+        {{EMAIL}}
+		</address>
+	</td>
+	<td>
+		<strong>
+			{{AMOUNT}}: {{CURRENCY}}
+		</strong>
+	</td>
+	<td>
+		<time>
+			{{DATE}}
+		</time>
+	</td>
+	<td class="request-status">
+		<?php if ($pt->wal_requests->status == 0): ?>
+			<span class="alert-warning">
+				Pending
+			</span>
+		<?php elseif ($pt->wal_requests->status == 1):?>
+			<span class="alert-success">
+				Paid
+			</span>
+		<?php elseif ($pt->wal_requests->status == 2):?>
+			<span class="alert-danger">
+				Declined
+			</span>
+		<?php endif; ?>
+		
+	</td>
+	<td>
+      <button onclick="PT_ManageWRequests({{ID}},1);" type="button" class="btn bg-success admn_table_btn">Paid</button>
+      <button onclick="PT_ManageWRequests({{ID}},2);" type="button" class="btn bg-info admn_table_btn">Decline</button>
+      <button onclick="PT_ManageWRequests({{ID}},3,'hide');" type="button" class="btn bg-danger admn_table_btn">Delete</button>
+   	</td>
+</tr>

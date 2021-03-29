@@ -1,0 +1,38 @@
+<div class="content">
+	<div class="col-md-12">
+		<div class="upload-head">
+			<h4 class="pt_mn_page_hd"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M20,8H4V6H20M20,18H4V12H20M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"></path></svg> {{LANG purchased}}</h4>
+			<div class="tp_vid_fltr_tabs">
+				<ul class="list-unstyled">
+					<li <?php echo empty($_GET['type']) || $_GET['type'] == 'videos' ? 'class="selected"' : ''; ?>>
+						<a href="{{LINK paid-videos?type=videos}}" data-load="?link1=paid-videos&type=videos">{{LANG videos}}</a>
+					</li>
+					<?php if ($pt->config->movies_videos == 'on') { ?>
+					<li <?php echo !empty($_GET['type']) && $_GET['type'] == 'movies' ? 'class="selected"' : ''; ?>>
+						<a href="{{LINK paid-videos?type=movies}}" data-load="?link1=paid-videos&type=movies">{{LANG movies}}</a>
+					</li>
+					<li <?php echo !empty($_GET['type']) && $_GET['type'] == 'rented_movies' ? 'class="selected"' : ''; ?>>
+						<a href="{{LINK paid-videos?type=rented_movies}}" data-load="?link1=paid-videos&type=rented_movies">{{LANG rented_movies}}</a>
+					</li>
+					<?php } ?>
+					<li <?php echo !empty($_GET['type']) && $_GET['type'] == 'rented_videos' ? 'class="selected"' : ''; ?>>
+						<a href="{{LINK paid-videos?type=rented_videos}}" data-load="?link1=paid-videos&type=rented_videos">{{LANG rented_videos}}</a>
+					</li>
+				</ul>
+			</div>
+			<div class="clear"></div>
+			<hr>
+		</div>
+		
+      	<div class="videos-latest-list row">
+      		{{PAID_LIST}}
+      	</div>
+      	<?php if (count($pt->videos) > 0) { ?>
+            <div class="watch-video-show-more desc load-more" data-type="paid_videos" data-video-type="<?php echo($_GET['type']) ?>">
+                {{LANG show_more}}
+            </div>
+      	<?php } ?>
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+</div>

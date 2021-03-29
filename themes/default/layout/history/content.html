@@ -1,0 +1,20 @@
+<div class="content">
+	<div class="col-md-12">
+		<div class="upload-head">
+			<h4><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> {{LANG history}}</h4>
+			<hr>
+		</div>
+		<div class="subscriptions-list">
+			<div class="author-list row pt_history">
+      		{{HISTORY_LIST}}
+			</div>
+			<?php if (count($pt->videos) > 5) { ?>
+            <div class="watch-video-show-more desc load-more" data-type="history">
+                {{LANG show_more}}
+            </div>
+			<?php } ?>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+</div>

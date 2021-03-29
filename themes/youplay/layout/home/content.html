@@ -1,0 +1,224 @@
+<div class="video-player-page">
+	<div class="top-video content yp_trans">
+		<div class="pt_featured_video">
+			<div class="home-page-categories">
+				<div class="title">
+					<h4><div style="background:#E91E63"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-award"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg></div> {{LANG featured_video}}</h4>
+				</div>
+			</div>
+			<div class="video-player row">
+				<div class="col-md-8 no-padding-left" id="no_padding">
+					<a href="{{URL}}" data-load="?link1=watch&id={{VIDEO_ID_}}">
+						<div class="thumbnail_holder">
+							<img src="{{THUMBNAIL}}">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8,5.14V19.14L19,12.14L8,5.14Z" /></svg>
+							<span class="duration">{{DURATION}}</span>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-4 no-padding-right" id="no_padding">
+					<div class="video-title">
+						<input type="hidden" value="{{ID}}" id="video-id">
+						<div class="publisher-element">
+							<div class="publisher-avatar pull-left">
+								<a href="{{USER url}}" data-load="?link1=timeline&id={{USER username}}"><img src="{{USER avatar}}" alt="{{USER name}}"></a>
+							</div>
+							<div class="publisher-name">
+								<a href="{{USER url}}" data-load="?link1=timeline&id={{USER username}}">{{USER name_v}}</a>
+								<div class="publisher-subscribe-button">{{SUBSCIBE_BUTTON}}</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<hr>
+						<div class="video-big-title">
+							<a href="{{URL}}" data-load="?link1=watch&id={{VIDEO_ID_}}">{{TITLE}}</a>
+							<p>{{DESC}}</p>
+						</div>
+						<div class="clear"></div>
+						<div class="video-big-share">
+							<span title="{{LANG share}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#888" d="M21,11L14,4V8C7,9 4,14 3,19C5.5,15.5 9,13.9 14,13.9V18L21,11Z"></path></svg></span>
+							<span><a href="https://www.facebook.com/sharer/sharer.php?u={{URL}}"><i class="fa fa-facebook"></i></a></span>
+							<span><a href="https://twitter.com/intent/tweet?url={{URL}}"><i class="fa fa-twitter"></i></a></span>
+							<span><a href="https://www.linkedin.com/shareArticle?mini=true&url={{URL}}&title={{TITLE}}"><i class="fa fa-linkedin"></i></a></span>
+							<span><a href="https://pinterest.com/pin/create/button/?url={{URL}}&media={{THUMBNAIL}}"><i class="fa fa-pinterest"></i></a></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<hr class="dark_hr">
+	
+	<div class="hide_trend">
+		<div class="content pt_shadow yp_trans">
+			<div class="home-page-categories">
+				<div class="title">
+					<h4>
+						<div style="background:#2196F3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trending-up"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg></div> {{LANG trending}} 
+						<span class="view_more_link"><a href="{{LINK videos/trending}}" data-load="?link1=videos&page=trending">{{LANG explore_more}}</a></span>
+					</h4>
+				</div>
+				<div class="videos">
+					<div class="row pt_four_videos_trend cus_slider">{{TRENDING_LIST}}</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<hr class="dark_hr">
+	</div>
+		
+	<div class="hide_top">
+		<div class="content pt_shadow yp_trans">
+			<div class="home-page-categories">
+				<div class="title">
+					<h4>
+						<div style="background:#673ab7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></div> {{LANG top_videos}} 
+						<span class="view_more_link"><a href="{{LINK videos/top}}" data-load="?link1=videos&page=top">{{LANG explore_more}}</a></span>
+					</h4>
+				</div>
+				<div class="videos">
+					<div class="row pt_four_videos_top cus_slider">{{TOP_LIST}}</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<hr class="dark_hr">
+	</div>
+	<?php if ($pt->config->live_video == 1) { ?>	
+	<div class="hide_top">
+		<div class="content pt_shadow yp_trans">
+			<div class="home-page-categories">
+				<div class="title">
+					<h4>
+						<div style="background:#673ab7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></div> {{LANG live_videos}} 
+						<span class="view_more_link"><a href="{{LINK videos/live}}" data-load="?link1=videos&page=live">{{LANG explore_more}}</a></span>
+					</h4>
+				</div>
+				<div class="videos">
+					<div class="row pt_four_videos_top cus_slider">{{LIVE_LIST}}</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<hr class="dark_hr">
+	</div>
+	<?php } ?>
+	<?php if ($pt->config->show_articles == 'on') { ?>	
+	<div class="hide_top">
+		<div class="content pt_shadow yp_trans">
+			<div class="home-page-categories">
+				<div class="title">
+					<h4>
+						<div style="background:#673ab7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></div> {{LANG articles}} 
+						<span class="view_more_link"><a href="{{LINK articles}}" data-load="?link1=articles">{{LANG explore_more}}</a></span>
+					</h4>
+				</div>
+				<div class="articles-content pt_homep_articls">
+					<div class="row">{{HTML_POSTS}}</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<hr class="dark_hr">
+	</div>
+	<?php } ?>
+
+    {{SUBSC_HTML}}
+
+	<div class="content pt_shadow yp_trans">
+		<div class="home-page-categories">
+			<div class="title">
+				<h4>
+					<div style="background:#e91e63"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-video"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg></div> {{LANG latest_videos}} 
+					<span class="view_more_link"><a href="{{LINK videos/latest}}" data-load="?link1=videos&page=latest">{{LANG explore_more}}</a></span>
+				</h4>
+			</div>
+			<div class="videos">
+				<div class="row cus_slider">{{LATEST_LIST}}</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	
+	<hr class="dark_hr">
+
+    {{HOME_PAGE_VIDEOS}}
+</div>
+<script>
+$(document).ready(function() {
+if( !$.trim( $('.pt_four_videos_trend').html() ).length ) {
+	$('.hide_trend').html("");
+};
+});
+
+$(document).ready(function() {
+if( !$.trim( $('.pt_four_videos_top').html() ).length ) {
+	$('.hide_top').html("");
+};
+});
+
+$(document).ready(function(){
+  $('.cus_slider').slick({
+  infinite: false,
+  slidesToShow: 5,
+  <?php if ($pt->language_type == 'rtl') { ?>rtl: true,<?php } ?>
+  slidesToScroll: 2,
+  responsive: [
+	{
+      breakpoint: 1360,
+      settings: {
+        slidesToShow: 4
+      }
+    },
+	{
+      breakpoint: 1251,
+      settings: {
+        slidesToShow: 5
+      }
+    },
+	{
+      breakpoint: 1127,
+      settings: {
+        slidesToShow: 4
+      }
+    },
+    {
+      breakpoint: 992,
+      settings: {
+        slidesToShow: 4
+      }
+    },
+	{
+      breakpoint: 910,
+      settings: {
+        slidesToShow: 3
+      }
+    },
+    {
+      breakpoint: 705,
+      settings: {
+        slidesToShow: 2
+      }
+    },
+	{
+      breakpoint: 530,
+      settings: {
+        arrows: false,
+		slidesToShow: 2,
+		waitForAnimate: false,
+      }
+    },
+    {
+      breakpoint: 485,
+      settings: {
+        arrows: false,
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		waitForAnimate: false,
+      }
+    }
+  ]
+  });
+});
+</script>

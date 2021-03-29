@@ -1,0 +1,104 @@
+l<div class="container login-page">
+    <div class="login-form">
+        <h4>{{LANG welcome_back}}</h4>
+    	<form action="" method="POST">
+    	    <div class="errors form-group">{{ERRORS}}</div>
+			<div class="form-group">
+				<input type="text" name="username" id="username" placeholder="{{LANG username}}" required value="{{USERNAME}}">
+			</div>
+			<div class="form-group">
+				<input type="password" name="password" id="password" placeholder="{{LANG password}}" required>
+			</div>
+			<div class="new-here pull-left">
+				<a href="{{LINK forgot_password}}">{{LANG forgot_your_password}}</a>
+			</div>
+			<div class="pull-right login-icons">
+			    <?php if ($pt->config->fb_login == 'on') { ?>
+			    <div class="facebook-icon pull-left">
+				   <a href="{{LINK social-login.php?provider=Facebook}}">
+				     <i class="fa fa-facebook-square"></i>
+				   </a>
+				</div>
+				<?php } ?>
+				<?php if ($pt->config->plus_login == 'on') { ?>
+				<div class="google-icon pull-left">
+				   <a href="{{LINK social-login.php?provider=Google}}">
+				     <i class="fa fa-google-plus-square"></i>
+				   </a>
+				</div>
+				<?php } ?>
+				<?php if ($pt->config->tw_login == 'on') { ?>
+				<div class="twitter-icon pull-left">
+				   <a href="{{LINK social-login.php?provider=Twitter}}">
+				     <i class="fa fa-twitter-square"></i>
+				   </a>
+				</div>
+				<?php } ?>
+				<?php if ($pt->config->wowonder_login == 'on') { ?>
+				<div class="twitter-icon pull-left">
+				   <a href="{{CONFIG wowonder_domain_uri}}/oauth?app_id={{CONFIG wowonder_app_ID}}">
+				     <img src="{{CONFIG wowonder_img}}" alt="" style="width: 20px; height: 20px">
+				   </a>
+				</div>
+				<?php } ?>
+			</div>
+			<div class="clear"></div>
+			<div class="form-group">
+				<input type="submit" class="button" value ="{{LANG login_}}">
+			</div>
+			<div class="new-here text-center">
+				{{LANG new_here}} <a class="dec" href="{{LINK register}}">{{LANG sign_up}}</a>
+			</div>
+		</form>
+    </div>    
+</div>
+<ul class="bg-bubbles">
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+</ul>
+<script>
+$(function() {
+	$('.button').on('click', function () {
+		if ($('#username').val() && $('#password').val()) {
+			$(this).val("{{LANG please_wait}}");
+		}
+	});
+});
+</script>
+<style>
+.bg-bubbles {
+  background: -webkit-linear-gradient(top left, #{{COLOR1}} 0%, #{{COLOR2}} 100%);
+  background: linear-gradient(to bottom right, #{{COLOR1}} 0%, #{{COLOR2}} 100%);
+}
+
+.login-form input[type=submit] {
+	color: #{{COLOR1}} !important;
+}
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #fff;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #fff;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #fff;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #fff;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color:    #fff;
+}
+</style>

@@ -1,0 +1,78 @@
+<div class="videos-latest-list">
+	<div class="pt_chnl_actvty">
+		<h3 class="recent-articles">{{LANG recent_activities}}
+			<?php if (IS_LOGGED && $pt->config->post_system == 'on' && $pt->profile_user->id == $pt->user->id) { ?>
+				<a href="{{LINK create_post}}" class="btn btn-main btn-sm pull-right" data-load="?link1=create_post">{{LANG create_post}}</a><div class="clear"></div>
+			<?php } ?>
+		</h3>
+		<div class="articles-container pt_actv_prnt">
+			{{VIDEOS}}
+		</div>
+	</div>
+	<?php if ($pt->posts_count > 20) { ?>
+		<div class="watch-video-show-more desc" data-type="activity" onclick="PT_LoadActivity(this);">{{LANG show_more}}</div>
+	<?php } ?>
+</div>
+<div class="clear"></div>
+<script type="text/javascript">
+	  function PT_LikePost(self,type){
+    if (!self || (type != 'up' && type != 'down')){
+      return false;
+    }
+
+    else if (!$('#main-container').attr('data-logged') && $('#main-url').val()) {
+      window.location.href = PT_Ajax_Requests_File() + 'login?to=' + $('#main-url').val();
+      return false;
+    }
+    id = $(self).attr('data-post-id');
+
+    var self = $(self);
+    $.ajax({
+      url: '{{LINK aj/like-system/}}' + type,
+      type: 'POST',
+      dataType: 'json',
+      data: {activity_id: id}
+    })
+    .done(function(data) {
+      if (data.status == 200 && type == 'up' && data.code == 1){
+        self.find('span').text((data.up));
+        $('[data-post-dislikes]').find('span').text((data.down));
+        self.find('svg.feather').addClass('active');
+        self.siblings().find('svg.feather').removeClass('active');
+        
+      }
+
+      else if (data.status == 200 && type == 'up' && data.code == 0){
+        self.find('span').text((data.up));
+        $('[data-post-dislikes]').find('span').text((data.down));
+        self.find('svg.feather').removeClass('active');
+        self.siblings().find('svg.feather').removeClass('active');
+      }
+
+      else if (data.status == 200 && type == 'down' && data.code == 1){
+        self.find('span').text((data.down));
+        self.find('svg.feather').addClass('active');
+        $('[data-post-likes]').find('span').text((data.up));
+        self.siblings().find('svg.feather').removeClass('active');
+      }
+
+      else if (data.status == 200 && type == 'down' && data.code == 0){
+        self.find('span').text((data.down));
+        self.find('svg.feather').removeClass('active');
+        $('[data-post-likes]').find('span').text((data.up));
+        self.siblings().find('i').removeClass('active');
+      }
+
+      else{
+        swal(
+           'Error!',
+           'Something went wrong.Please try again later!',
+           'error'
+         );
+      }
+    })
+    .fail(function() {
+      console.log("error");
+    })
+  }
+</script>
