@@ -1,0 +1,25 @@
+<li class="dropdown hide-from-mobile profile-nav">
+	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> <span class="caret"></span>
+	</a>
+	<ul class="dropdown-menu" role="menu">
+		<li><a href="{{LINK login}}">{{LANG login}}</a></li>
+		<?php if ($pt->config->user_registration == 'on') { ?>
+		<li>
+			<a href="{{LINK register}}">{{LANG register}}</a>
+		</li>
+		<?php } ?>
+		<li class="divider hidden-lg hidden-md hidden-sm"></li>
+		<?php if ($pt->config->night_mode == 'both'): ?>
+	    <?php if ($pt->mode == 'night'): ?>
+	    <li class="hidden-lg hidden-md hidden-sm toggle-mobile-mode" data-mode="day">
+			<a href="javascript:void(0);">{{LANG day_mode}}</a>
+		</li>      
+	    <?php else: ?> 
+	    <li class="hidden-lg hidden-md hidden-sm toggle-mobile-mode" data-mode="night">
+			<a href="javascript:void(0);">{{LANG night_mode}}</a>
+		</li> 
+	    <?php endif; ?>  
+	    <?php endif; ?> 
+   </ul>
+</li>

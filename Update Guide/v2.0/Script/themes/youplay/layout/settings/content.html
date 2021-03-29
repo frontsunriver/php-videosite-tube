@@ -1,0 +1,82 @@
+<style>
+.yp_side_menu {display: flex;flex-direction: column;min-height: calc(100vh - 56px);}
+.yp_side_menu .pt_footer {margin-top: auto;}
+</style>
+<br>
+<div class="page-margin">
+	<div class="row sett_row_rev">
+		<div class="col-sm-4">
+			<div class="settings-sidebar" id="mobi-set-side">
+				<ul class="list-group scrollmenu">
+					<p>{{LANG settings}}</p>
+					<li class="list-group-item <?php echo ($pt->setting_page == 'general') ? 'active': '';?>">
+						<a href="{{LINK settings/general/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=general"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M416.3 256c0-21 13.1-38.9 31.7-46.1-4.9-20.5-13-39.7-23.7-57.1-6.4 2.8-13.2 4.3-20.1 4.3-12.6 0-25.2-4.8-34.9-14.4-14.9-14.9-18.2-36.8-10.2-55-17.3-10.7-36.6-18.8-57-23.7C295 82.5 277 95.7 256 95.7S217 82.5 209.9 64c-20.5 4.9-39.7 13-57.1 23.7 8.1 18.1 4.7 40.1-10.2 55-9.6 9.6-22.3 14.4-34.9 14.4-6.9 0-13.7-1.4-20.1-4.3C77 170.3 68.9 189.5 64 210c18.5 7.1 31.7 25 31.7 46.1 0 21-13.1 38.9-31.6 46.1 4.9 20.5 13 39.7 23.7 57.1 6.4-2.8 13.2-4.2 20-4.2 12.6 0 25.2 4.8 34.9 14.4 14.8 14.8 18.2 36.8 10.2 54.9 17.4 10.7 36.7 18.8 57.1 23.7 7.1-18.5 25-31.6 46-31.6s38.9 13.1 46 31.6c20.5-4.9 39.7-13 57.1-23.7-8-18.1-4.6-40 10.2-54.9 9.6-9.6 22.2-14.4 34.9-14.4 6.8 0 13.7 1.4 20 4.2 10.7-17.4 18.8-36.7 23.7-57.1-18.4-7.2-31.6-25.1-31.6-46.2zm-159.4 79.9c-44.3 0-80-35.9-80-80s35.7-80 80-80 80 35.9 80 80-35.7 80-80 80z"/></svg> {{LANG general}}</a>
+					</li>
+					<li class="list-group-item <?php echo ($pt->setting_page == 'profile') ? 'active': '';?>">
+						<a href="{{LINK settings/profile/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=profile&user=<?php echo $pt->settings->username; ?>"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 256c52.805 0 96-43.201 96-96s-43.195-96-96-96-96 43.201-96 96 43.195 96 96 96zm0 48c-63.598 0-192 32.402-192 96v48h384v-48c0-63.598-128.402-96-192-96z"/></svg> {{LANG profile}}</a>
+					</li>
+					<?php if (($pt->config->usr_v_mon == 'on' || $pt->config->payed_subscribers == 'on') && ($pt->settings->id == $pt->user->id)): ?>
+						<li class="list-group-item <?php echo ($pt->setting_page == 'monetization') ? 'active': '';?>">
+							<a href="{{LINK settings/monetization/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=monetization&user=<?php echo $pt->settings->username; ?>"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M404 160H108c-33.1 0-60 26.9-60 60v168c0 33.1 26.9 60 60 60h296c33.1 0 60-26.9 60-60V220c0-33.1-26.9-60-60-60zM342.9 65L108 110.9c-18 4-44 22.1-44 44.1 0 0 15-19 49-19h287v-20.5c0-12.6-5-28.7-13.9-37.6-11.3-11.3-27.5-16.2-43.2-12.9z"/></svg> {{LANG monetization}}</a>
+						</li>
+					<?php endif; ?>
+					<li class="list-group-item <?php echo ($pt->setting_page == 'password') ? 'active': '';?>">
+						<a href="{{LINK settings/password/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=password&user=<?php echo $pt->settings->username; ?>"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M376 186h-20v-40c0-55-45-100-100-100S156 91 156 146v40h-20c-22.002 0-40 17.998-40 40v200c0 22.002 17.998 40 40 40h240c22.002 0 40-17.998 40-40V226c0-22.002-17.998-40-40-40zM256 368c-22.002 0-40-17.998-40-40s17.998-40 40-40 40 17.998 40 40-17.998 40-40 40zm62.002-182H193.998v-40c0-34.004 28.003-62.002 62.002-62.002 34.004 0 62.002 27.998 62.002 62.002v40z"/></svg> {{LANG password}}</a>
+					</li>
+					<?php if (($pt->config->usr_v_mon == 'on' && $pt->config->sell_videos_system == 'on') || ($pt->config->usr_v_mon == 'off' && $pt->config->sell_videos_system == 'on') || ($pt->config->usr_v_mon == 'on' && $pt->config->sell_videos_system == 'off') ) { ?>
+					<li class="list-group-item <?php echo (in_array($pt->setting_page, array('withdrawals','balance'))) ? 'active': '';?>">
+						<a href="{{LINK settings/balance/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=balance&user=<?php echo $pt->settings->username; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg> {{LANG balance_}}</a>
+					</li>
+					<?php } ?>
+					<li class="list-group-item <?php echo ($pt->setting_page == 'avatar') ? 'active': '';?>">
+						<a href="{{LINK settings/avatar/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=avatar&user=<?php echo $pt->settings->username; ?>"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M262.3 199.2c-1.6-2.8-5.6-3.2-7.7-.7l-91.9 122.2c-2.5 2.9-.6 7.4 3.2 7.7l161.1 14c3.8.3 6.4-3.8 4.5-7.1l-69.2-136.1zM367.2 264.1c-1.6-2.8-5.6-3.2-7.7-.7l-24.8 25.1a4.68 4.68 0 0 0-.5 5.4l25.4 49.5c.8 1.3 2.1 2.2 3.7 2.3l44.9 3.9c3.8.3 6.4-3.8 4.5-7.1l-45.5-78.4zM378.1 224.4c11.2-.1 20.9-8.3 23-19.2 2.8-14.8-8.6-28.3-23.7-28.1-11.2.1-20.9 8.3-23 19.2-2.8 14.8 8.6 28.3 23.7 28.1z"/><path fill="currentColor" d="M455.2 129.3l-65.8-5.7-6.1-67c-1.3-14.9-14.5-25.9-29.5-24.5L56.7 58.9c-14.9 1.3-25.9 14.5-24.6 29.4l26.8 296.5c1.3 14.9 14.5 25.9 29.5 24.5l15.7-1.4-1.5 16.7c-1.3 14.9 9.7 28 24.7 29.3l297.3 25.9c14.9 1.3 28.1-9.7 29.4-24.6l26-296.6c1.2-14.8-9.8-28-24.8-29.3zM87.6 300.7c-3.7.3-7-2.4-7.4-6.1l-18-200c-.3-3.7 2.4-7 6.1-7.3l279.2-25.1c3.7-.3 7 2.4 7.4 6.1l4.8 52.8L158 103.4c-14.9-1.3-28.1 9.7-29.4 24.6l-14.9 170.3-26.1 2.4zm362.2-135.6l-17.5 200c-.3 3.7-3.6 6.5-7.3 6.2l-18.6-1.6L145.7 347c-3.7-.3-6.5-3.6-6.2-7.3l3.8-43.9L157 139.7c.3-3.7 3.6-6.5 7.3-6.2l198 17.3 29.7 2.6 51.6 4.5c3.8.2 6.6 3.5 6.2 7.2z"/></svg> {{LANG avatar_and_cover}}</a>
+					</li>
+					<?php if ($pt->config->verification_badge == 'on'): ?>  
+						<li class="list-group-item <?php echo ($pt->setting_page == 'verification') ? 'active': '';?>">
+							<a href="{{LINK settings/verification/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=verification&user=<?php echo $pt->settings->username; ?>"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 48C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48zm106.5 150.5L228.8 332.8h-.1c-1.7 1.7-6.3 5.5-11.6 5.5-3.8 0-8.1-2.1-11.7-5.7l-56-56c-1.6-1.6-1.6-4.1 0-5.7l17.8-17.8c.8-.8 1.8-1.2 2.8-1.2 1 0 2 .4 2.8 1.2l44.4 44.4 122-122.9c.8-.8 1.8-1.2 2.8-1.2 1.1 0 2.1.4 2.8 1.2l17.5 18.1c1.8 1.7 1.8 4.2.2 5.8z"/></svg> {{LANG verification}}</a>
+						</li>
+					<?php endif ?>
+					<?php if ($pt->config->point_level_system == 1): ?>  
+						<li class="list-group-item <?php echo ($pt->setting_page == 'points') ? 'active': '';?>">
+							<a href="{{LINK settings/points/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=points&user=<?php echo $pt->settings->username; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15 4A8 8 0 1 1 7 12A8 8 0 0 1 15 4M3 12A6 6 0 0 0 7 17.65V19.74A8 8 0 0 1 7 4.26V6.35A6 6 0 0 0 3 12Z"></path></svg> {{LANG points}}</a>
+						</li>
+					<?php endif ?>
+					<?php if ($pt->config->two_factor_setting == 'on'): ?>  
+						<li class="list-group-item <?php echo ($pt->setting_page == 'two_factor') ? 'active': '';?>">
+							<a href="{{LINK settings/two_factor/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=two_factor&user=<?php echo $pt->settings->username; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> {{LANG two_factor}}</a>
+						</li>
+					<?php endif ?>
+					<?php if ($pt->config->block_system == 'on'): ?>  
+						<li class="list-group-item <?php echo ($pt->setting_page == 'blocked_users') ? 'active': '';?>">
+							<a href="{{LINK settings/blocked_users/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=blocked_users&user=<?php echo $pt->settings->username; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="feather" fill="none" stroke="currentColor" stroke-width="2"><path fill="none" d="M15,14C17.67,14 23,15.33 23,18V20H7V18C7,15.33 12.33,14 15,14M15,12A4,4 0 0,1 11,8A4,4 0 0,1 15,4A4,4 0 0,1 19,8A4,4 0 0,1 15,12M5,9.59L7.12,7.46L8.54,8.88L6.41,11L8.54,13.12L7.12,14.54L5,12.41L2.88,14.54L1.46,13.12L3.59,11L1.46,8.88L2.88,7.46L5,9.59Z"></path></svg> {{LANG blocked_users}}</a>
+						</li>
+					<?php endif ?>
+					<li class="list-group-item <?php echo ($pt->setting_page == 'manage_sessions') ? 'active': '';?>">
+						<a href="{{LINK settings/manage_sessions/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=manage_sessions&user=<?php echo $pt->settings->username; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="feather" stroke="currentColor"><path fill="none" d="M17.81,4.47C17.73,4.47 17.65,4.45 17.58,4.41C15.66,3.42 14,3 12,3C10.03,3 8.15,3.47 6.44,4.41C6.2,4.54 5.9,4.45 5.76,4.21C5.63,3.97 5.72,3.66 5.96,3.53C7.82,2.5 9.86,2 12,2C14.14,2 16,2.47 18.04,3.5C18.29,3.65 18.38,3.95 18.25,4.19C18.16,4.37 18,4.47 17.81,4.47M3.5,9.72C3.4,9.72 3.3,9.69 3.21,9.63C3,9.47 2.93,9.16 3.09,8.93C4.08,7.53 5.34,6.43 6.84,5.66C10,4.04 14,4.03 17.15,5.65C18.65,6.42 19.91,7.5 20.9,8.9C21.06,9.12 21,9.44 20.78,9.6C20.55,9.76 20.24,9.71 20.08,9.5C19.18,8.22 18.04,7.23 16.69,6.54C13.82,5.07 10.15,5.07 7.29,6.55C5.93,7.25 4.79,8.25 3.89,9.5C3.81,9.65 3.66,9.72 3.5,9.72M9.75,21.79C9.62,21.79 9.5,21.74 9.4,21.64C8.53,20.77 8.06,20.21 7.39,19C6.7,17.77 6.34,16.27 6.34,14.66C6.34,11.69 8.88,9.27 12,9.27C15.12,9.27 17.66,11.69 17.66,14.66A0.5,0.5 0 0,1 17.16,15.16A0.5,0.5 0 0,1 16.66,14.66C16.66,12.24 14.57,10.27 12,10.27C9.43,10.27 7.34,12.24 7.34,14.66C7.34,16.1 7.66,17.43 8.27,18.5C8.91,19.66 9.35,20.15 10.12,20.93C10.31,21.13 10.31,21.44 10.12,21.64C10,21.74 9.88,21.79 9.75,21.79M16.92,19.94C15.73,19.94 14.68,19.64 13.82,19.05C12.33,18.04 11.44,16.4 11.44,14.66A0.5,0.5 0 0,1 11.94,14.16A0.5,0.5 0 0,1 12.44,14.66C12.44,16.07 13.16,17.4 14.38,18.22C15.09,18.7 15.92,18.93 16.92,18.93C17.16,18.93 17.56,18.9 17.96,18.83C18.23,18.78 18.5,18.96 18.54,19.24C18.59,19.5 18.41,19.77 18.13,19.82C17.56,19.93 17.06,19.94 16.92,19.94M14.91,22C14.87,22 14.82,22 14.78,22C13.19,21.54 12.15,20.95 11.06,19.88C9.66,18.5 8.89,16.64 8.89,14.66C8.89,13.04 10.27,11.72 11.97,11.72C13.67,11.72 15.05,13.04 15.05,14.66C15.05,15.73 16,16.6 17.13,16.6C18.28,16.6 19.21,15.73 19.21,14.66C19.21,10.89 15.96,7.83 11.96,7.83C9.12,7.83 6.5,9.41 5.35,11.86C4.96,12.67 4.76,13.62 4.76,14.66C4.76,15.44 4.83,16.67 5.43,18.27C5.53,18.53 5.4,18.82 5.14,18.91C4.88,19 4.59,18.87 4.5,18.62C4,17.31 3.77,16 3.77,14.66C3.77,13.46 4,12.37 4.45,11.42C5.78,8.63 8.73,6.82 11.96,6.82C16.5,6.82 20.21,10.33 20.21,14.65C20.21,16.27 18.83,17.59 17.13,17.59C15.43,17.59 14.05,16.27 14.05,14.65C14.05,13.58 13.12,12.71 11.97,12.71C10.82,12.71 9.89,13.58 9.89,14.65C9.89,16.36 10.55,17.96 11.76,19.16C12.71,20.1 13.62,20.62 15.03,21C15.3,21.08 15.45,21.36 15.38,21.62C15.33,21.85 15.12,22 14.91,22Z"></path></svg> {{LANG manage_sessions}}</a>
+					</li>
+					<li class="list-group-item <?php echo ($pt->setting_page == 'my_info') ? 'active': '';?>">
+						<a href="{{LINK settings/my_info/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=my_info&user=<?php echo $pt->settings->username; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17,9H7V7H17M17,13H7V11H17M14,17H7V15H14M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z"></path></svg> {{LANG my_information}}</a>
+					</li>
+					<?php if ($pt->config->delete_account == 'on') { ?>
+					<li class="list-group-item <?php echo ($pt->setting_page == 'delete') ? 'active': '';?>">
+						<a href="{{LINK settings/delete/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=delete&user=<?php echo $pt->settings->username; ?>"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M128 405.429C128 428.846 147.198 448 170.667 448h170.667C364.802 448 384 428.846 384 405.429V160H128v245.429zM416 96h-80l-26.785-32H202.786L176 96H96v32h320V96z"/></svg> {{LANG delete_account}}</a>
+					</li>
+					<?php } ?>
+				</ul>
+			</div>
+		</div>
+		<div class="col-sm-8">
+        {{SETTINGSPAGE}}
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<br><br><br>
+<script>
+jQuery(document).ready(function($) {
+  var totalWidth = $("#mobi-set-side").outerWidth()
+  $('#mobi-set-side ul').css('width', totalWidth);
+    var myScrollPos = $('.active').offset().left + $('.active').outerWidth(true) / 2 + $('.scrollmenu').scrollLeft() - $('.scrollmenu').width() / 2;
+    $('.scrollmenu').scrollLeft(myScrollPos);
+});
+</script>

@@ -1,0 +1,298 @@
+<link href="{{CONFIG theme_url}}/js/colorpicker/css/bootstrap-colorpicker.css" rel="stylesheet">
+<script src="{{CONFIG theme_url}}/js/colorpicker/js/bootstrap-colorpicker.js"></script>
+<link href="{{CONFIG theme_url}}/js/lib/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<script src="{{CONFIG theme_url}}/js/lib/jquery-datatable/jquery.dataTables.js"></script>
+<script src="{{CONFIG theme_url}}/js/lib/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+<div class="content pt_shadow">
+	<div class="col-md-12">
+		<div class="upload-head">
+			<h4><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon><line x1="3" y1="22" x2="21" y2="22"></line></svg> {{LANG add_card}}: {{TITLE}}</h4>
+			<hr>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="col-md-5">
+		<div class="pt_vid_card_prvw">
+			<div class="responsive">
+				<div class="wait"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="spin spin-svg"><path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z" fill="currentColor"/></svg></div>
+				<canvas id="main_canvas"></canvas>
+			</div>
+			<input id="my-input" type="range" min="0" max="72" value="0" disabled />
+		</div>
+	</div>
+	<div class="col-md-7" id="edit-form">
+		<div class="video-player pt_video_player">
+			<video id="my-video" class="hidden">
+			   <?php if (!empty($pt->video->video_location)) { ?>
+			   <source src="<?php echo($pt->video->video_location) ?>">
+			   <?php } ?>
+			   Your browser does not support HTML5 video.
+			</video>
+		</div>
+		<form action="" class="form-horizontal pt_forms pt_vid_card_form" method="POST">
+			<div id="video-success"></div>
+			<div class="form-group">
+				<label class="col-md-12" for="part"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M3,3H11V7.34L16.66,1.69L22.31,7.34L16.66,13H21V21H13V13H16.66L11,7.34V11H3V3M3,13H11V21H3V13Z" /></svg> {{LANG placement}}</label>
+				<div class="col-md-12">
+					<select name="part" id="part" class="form-control" disabled>
+					   <option value="top_left">{{LANG top_left}}</option>
+					   <option value="top_right">{{LANG top_right}}</option>
+					   <option value="bottom_left">{{LANG bottom_left}}</option>
+					   <option value="bottom_right">{{LANG bottom_right}}</option>
+					   <option value="center">{{LANG center}}</option>
+					</select>
+				</div> 
+			</div>
+			<div class="form-group">
+				<label class="col-md-12" for="type"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M4,2H14V4H4V14H2V4C2,2.89 2.89,2 4,2M8,6H18V8H8V18H6V8C6,6.89 6.89,6 8,6M12,10H20C21.11,10 22,10.89 22,12V20C22,21.11 21.11,22 20,22H12C10.89,22 10,21.11 10,20V12C10,10.89 10.89,10 12,10M14,12V20L20,16L14,12Z" /></svg> {{LANG type}}</label>
+				<div class="col-md-12">
+					<select name="type" id="typedd" class="form-control" disabled>
+					   <option value="text">{{LANG text}}</option>
+					   <option value="video">{{LANG video}}</option>
+					   <option value="subscribe">{{LANG subscribe}}</option>
+					</select>
+				</div> 
+			</div>
+			<div class="text_card">
+				<div class="form-group">
+					<label class="col-md-12" for="url"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M3.9,12C3.9,10.29 5.29,8.9 7,8.9H11V7H7A5,5 0 0,0 2,12A5,5 0 0,0 7,17H11V15.1H7C5.29,15.1 3.9,13.71 3.9,12M8,13H16V11H8V13M17,7H13V8.9H17C18.71,8.9 20.1,10.29 20.1,12C20.1,13.71 18.71,15.1 17,15.1H13V17H17A5,5 0 0,0 22,12A5,5 0 0,0 17,7Z" /></svg> URL</label>
+					<div class="col-md-12">
+						<input type="text" id="url" name="url" class="form-control" disabled>
+					</div> 
+				</div>
+				<div class="form-group">
+					<label class="col-md-12" for="title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M18.5,4L19.66,8.35L18.7,8.61C18.25,7.74 17.79,6.87 17.26,6.43C16.73,6 16.11,6 15.5,6H13V16.5C13,17 13,17.5 13.33,17.75C13.67,18 14.33,18 15,18V19H9V18C9.67,18 10.33,18 10.67,17.75C11,17.5 11,17 11,16.5V6H8.5C7.89,6 7.27,6 6.74,6.43C6.21,6.87 5.75,7.74 5.3,8.61L4.34,8.35L5.5,4H18.5Z" /></svg> {{LANG title}}</label>
+					<div class="col-md-12">
+						<input type="text" id="title" name="title" class="form-control" disabled>
+					</div> 
+				</div>
+				<div class="form-group col-md-6">
+					<label class="col-md-12" for="color"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M6.92,19L5,17.08L13.06,9L15,10.94M20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L13.84,6.41L11.91,4.5L10.5,5.91L11.92,7.33L3,16.25V21H7.75L16.67,12.08L18.09,13.5L19.5,12.09L17.58,10.17L20.7,7.05C21.1,6.65 21.1,6 20.71,5.63Z" /></svg> {{LANG color}}</label>
+					<div class="col-md-12">
+						<input type="text" class="colorpicker" id="color" name="color" class="form-control" disabled>
+					</div> 
+				</div>
+				<div class="form-group col-md-6">
+					<label class="col-md-12" for="background_color"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19,11.5C19,11.5 17,13.67 17,15A2,2 0 0,0 19,17A2,2 0 0,0 21,15C21,13.67 19,11.5 19,11.5M5.21,10L10,5.21L14.79,10M16.56,8.94L7.62,0L6.21,1.41L8.59,3.79L3.44,8.94C2.85,9.5 2.85,10.47 3.44,11.06L8.94,16.56C9.23,16.85 9.62,17 10,17C10.38,17 10.77,16.85 11.06,16.56L16.56,11.06C17.15,10.47 17.15,9.5 16.56,8.94Z" /></svg> {{LANG background_color}}</label>
+					<div class="col-md-12">
+						<input type="text" class="colorpicker" id="background_color" name="background_color" class="form-control" disabled>
+					</div> 
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="video_card" style="display: none;">
+				<div class="form-group">
+					<label class="col-md-12" for="video_search"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg> {{LANG search_keyword}}</label>
+					<div class="col-md-12">
+						<input type="text" id="video_search" name="video_search" class="form-control" disabled>
+					</div> 
+					<div class="col-md-12 video_dropdown"></div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-12" for="video_selected"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,10.5V7A1,1 0 0,0 16,6H4A1,1 0 0,0 3,7V17A1,1 0 0,0 4,18H16A1,1 0 0,0 17,17V13.5L21,17.5V6.5L17,10.5Z" /></svg> {{LANG selected}}</label>
+					<div class="col-md-12">
+						<input type="text" id="video_selected" name="video_selected" class="form-control" readonly>
+					</div> 
+				</div>
+			</div>
+			<div class="last-sett-btn text-center">
+				<button type="submit" id="submit-btn" class="btn btn-main setting-panel-mdbtn" disabled>{{LANG publish}}</button>
+			</div>
+			<input type="hidden" name="video_id" class="video_id" value="{{ID}}">
+			<input type="hidden" name="ref_video" class="ref_video" value="0">
+			<input type="hidden" name="duration" class="duration">
+		</form>
+	</div>
+	<div class="clear"></div>
+	<br><br><hr><br>
+	<div class="col-md-12">
+		<table class="table" id="video_cards_table"> 
+			<thead>
+				<th>{{LANG id}}</th>
+				<th>{{LANG type}}</th>
+				<th>{{LANG name}}</th>
+				<th>{{LANG part}}</th>
+				<th>{{LANG action}}</th>
+			</thead>
+			<tbody>
+				{{CARDS_LIST}}
+			</tbody>
+		</table>
+	</div>
+	<div class="clear"></div>
+	<div id="frames" class="hidden"></div>
+</div>
+
+<script>
+const rangeToPercent = slider => {
+  const value = slider.value;
+  const max = slider.getAttribute('max') || 10;
+  const percent = value / max * 100;
+
+  return `${parseInt(percent)}%`;
+};
+
+const sliders = document.querySelectorAll('.pt_vid_card_prvw input[type="range"]');
+
+sliders.forEach(slider => {
+  slider.style.setProperty('--track-fill', rangeToPercent(slider));
+
+  slider.addEventListener('input', e => {
+    e.target.style.setProperty('--track-fill', rangeToPercent(e.target));
+  });
+});
+
+function DeleteCard(id) {
+	$.post('{{LINK aj/cards/delete}}', {id: id}, function(data, textStatus, xhr) {
+		$("[data-card-list="+id+"]").remove();
+	});
+}
+function SelectVideo(id,self) {
+	$('.ref_video').val(id);
+	$('#video_selected').val($(self).text());
+	var search_dropdown = $('.video_dropdown');
+	search_dropdown.addClass('hidden');
+	search_dropdown.empty();
+}
+$('#video_search').keyup(function(event) {
+	var search_value = $(this).val();
+	var search_dropdown = $('.video_dropdown');
+	if (search_value == '') {
+		search_dropdown.addClass('hidden');
+		search_dropdown.empty();
+		return false;
+	} else {
+		search_dropdown.removeClass('hidden');
+	}
+    $.post('{{LINK aj/cards/search}}', {search_value: search_value}, function(data, textStatus, xhr) {
+    	if (data.status == 200) {
+    		search_dropdown.html(data.html);
+    	} else {
+	       search_dropdown.addClass('hidden');
+		   search_dropdown.empty();
+		   return false;
+    	}
+    });
+});
+$(document).on('change', '#type', function(event) {
+	event.preventDefault();
+	if ($(this).val() == 'text') {
+		$('.text_card').slideDown();
+		$('.video_card').slideUp();
+		$('#my-input').removeAttr('disabled');
+	}
+	if ($(this).val() == 'video') {
+		$('.video_card').slideDown();
+		$('.text_card').slideUp();
+		$('#my-input').attr('disabled', 'true');
+	}
+	if ($(this).val() == 'subscribe') {
+		$('.video_card').slideUp();
+		$('.text_card').slideUp();
+		$('#my-input').attr('disabled', 'true');
+	}
+});
+$('.colorpicker').colorpicker();
+
+var main_canvas = document.getElementById("main_canvas");
+
+jQuery(document).ready(function($) {
+	video = document.querySelector('video');
+	$('#video_cards_table').DataTable();
+	video.addEventListener('loadeddata', function() {
+		$.getScript('{{CONFIG theme_url}}/js/video_frames.js', function(data, textStatus) {
+			var minutes = parseInt(video.duration / 60, 10);
+			var seconds = parseInt(video.duration % 60);
+			count = parseInt(seconds + (minutes * 60));
+			var startTime = performance.now();
+			var endTime;
+			var input = document.getElementById("my-input");
+			input.max = count;
+			VideoToFrames.getFrames('<?php echo($pt->video->video_location) ?>', count, VideoToFramesMethod.totalFrames).then(function (frames) {
+			    endTime = performance.now();
+			    image_id = 0;
+			    frames.forEach(function (frame) {
+			        var canvas = document.createElement('canvas');
+			        canvas.id = "canvas_"+image_id;
+			        canvas.width = frame.width;
+			        canvas.height = frame.height;
+			        main_canvas.width = frame.width;
+					main_canvas.height = frame.height;
+			        canvas.getContext('2d').putImageData(frame, 0, 0);
+			        document.getElementById('frames').appendChild(canvas);
+			        image_id = image_id + 1;
+			    });
+			    $('.wait').remove();
+			    $('input').removeAttr('disabled');
+			    $('select').removeAttr('disabled');
+			    $('#submit-btn').removeAttr('disabled');
+			    var destinationCanvas = document.getElementById("canvas_0");
+			    var context = main_canvas.getContext("2d");
+			    context.drawImage(destinationCanvas, 0, 0);
+			});
+		});
+	});
+		
+	
+});
+	
+	
+
+$("#my-input").on("input", function(event) {
+  var destinationCanvas = document.getElementById("canvas_"+event.target.value);
+  main_canvas.width = destinationCanvas.width;
+  main_canvas.height = destinationCanvas.height;
+  var context = main_canvas.getContext("2d");
+  context.drawImage(destinationCanvas, 0, 0);
+  $('.duration').val(event.target.value);
+});
+jQuery(document).ready(function($) {
+	const video = document.querySelector('video');
+	video.addEventListener('seeked', (event) => {
+		$('.duration').val(video.currentTime);
+	    var minutes = parseInt(video.duration / 60, 10);
+	    var seconds = video.duration % 60;
+	});
+
+	$('.pt_forms').ajaxForm({
+      url: '{{LINK aj/cards/create}}?hash=' + $('.main_session').val(),
+      dataType:"json",
+      beforeSend: function() {
+
+        $('#submit-btn').attr('disabled', true).find('span').text("{{LANG please_wait}}");
+        
+      },
+      uploadProgress: function(event, position, total, percentComplete) {
+          if(percentComplete > 50) {
+            percent.addClass('white');
+          }
+          var percentVal = percentComplete + '%';
+          bar.width(percentVal);
+          percent.html(percentVal);
+
+          if (percentComplete == 100) {
+            $("#video-success").empty();
+          }
+      },
+      success: function(data) {
+        scrollToTop();
+        if (data.status == 200){
+          $("#video-success").html('<div class="alert alert-success bg-success"><i class="fa fa-check"></i> '+
+            data.message
+            +'</div>');
+          PT_Delay(function(){
+            location.reload();
+          },2000);
+          
+        }
+        else {
+          $('#submit-btn').removeAttr('disabled').find('span').text('{{LANG publish}}');
+          $("#video-success").html('<div class="alert alert-danger bg-danger"><i class="fa fa-info-circle"></i> '+
+            data.message
+            +'</div>');
+        }
+      }
+    });
+
+});
+</script>

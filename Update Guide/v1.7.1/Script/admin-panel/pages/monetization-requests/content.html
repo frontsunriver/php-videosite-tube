@@ -1,0 +1,139 @@
+<?php 
+$page                = (!empty($_GET['page-id'])) ? $_GET['page-id'] : 1;
+$db->pageLimit       = 20;
+$total_requests      = $db->getValue(T_MON_REQUESTS, 'COUNT(*)');
+$verif_requests      = $db->orderBy('id','ASC')->paginate(T_MON_REQUESTS,$page);
+
+if (($page > $db->totalPages) && !empty($_GET['page-id'])) {
+    header("Location: " . PT_LoadAdminLinkSettings('monetization-requests'));
+    exit();
+}
+?>
+
+<div class="container-fluid">
+    <div class="block-header">
+        <h2>Users &gt; Manage Monetization Reqeusts</h2>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h2>Manage Monetization Requests</h2>
+                </div>
+                <div class="body">
+                   <div class="table-responsive1">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr role="row">
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>Requested</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                    foreach ($verif_requests as $key => $pt->requests) {
+                                        $user_data = PT_UserData($pt->requests->user_id);
+                                        echo PT_LoadAdminPage('monetization-requests/list',array(
+                                            'ID' => $pt->requests->id,
+                                            'USERNAME' => $user_data->username,
+                                            'DATE' => date("Y-F-d",$pt->requests->time),
+                                        ));
+                                    }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                    
+                <div class="admincp-pagination">
+                	<div class="pull-left">
+                        <?php echo "Showing $page out of " . $db->totalPages; ?>
+                    </div>
+                    <nav class="pull-right">
+                        <ul class="pagination">
+                            <li>
+                                <a href="<?php echo PT_LoadAdminLinkSettings('monetization-requests?page-id=1'); ?>" class="waves-effect" title='First Page'>
+                                    <i class="material-icons">first_page</i>
+                                </a>
+                            </li>
+                            <?php if ($page > 1) {  ?>
+                            <li>
+                                <a href="<?php echo PT_LoadAdminLinkSettings('monetization-requests?page-id=' . ($page - 1)); ?>" class="waves-effect" title='Previous Page'>
+                                    <i class="material-icons">chevron_left</i>
+                                </a>
+                            </li>
+                            <?php  } ?>
+                            <?php 
+                            $nums = 0;
+                            $nums_pages = ($page > 4) ? ($page - 4) : $page;
+                            for ($i=$nums_pages; $i <= $db->totalPages; $i++) { 
+                                if ($nums < 20) {
+                                ?>
+                                <li class="<?php echo ($page == $i) ? 'active' : ''; ?>"><a href="<?php echo PT_LoadAdminLinkSettings('monetization-requests?page-id=' . ($i)); ?>" class="waves-effect"><?php echo $i ?></a></li>
+                                <?php
+                                }
+                                $nums++;
+                            }
+                            ?>
+                            <?php if ($db->totalPages > $page) { ?>
+                            <li>
+                                <a href="<?php echo PT_LoadAdminLinkSettings('monetization-requests?page-id=' . ($page + 1)); ?>" class="waves-effect" title="Next Page">
+                                    <i class="material-icons">chevron_right</i>
+                                </a>
+                            </li>
+                            <?php } ?>
+                            <li>
+                                <a href="<?php echo PT_LoadAdminLinkSettings('monetization-requests?page-id=' . ($db->totalPages)); ?>" class="waves-effect" title='Last Page'>
+                                    <i class="material-icons">last_page</i>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="clearfix"></div>
+                </div>
+
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<script>
+    function PT_ManageVRequests(id,action,self) {
+        if (!id || (action != 1 && action != 2 && action != 3)) {
+            return false;
+        }
+
+        else if (action == 1) {
+        	$("#list-"+id).find('td.request-status').html('<span class="alert-success">Verified</span>'); 
+        }
+
+        else if (action == 3){
+            $("#list-"+id).slideUp(function(){
+                $(this).remove();
+            });
+        }
+
+        else if (action == 2){
+        	$(self).text('Please wait..').attr("disabled","true");
+        }
+
+        $.post('{{LINK aj/ap/monetization}}', {a:action,id:id}, function(data){ 
+            if (action == 2 && data.status == 200) {
+                swal({
+                    html:true,
+                    title:"",
+                    text:data.html,
+                    showConfirmButton:false,
+                    allowOutsideClick:true,
+                    customClass:"sw-review-data",
+                    animation:false
+                })
+                $(self).text('VIEW').removeAttr('disabled');
+            } 
+         },dataType="json");
+    }
+</script>

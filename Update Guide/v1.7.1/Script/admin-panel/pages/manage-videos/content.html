@@ -1,0 +1,422 @@
+<?php 
+$page = isset($_GET['page-id']) ? $_GET['page-id'] : 1;
+$limit_per_page = isset($_GET['limit']) ? (int) $_GET['limit'] : 50;
+$video_source = 'all';
+if (!empty($_GET['source'])) {
+    $video_source = PT_Secure($_GET['source']);
+}
+$video_filter = 'all';
+
+$category_filter = '0';
+if (!empty($_GET['category_id'])) {
+    if (in_array($_GET['category_id'], array_keys(ToArray($pt->categories)))) {
+        $category_filter = $_GET['category_id'];
+    }
+}
+$video_filter = 'all';
+if (isset($_GET['privacy'])) {
+    if (in_array($_GET['privacy'], array('0', '1', '2'))) {
+        $video_filter = $_GET['privacy'];
+    }
+}
+
+$video_approve = 'all';
+if (isset($_GET['status'])) {
+    if (in_array($_GET['status'], array('0', '1'))) {
+        $video_approve = $_GET['status'];
+    }
+}
+$video_type = 'all';
+if (isset($_GET['type'])) {
+    if (in_array($_GET['type'], array('all', 'free','paid'))) {
+        $video_type = $_GET['type'];
+    }
+}
+
+$filter_keyword = (!empty($_GET['query'])) ? PT_Secure($_GET['query']) : '';
+$db->pageLimit = $limit_per_page;
+$where = 'id > 0';
+if ($video_source != 'all') {
+    if ($video_source == 'youtube') {
+        $where .= " AND `youtube` <> ''";
+    }
+    if ($video_source == 'dailymotion') {
+        $where .= " AND `daily` <> ''";
+    }
+    if ($video_source == 'vimeo') {
+        $where .= " AND `vimeo` <> ''";
+    }
+    if ($video_source == 'uploaded') {
+        $where .= " AND `youtube` = '' AND `vimeo` = '' AND `daily` = ''";
+    }
+}
+if (!empty($category_filter)) {
+    $where .= " AND `category_id` = '$category_filter'";
+}
+if (isset($video_filter)) {
+    if ($video_filter != 'all') {
+        $where .= " AND `privacy` = '$video_filter'";
+    }
+}
+if (isset($video_approve)) {
+    if ($video_approve != 'all') {
+        $where .= " AND `approved` = '$video_approve'";
+    }
+}
+if (isset($video_type)) {
+    if ($video_type == 'paid') {
+        $where .= " AND `sell_video` > 0 ";
+    }
+    elseif ($video_type == 'free') {
+        $where .= " AND `sell_video` = 0 ";
+    }
+}
+if (!empty($filter_keyword)) {
+    $where .= " AND MATCH (title) AGAINST ('{$filter_keyword}' IN BOOLEAN MODE) OR id = '$filter_keyword' OR (video_id = '$filter_keyword')";
+} 
+$videos = $db->where($where)->orderBy('id', 'DESC')->objectbuilder()->paginate(T_VIDEOS, $page);
+if ($db->totalPages != 0) {
+    if (($page > $db->totalPages) && !empty($_GET['page-id'])) {
+        header("Location: " . PT_LoadAdminLinkSettings('manage-videos'));
+        exit();
+    }
+}
+?>
+<div class="container-fluid">
+    <div class="block-header">
+        <h2>Videos > <a href="<?php echo PT_LoadAdminLinkSettings('manage-videos') ?>">Manage Videos</a> <small>{{CONFIG total_videos}} TOTAL VIDEOS</small></h2>
+
+    </div>
+    <!-- Vertical Layout -->
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h2>Manage & Edit Videos</h2>
+                </div>
+                <div class="body">
+                   <div class="row">
+                       <form action="<?php echo PT_LoadAdminLinkSettings('manage-videos'); ?>" method="get">
+                            <div class=" clearfix">
+                                <div class="col-lg-2 col-md-2">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="query" value="<?php echo $filter_keyword ?>">
+                                            <label class="form-label">Keyword, ID, Title</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    <select class="form-control show-tick" id="source" name="source">
+                                        <option value="all" <?php echo ($video_source == 'all') ? 'selected' : '' ?>>All (Default)</option>
+                                        <option value="uploaded" <?php echo ($video_source == 'uploaded') ? 'selected' : '' ?>>Uploaded</option>
+                                        <option value="youtube" <?php echo ($video_source == 'youtube') ? 'selected' : '' ?>>YouTube</option>
+                                        <option value="dailymotion" <?php echo ($video_source == 'dailymotion') ? 'selected' : '' ?>>Dailymotion</option>
+                                        <option value="vimeo" <?php echo ($video_source == 'vimeo') ? 'selected' : '' ?>>Vimeo</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    <select class="form-control show-tick" id="limit" name="limit">
+                                        <option value="all" selected disabled>Limit Per Page</option>
+                                        <option value="10" <?php echo ($limit_per_page == 10) ? 'selected' : '' ?>>10</option>
+                                        <option value="25" <?php echo ($limit_per_page == 25) ? 'selected' : '' ?>>25</option>
+                                        <option value="50" <?php echo ($limit_per_page == 50) ? 'selected' : '' ?>>50 (Default)</option>
+                                        <option value="100" <?php echo ($limit_per_page == 100) ? 'selected' : '' ?>>100</option>
+                                        <option value="500" <?php echo ($limit_per_page == 500) ? 'selected' : '' ?>>500</option>
+                                        <option value="1000" <?php echo ($limit_per_page == 1000) ? 'selected' : '' ?>>1000</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    <select class="form-control show-tick" id="privacy" name="privacy">
+                                        <option value="all" <?php echo ($video_filter == 'all') ? 'selected' : '' ?>>All Videos</option>
+                                        <option value="0" <?php echo ($video_filter == '0') ? 'selected' : '' ?>>Public</option>
+                                        <option value="1" <?php echo ($video_filter == '1') ? 'selected' : '' ?>>Private</option>
+                                        <option value="2" <?php echo ($video_filter == '2') ? 'selected' : '' ?>>Unlisted</option>
+                                    </select>
+                                </div>
+                                <?php if ($pt->config->approve_videos == 'on') { ?>
+                                <div class="clear"></div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <select class="form-control show-tick" id="status" name="status">
+                                            <option value="all" <?php echo ($video_approve == 'all') ? 'selected' : '' ?>>All Videos</option>
+                                            <option value="0" <?php echo ($video_approve == '0') ? 'selected' : '' ?>>Pending Apporval</option>
+                                            <option value="1" <?php echo ($video_approve == '1') ? 'selected' : '' ?>>Approved</option>
+                                        </select>
+                                    </div>
+                                <?php } ?>
+                                 <div class="col-lg-2 col-md-2">
+                                    <select class="form-control show-tick" id="category_id" name="category_id">
+                                        <option value="0" selected>Category</option>
+                                        <?php 
+                                        foreach($pt->categories as $key => $category) { 
+                                            $selected = ($key == $category_filter) ? 'selected' : '';
+                                        ?>
+                                        <option value="<?php echo $key?>" <?php echo $selected?>><?php echo $category?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <select class="form-control show-tick" id="type" name="type">
+                                            <option value="all" <?php echo ($video_type == 'all') ? 'selected' : '' ?>>Paid & Free</option>
+                                            <option value="paid" <?php echo ($video_type == 'paid') ? 'selected' : '' ?>>Paid Videos</option>
+                                            <option value="free" <?php echo ($video_type == 'free') ? 'selected' : '' ?>>Free Videos</option>
+                                        </select>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                <div class="col-lg-2 col-md-2">
+                                    <button type="submit" class="btn btn-primary btn-lg m-l-10 waves-effect">SEARCH</button>
+                                </div>
+                            </div>
+                        </form>
+                   </div>
+                   <div class="clearfix"></div>
+                   <div class="table-responsive1">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                      <th><input type="checkbox" id="check-all" class="filled-in check-all" ><label for="check-all"></label></th>
+                                      <th>ID</th>
+					                  <th>Video ID</th>
+					                  <th>Title</th>
+                                      <th>Category</th>
+                                      <th>Source</th>
+                                      <th>Privacy</th>
+                                      <th>Added By</th>
+					                  <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                foreach ($videos as $key => $video) {
+                                	$video = PT_GetVideoByID($video, 0, 0, 0);
+                                    $privacy = 'Public';
+                                    if ($video->privacy == 1) {
+                                        $privacy = 'Private';
+                                    } else if ($video->privacy == 2) {
+                                        $privacy = 'Unlisted';
+                                    }
+                                    $pt->sell_video = $video->sell_video;
+                                    $video_data = array(
+                                        'ID' => $video->id,
+                                        'TITLE' => mb_substr($video->title, 0, 40, "UTF-8") . '..',
+                                        'VIDEO_ID' => $video->video_id,
+                                        'URL' => $video->url,
+                                        'SOURCE' => $video->source,
+                                        'CATEGORY' => $video->category_name,
+                                        'USER_DATA' => PT_UserData($video->user_id),
+                                        'PRIVACY' => $privacy
+                                    );
+                                    $pt->video_approve = $video->approved;
+                                	echo PT_LoadAdminPage('manage-videos/list', $video_data);
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                        <?php if (count($videos) == 0) { ?>
+                           <div class="no-data-found">
+                               No videos found
+                           </div>
+                        <?php } ?>
+                    </div>
+                    <?php if (count($videos) > 0) { ?>
+                    <div class="pull-left">
+                    	<?php echo "Showing $page out of " . $db->totalPages; ?>
+                    </div>
+                    <div class="pull-right">
+                    	<nav>
+                            <ul class="pagination">
+                            	<li>
+                                    <a href="<?php echo PT_LoadAdminLinkSettings("manage-videos?status=$video_approve&source=$video_source&query=$filter_keyword&limit=$limit_per_page&page-id=1"); ?>" class="waves-effect" title='First Page'>
+                                        <i class="material-icons">first_page</i>
+                                    </a>
+                                </li>
+                                <?php if ($page > 1) {  ?>
+                                <li>
+                                    <a href="<?php echo PT_LoadAdminLinkSettings("manage-videos?status=$video_approve&source=$video_source&query=$filter_keyword&limit=$limit_per_page&page-id=" . ($page - 1)); ?>" class="waves-effect" title='Previous Page'>
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php  } ?>
+                                <?php 
+                                $nums = 0;
+                                $nums_pages = ($page > 4) ? ($page - 4) : $page;
+                                for ($i=$nums_pages; $i <= $db->totalPages; $i++) { 
+                                	if ($nums < 20) {
+                                	?>
+                                	<li class="<?php echo ($page == $i) ? 'active' : ''; ?>"><a href="<?php echo PT_LoadAdminLinkSettings("manage-videos?status=$video_approve&source=$video_source&query=$filter_keyword&limit=$limit_per_page&page-id=" . ($i)); ?>" class="waves-effect"><?php echo $i ?></a></li>
+                                	<?php
+                                	}
+                                	$nums++;
+                                }
+                                ?>
+                                <?php if ($db->totalPages > $page) { ?>
+                                <li>
+                                    <a href="<?php echo PT_LoadAdminLinkSettings("manage-videos?status=$video_approve&source=$video_source&query=$filter_keyword&limit=$limit_per_page&page-id=" . ($page + 1)); ?>" class="waves-effect" title="Next Page">
+                                        <i class="material-icons">chevron_right</i>
+                                    </a>
+                                </li>
+                                <?php } ?>
+                                <li>
+                                    <a href="<?php echo PT_LoadAdminLinkSettings("manage-videos?status=$video_approve&source=$video_source&query=$filter_keyword&limit=$limit_per_page&page-id=" . ($db->totalPages)); ?>" class="waves-effect" title='Last Page'>
+                                        <i class="material-icons">last_page</i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="clearfix"></div>
+                    <button type="button" class="btn btn-info waves-effect delete-selected" disabled>DELETE SELECTED<span></span></button>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!-- #END# Vertical Layout -->
+<div id="delete-modal" class="modal fade" role="dialog" data-id="">
+  <div class="modal-dialog">
+    <div class="modal-content modal-col-red">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">DELETE VIDEO</h4>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to continue? this action can't be undo</p>
+      </div>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-link waves-effect delete-button" data-dismiss="modal" data-type="video">DELETE</button>
+        <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+$(document).on('click', '.approve-content', function(event) {
+    event.preventDefault();
+    $video_id_approve = $(this).attr('data-id');
+    $('#list-' + $video_id_approve).find('.approve-content').removeClass('btn-success').addClass('btn-default').removeClass('approve-content').addClass('disapprove-content').text('Disapporve');
+    $.post('{{LINK aj/ap/videos-status}}', {id: $video_id_approve, status:'approve'}, function(data, textStatus, xhr) {
+        /*optional stuff to do after success */
+    });
+});
+$(document).on('click', '.disapprove-content', function(event) {
+    event.preventDefault();
+    $video_id_approve = $(this).attr('data-id');
+    $('#list-' + $video_id_approve).find('.disapprove-content').addClass('btn-success').removeClass('btn-default').removeClass('disapprove-content').addClass('approve-content').text('Approve');
+    $.post('{{LINK aj/ap/videos-status}}', {id: $video_id_approve, status:'disapporve'}, function(data, textStatus, xhr) {
+        /*optional stuff to do after success */
+    });
+});
+$(function () {
+    
+	$('.delete-content').on('click', function(event) {
+		event.preventDefault();
+		$('#delete-modal').attr('data-id', $(this).attr('data-id')).modal('show');
+	});
+    $('.fake-content').on('click', function(event) {
+        event.preventDefault();
+        $('#fake_views_modal').modal('show');
+        $('#video_id_generate').val($(this).attr('data-id'));
+        $('#views_generate').val('0');
+        $('#likes_generate').val('0');
+    });
+    $('.check-all').on('click', function(event) {
+        $('input:checkbox').not(this).prop('checked', this.checked);
+    });
+    $('.delete-checkbox, .check-all').change(function(event) {
+        $('.delete-selected').attr('disabled', false);
+        $('.delete-selected').find('span').text(' (' + $('.delete-checkbox:checked').size() + ')');
+    });
+    $('.delete-selected').on('click', function(event) {
+        event.preventDefault();
+        data = new Array();
+        $('td input:checked').parents('tr').each(function () {
+            data.push($(this).attr('data-id'));
+        });
+        if (confirm('Are you sure that you want to delete the selected video(s)?')) {
+            $('.delete-selected').attr('disabled', true);
+            $('.delete-selected').text('Please wait..');
+            $.post('{{LINK aj/ap/delete-multi-videos}}', {ids: data}, function () {
+                alert('Video successfully deleted!');
+                $.each( data, function( index, value ){
+                    $('#list-' + value).remove();
+                });
+                $('.delete-selected').text('DELETE SELECTED');
+            });
+        }
+    });
+
+
+    var fake_views_settings = $('form.fake_views_settings');
+    fake_views_settings.ajaxForm({
+        url: '{{LINK aj/ap/fake_views_likes}}',
+        beforeSend: function() {
+            $('.fake_views_settings').find('.btn-save').text('PLEASE WAIT..');
+            $('.fake_views_alert').html('<div class="alert alert-warning">This process may take some time.</div>')
+        },
+        success: function(data) {
+            if (data.status == 200) {
+                $('.fake_views_settings').find('.btn-save').text('SAVE CHANGES');
+                $('.fake_views_alert').html('<div class="alert alert-success">Views and Likes are being generated, please check your site after few mins.</div>')
+                setTimeout(function (argument) {
+                    $('.fake_views_alert').html('');
+                    $('#fake_views_modal').modal('hide');
+                },2000);
+                
+            }
+            else{
+                $('.fake_views_settings').find('.btn-save').text('SAVE CHANGES');
+                $('.fake_views_alert').html('<div class="alert alert-danger">'+data.message+'</div>');
+                setTimeout(function (argument) {
+                    $('.fake_views_alert').html('');
+                },2000);
+            }
+        }
+    });
+
+
+
+});
+</script>
+
+<div class="modal fade" id="fake_views_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Generate Fake Views And Likes</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert fake_views_alert"></div>
+                <form class="fake_views_settings" method="POST">
+                    <div class="form-group">
+                        <div class="form-lins">
+                            <label class="form-lasbel pull-left">
+                                How many views you want to generate?
+                            </label>
+
+                            <div>
+                                <input style="resize: none; border: 1px solid #eee; padding: 5px;" name="views" id="views_generate" class="form-control" value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-lins">
+                            <label class="form-lasbel pull-left">
+                                How many likes you want to generate?
+                            </label>
+
+                            <div>
+                                <input style="resize: none; border: 1px solid #eee; padding: 5px;" name="likes" id="likes_generate" class="form-control" value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="video_id" id="video_id_generate" value="">
+                    <div class="modal-footer">
+                        <button type="submit" class="btn-save btn btn-link waves-effect">SAVE CHANGES</button>
+                        <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

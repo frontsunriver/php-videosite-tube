@@ -1,0 +1,43 @@
+<div class="col-md-12 pt_home_vid_content">
+	<div class="row">
+        <div class="content pt_shadow">
+            <div class="home-page-categories">
+                <div class="title">
+                    <h4>
+						<div style="border-color: #384047;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#384047" d="M5.5,7A1.5,1.5 0 0,1 4,5.5A1.5,1.5 0 0,1 5.5,4A1.5,1.5 0 0,1 7,5.5A1.5,1.5 0 0,1 5.5,7M21.41,11.58L12.41,2.58C12.05,2.22 11.55,2 11,2H4C2.89,2 2,2.89 2,4V11C2,11.55 2.22,12.05 2.59,12.41L11.58,21.41C11.95,21.77 12.45,22 13,22C13.55,22 14.05,21.77 14.41,21.41L21.41,14.41C21.78,14.05 22,13.55 22,13C22,12.44 21.77,11.94 21.41,11.58Z" /></svg></div>&nbsp;&nbsp;{{CATEGORY_ONE_NAME}} 
+                        <span class="view_more_link">
+                            <a  data-load="<?php echo (!empty($pt->subscriptions)) ? '?link1=subscriptions' : '?link1=videos&page=category&id={{CATEGORY_ONE_ID}}' ?>" href="<?php echo (!empty($pt->subscriptions)) ? "{{LINK subscriptions}}" : "{{LINK videos/category/{{CATEGORY_ONE_ID}}}}" ?>">
+                                {{LANG explore_more}} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </a>
+                        </span>
+                    </h4>
+                </div>
+                <div class="videos">
+                    <div class="row pt_cat_vid_list">
+                        <?php 
+                            foreach ($pt->cat_videos as $key => $video) {
+                                $video = PT_GetVideoByID($video, 0, 0, 0);
+                                echo PT_LoadPage('home/list', array(
+                                    'ID' => $video->id,
+                                    'TITLE' => $video->title,
+                                    'VIEWS' => $video->views,
+                                    'VIEWS_NUM' => number_format($video->views),
+                                    'USER_DATA' => $video->owner,
+                                    'THUMBNAIL' => $video->thumbnail,
+                                    'URL' => $video->url,
+                                    'TIME' => $video->time_ago,
+                                    'DURATION' => $video->duration,
+                                    'VIDEO_ID' => $video->video_id_,
+                                    'VIDEO_ID_' => PT_Slug($video->title, $video->video_id),
+                                    'GIF' => $video->gif
+                                ));
+                            }
+                        ?>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+<div class="container-fluid">
+    <div class="block-header">
+        <h2>Mobile & API Settings > Manage API Access Keys</h2>
+    </div>
+    <!-- Vertical Layout -->
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="card">
+                <div class="header">
+                    <h2>Manage API Access Keys</h2><br>
+                    <div>Use these keys to setup your application(s).</div><br>
+                    <a href="https://docs.playtubescript.com/api" target="_blank">PlayTube API Docs</a>
+                </div>
+                <div class="body">
+                    <div class="alert alert-success email-settings-alert"></div>
+                    <form class="api-settings" method="POST">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" id="server_key" name="server_key" class="form-control" value="{{CONFIG server_key}}">
+                                <label class="form-label">Site Server Key</label>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary m-t-15 waves-effect" id="reset-api-key">RESET KEYS</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!-- #END# Vertical Layout -->
+<script>
+    jQuery(document).ready(function($) {
+
+        $("#reset-api-key").click(function(event) {
+            swal({
+                title:"Confirmation",
+                text:"Are you sure you want to reset the api secret key? all of your (windows, phone) applications will stop working on all your users devices.",
+                type:"warning",
+                showCancelButton:true,
+                allowOutsideClick:true
+            },function(){
+                $("#reset-api-key").text('Please wait..');
+                $.get('{{LINK aj/ap/reset_apps_key}}',function (data) {
+                    if (data.status == 200) {
+                        $('#server_key').val(data.app_key);
+                    } 
+
+                    else{
+                        swal({
+                            title:"Error",
+                            text:"Erorr found while reseting, please try again later.",
+                            type:"error"
+                        })
+                    }
+                    $("#reset-api-key").text('RESET KEYS');
+                });
+            });
+            
+        });        
+    });
+</script>

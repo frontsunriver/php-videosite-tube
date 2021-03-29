@@ -1,0 +1,165 @@
+<div class="page-margin video-player-page">
+    <style>
+        .pt_fv_blur_img>div:before {
+            background-image: url({{THUMBNAIL}});
+        }
+    </style>
+    <div class="pt_fv_blur_img">
+        <div></div>
+    </div>
+    <div class="col-md-12">
+        <div class="top-video">
+            <div class="row">
+                <div class="pt_featured_video">
+                    <h4 title="{{LANG featured_video}}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-award"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+          </h4>
+                    <div class="video-player">
+                        <a href="{{URL}}" data-load="?link1=watch&id={{VIDEO_ID_}}">
+                            <div class="thumbnail_holder"><img src="{{THUMBNAIL}}"></div>
+                        </a>
+                        <div class="video-title">
+                            <input type="hidden" value="{{ID}}" id="video-id">
+                            <div class="publisher-element">
+                                <div class="publisher-avatar pull-left hide-in-mobile-720">
+                                    <a href="{{USER url}}" data-load="?link1=timeline&id={{USER username}}"><img src="{{USER avatar}}" alt="{{USER name}}"></a>
+                                </div>
+                                <div class="publisher-name">
+                                    <a href="{{USER url}}" data-load="?link1=timeline&id={{USER username}}">{{USER name_v}}</a>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="video_title_combo">
+                                <div class="video-big-title">
+                                    <a href="{{URL}}" data-load="?link1=watch&id={{VIDEO_ID_}}">{{TITLE}}</a>
+                                </div>
+                                <div class="video_info">
+                                    <div class="video-views">{{VIEWS}} {{LANG views}}</div>
+                                    <div class="video-likes">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up">
+                                            <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                                        </svg> <span class="likes" id="likes">{{LIKES}}</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-down" style="margin-left: 10px;">
+                                            <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path>
+                                        </svg> <span class="likes" id="dislikes">{{DISLIKES}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="content pt_shadow">
+                <div class="home-page-categories">
+                    <div class="title">
+                        <h4>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trending-up" color="#2196F3"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>&nbsp;&nbsp;{{LANG trending}} 
+              <span class="view_more_link">
+                <a href="{{LINK videos/trending}}" data-load="?link1=videos&page=trending">{{LANG explore_more}} 
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+              </span>
+            </h4>
+                    </div>
+                    <div class="videos">
+                        <div class="row pt_four_videos pt_four_videos_trend">
+                            {{TRENDING_LIST}}
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="content pt_shadow">
+                <div class="home-page-categories">
+                    <div class="title">
+                        <h4>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2" color="#359b39"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>&nbsp;&nbsp;{{LANG top_videos}} 
+              <span class="view_more_link">
+                <a href="{{LINK videos/top}}" data-load="?link1=videos&page=top">{{LANG explore_more}} 
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+              </span>
+            </h4>
+                    </div>
+                    <div class="videos">
+                        <div class="row pt_four_videos pt_four_videos_top">
+                            {{TOP_LIST}}
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+
+    {{SUBSC_HTML}}
+
+    <div class="col-md-12">
+        <div class="row">
+            <div class="content pt_shadow">
+                <div class="home-page-categories">
+                    <div class="title">
+                        <h4>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-video" color="#e91e63"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>&nbsp;&nbsp;{{LANG latest_videos}} 
+              <span class="view_more_link">
+                <a href="{{LINK videos/latest}}" data-load="?link1=videos&page=latest">{{LANG explore_more}} 
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+              </span>
+            </h4>
+                    </div>
+                    <div class="videos pt_latest_vds">
+                        <div class="row">
+                            {{LATEST_LIST}}
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+    {{HOME_PAGE_VIDEOS}}
+</div>
+<script>
+$(document).ready(function() {
+if( !$.trim( $('.pt_four_videos_trend').html() ).length ) {
+	$('.pt_four_videos_trend').html("<h5 class=\"empty_state\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"feather feather-video-off\"><path d=\"M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2m5.66 0H14a2 2 0 0 1 2 2v3.34l1 1L23 7v10\"></path><line x1=\"1\" y1=\"1\" x2=\"23\" y2=\"23\"></line></svg> {{LANG no_videos_found_for_now}}</h5>");
+};
+});
+
+$(document).ready(function() {
+if( !$.trim( $('.pt_four_videos_top').html() ).length ) {
+	$('.pt_four_videos_trend').html("<h5 class=\"empty_state\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"feather feather-video-off\"><path d=\"M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2m5.66 0H14a2 2 0 0 1 2 2v3.34l1 1L23 7v10\"></path><line x1=\"1\" y1=\"1\" x2=\"23\" y2=\"23\"></line></svg> {{LANG no_videos_found_for_now}}</h5>");
+};
+});
+
+$(function () {
+   $('#save-button').on('click', function(event) {
+      event.preventDefault();
+      var logged = $('#main-container').attr('data-logged');
+      if (!logged) {
+         window.location.href = "{{LINK login?to=<?php echo $pt->actual_link;?>}}";
+         return false;
+      }
+      var video_id = $('#video-id').val();
+      if ($(this).attr('saved')) {
+         $(this).html('<i class="fa fa-floppy-o fa-fw"></i> {{LANG save}}');
+         $(this).removeAttr('saved');
+      } else {
+         $(this).html('<i class="fa fa-check fa-fw"></i> {{LANG saved}}');
+         $(this).attr('saved', 'true');
+      }
+      $.post('{{LINK aj/save-video}}', {video_id: video_id});
+   });
+});
+</script>

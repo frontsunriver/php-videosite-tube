@@ -1,0 +1,132 @@
+<?php 
+$page = isset($_GET['page-id']) ? $_GET['page-id'] : 1;
+$limit_per_page = isset($_GET['limit']) ? (int) $_GET['limit'] : 50;
+$db->pageLimit = $limit_per_page;
+$videos = $db->where('is_movie',1)->orderBy('id', 'DESC')->objectbuilder()->paginate(T_VIDEOS, $page);
+ ?>
+<div class="container-fluid">
+    <div class="block-header">
+        <h2>Movies > Manage Movies</h2>
+    </div>
+    <!-- Vertical Layout -->
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h2>Manage Movies</h2>
+                </div>
+                <div class="body">
+                   <div class="clearfix"></div>
+                   <div class="table-responsive1">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                      <th>ID</th>
+					                  <th>Name</th>
+					                  <th>Release</th>
+					                  <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               <?php 
+				                foreach ($videos as $pt->film) {
+                                  $pt->film->url = PT_Link('watch/' . PT_Slug($pt->film->title, $pt->film->video_id));
+
+				                  echo PT_LoadAdminPage('manage-movies/list');
+				                }
+				               ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <?php if (count($videos) > 0) { ?>
+                    <div class="pull-left">
+                        <?php echo "Showing $page out of " . $db->totalPages; ?>
+                    </div>
+                    <div class="pull-right">
+                        <nav>
+                            <ul class="pagination">
+                                <li>
+                                    <a href="<?php echo PT_LoadAdminLinkSettings("manage-movies?page-id=1"); ?>" class="waves-effect" title='First Page'>
+                                        <i class="material-icons">first_page</i>
+                                    </a>
+                                </li>
+                                <?php if ($page > 1) {  ?>
+                                <li>
+                                    <a href="<?php echo PT_LoadAdminLinkSettings("manage-movies?page-id=" . ($page - 1)); ?>" class="waves-effect" title='Previous Page'>
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php  } ?>
+                                <?php 
+                                $nums = 0;
+                                $nums_pages = ($page > 4) ? ($page - 4) : $page;
+                                for ($i=$nums_pages; $i <= $db->totalPages; $i++) { 
+                                    if ($nums < 20) {
+                                    ?>
+                                    <li class="<?php echo ($page == $i) ? 'active' : ''; ?>"><a href="<?php echo PT_LoadAdminLinkSettings("manage-movies?page-id=" . ($i)); ?>" class="waves-effect"><?php echo $i ?></a></li>
+                                    <?php
+                                    }
+                                    $nums++;
+                                }
+                                ?>
+                                <?php if ($db->totalPages > $page) { ?>
+                                <li>
+                                    <a href="<?php echo PT_LoadAdminLinkSettings("manage-movies?page-id=" . ($page + 1)); ?>" class="waves-effect" title="Next Page">
+                                        <i class="material-icons">chevron_right</i>
+                                    </a>
+                                </li>
+                                <?php } ?>
+                                <li>
+                                    <a href="<?php echo PT_LoadAdminLinkSettings("manage-movies?page-id=" . ($db->totalPages)); ?>" class="waves-effect" title='Last Page'>
+                                        <i class="material-icons">last_page</i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="clearfix"></div>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!-- #END# Vertical Layout -->
+<div class="modal fade" id="delete-film">
+   <div class="modal-dialog">
+      <div class="modal-content modal-col-red">
+         <div class="modal-header">
+            <h4 class="modal-title"><i class="fa fa-exclamation-circle"></i> Delete Movie</h4>
+         </div>
+         <div class="modal-body">
+            <p>Are you sure that you want to delete tnis movie?</p>
+         </div>
+         <div class="modal-footer">
+            <button  type="button" onclick="PT_DeleteMovie($('#delete-film').attr('data-film-ident'))" class="btn  btn-link">DELETE</button>
+            <button  type="button" class="btn btn-link" data-dismiss="modal">CLOSE</button>
+         </div>
+      </div>
+   </div>
+</div>
+<script>
+$(document).on('click', '.delete-film', function(event) {
+    $("#delete-film").attr('data-film-ident', $(this).attr('id')).modal('show');
+});
+
+
+function PT_DeleteMovie(id){
+    	if (!id) {
+    		return false;
+    	}
+    	$("#delete-film").modal('hide');
+		$("tr[data-film-id="+id+"]").slideUp(function(){
+			$(this).remove();
+		});
+    	$.ajax({
+    		url: "{{LINK aj/ap/delete-video}}",
+    		type: 'POST',
+    		dataType: 'json',
+    		data: {id:id},
+    	});
+    }
+</script>

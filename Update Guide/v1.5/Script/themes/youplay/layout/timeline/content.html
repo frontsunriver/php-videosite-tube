@@ -1,0 +1,44 @@
+<style>#yp_bg_color:before {background-image: url({{USER cover}});}</style>
+<div class="profile-container">
+	<div class="yp_profile">
+		<div class="card-container">
+			<div class="cover-container">
+				<img src="{{USER cover}}" alt="{{USER name}}" id="yp_cover">
+			</div>
+			<?php if ($pt->isowner == true) { ?>
+			<div class="edit-cover-container hidde">
+				<a href="{{LINK settings/avatar}}" data-load="?link1=settings&page=avatar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M4,4H7L9,2H15L17,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4M12,7A5,5 0 0,0 7,12A5,5 0 0,0 12,17A5,5 0 0,0 17,12A5,5 0 0,0 12,7M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9Z" /></svg></a>
+			</div>
+			<?php } ?>
+		</div>
+		<div id="yp_bg_color">
+			<div class="pro_black"></div>
+			<div class="pt_chnl_info">
+				<div class="yp_inner_profile_area">
+					<div class="avatar-container">
+						<a href="{{USER url}}" data-load="?link1=timeline&id={{USER username}}"><img src="{{USER avatar}}" alt="{{USER name}}"></a>
+					</div>
+					<div class="info-container">
+						<h4><a href="{{USER url}}" data-load="?link1=timeline&id={{USER username}}">{{USER name_v}}</a></h4>
+					</div>
+				</div>
+				<div class="subscribe-btn-container">
+					<div>{{SUBSCIBE_BUTTON}}</div>
+					<div>{{MESSAGE_BUTTON}}</div>
+				</div>
+			</div>
+			<div class="links-container">
+				<ul>
+					<li><a href="{{LINK @{{USER username}}?page=videos}}" class="<?php echo ($pt->second_page == 'videos') ? 'active' : ''?>" data-load="?link1=timeline&id={{USER username}}&page=videos">{{LANG videos}}</a></li>
+					<li><a href="{{LINK @{{USER username}}?page=play-lists}}" class="<?php echo ($pt->second_page == 'play-lists') ? 'active' : ''?>" data-load="?link1=timeline&id={{USER username}}&page=play-lists">{{LANG play_lists}}</a></li>
+					<li><a href="{{LINK @{{USER username}}?page=liked-videos}}" class="<?php echo ($pt->second_page == 'liked-videos') ? 'active' : ''?>" data-load="?link1=timeline&id={{USER username}}&page=liked-videos">{{LANG liked_videos}}</a></li>
+					<li><a href="{{LINK @{{USER username}}?page=about}}" class="<?php echo ($pt->second_page == 'about') ? 'active' : ''?>" data-load="?link1=timeline&id={{USER username}}&page=about">{{LANG about_profile}}</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="page-container content pt_shadow">
+		{{SECOND_PAGE}}
+	</div>
+	<input type="hidden" id="profile-id" value="{{USER id}}">
+</div>

@@ -1,0 +1,168 @@
+<link href="{{CONFIG theme_url}}/js/lib/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<script src="{{CONFIG theme_url}}/js/lib/jquery-datatable/jquery.dataTables.js"></script>
+<script src="{{CONFIG theme_url}}/js/lib/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+<div class="user-ads-list-container">
+	<div class="user-ads-list-header">
+		<span>
+			<a href="{{LINK ads}}" data-load="?link1=ads">
+				<i class="material-icons">dvr</i> {{LANG ads}}
+			</a>
+		</span>
+		&nbsp;
+		<span  class="pointer" title="Wallet">
+			<a onclick="PT_ReplenishWallet();">
+				<i class="material-icons">account_balance_wallet</i> {{LANG wallet}} ({{CURRENCY}}{{ME wallet}})
+			</a>
+		</span>
+		<a href="{{LINK ads/create}}" data-load="?link1=create_ads">
+			<span class="create-ad-btn">
+				<i class="fa fa-plus"></i> {{LANG create_ad}}
+			</span>
+		</a>
+	</div>
+	<div class="col-10">
+		<table class="table" id="pt-user-ads-table"> 
+			<thead>
+				<th>
+					{{LANG status}}
+				</th>
+				<th>
+					{{LANG category}}
+				</th>
+				<th>
+					{{LANG name}}
+				</th>
+				<th>
+					{{LANG results}}
+				</th>
+				<th>
+					{{LANG spent}}
+				</th>
+				<th>
+					{{LANG action}}
+				</th>
+			</thead>
+			<tbody>
+				{{ADS_LIST}}
+			</tbody>
+		</table>
+	</div>
+</div>
+<br>
+<script>
+	$(document).ready( function () {
+	    $('#pt-user-ads-table').DataTable();
+		$('#pt-user-ads-table').on( 'page.dt', function () {
+		    PT_Delay(function(){
+		    	$('#pt-user-ads-table').find('[type="checkbox"]').each(function(index, el) {
+			    	$(el).bootstrapToggle();
+			    });
+		    },50)
+		});
+	});
+
+	
+	var amount;
+
+	function PT_ReplenishWallet() {
+		swal({
+		  html:$('.replenish-wallet-form').clone().addClass('clone').removeClass('hidden'),
+		  showCloseButton: true,
+		  showCancelButton: true,
+		  focusConfirm: false,
+		  confirmButtonText:"<i class='fa fa-paypal'></i> {{LANG replenish}}",
+		  cancelButtonText:"<i class='fa fa-ban'></i> {{LANG cancel}}",
+		  buttonsStyling:false,
+		  confirmButtonClass:'btn btn-success pull-left margin-right',
+		  cancelButtonClass:"btn btn-default pull-left",
+		  allowOutsideClick:false,
+		  showLoaderOnConfirm: true,
+		  preConfirm: function () {
+		    return new Promise(function (resolve, reject) {
+		    	amount = $(".replenish-wallet-form.clone").find('input').val();
+		    	if (!amount || amount < 1){
+		    		reject("{{LANG please_check_details}}!");
+		    	}
+		    	else{
+		    		$.ajax({
+						url: '{{LINK aj/wallet/replenish}}',
+						type: 'POST',
+						dataType: 'json',
+						data: {amount:amount},
+					})
+					.done(function(data) {
+						if (data.status == 200) {
+							window.location.href = data.url;
+						}
+						else{
+							swal({
+								title:"{{LANG error}}",
+								text:"{{LANG error_msg}}",
+								type:"error"
+							});
+						}
+					})
+					.fail(function() {
+						swal({
+							title:"{{LANG error}}",
+							text:"{{LANG error_msg}}",
+							type:"error"
+						});
+					});
+		    	}
+		    })
+		  }
+		}).then(function(){/*pass*/},function(){/*pass*/});
+	}
+
+	function PT_DeleteAd(id){
+		if (!id) {
+			return false;
+		}
+		swal({
+		  title: '{{LANG confirmation}}',
+		  text: "{{LANG confirm_delete_ad}}",
+		  type: 'warning',
+		  showCloseButton: true,
+		  showCancelButton: true,
+		  focusConfirm: false,
+		  confirmButtonText:"<i class='material-icons'>delete</i> {{LANG delete}}!",
+		  cancelButtonText:"<i class='fa fa-ban'></i> {{LANG cancel}}",
+		  buttonsStyling:false,
+		  confirmButtonClass:'btn btn-success margin-right',
+		  cancelButtonClass:"btn btn-default",
+		  allowOutsideClick:false,
+		}).then(function (){
+			$.post('{{LINK aj/ads/delete}}', {id:id}, function(data, textStatus, xhr) {/* pass */});
+			$("tr[data-ads-list='"+id+"']").slideUp(function(){
+				$(this).remove();
+				swal({
+					title:'{{LANG deleted}}',
+				    type:'success',
+				    buttonsStyling:false,
+				    confirmButtonClass:'btn btn-success',
+				});
+			});
+		});
+	}
+
+	function PT_ToggleAdsStatus(id){
+		if (!id) {
+			return false;
+		}
+		$.post('{{LINK aj/ads/toggle-stat}}', {id:id}, function(data, textStatus, xhr) {/* pass */});
+	}	
+
+</script>
+
+<form class="replenish-wallet-form hidden">
+	<div class="form-group">
+		<label>
+			<span>{{LANG my_balance}}</span> <strong>{{CURRENCY}}{{ME wallet}}</strong> 
+		</label>
+	</div>
+	<div class="form-group">
+		<small>{{LANG replenish_my_balance}}</small>
+		<input type="number" class="form-control" placeholder="{{LANG amount}}">
+	</div>
+</form>

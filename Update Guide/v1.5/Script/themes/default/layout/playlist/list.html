@@ -1,0 +1,43 @@
+<div class="col-md-3 no-padding-right play-lists" data-playlist="{{ID}}">
+   <a href="{{URL}}" data-load="?link1=watch&id={{VIDEO_ID_}}&list={{LIST_ID}}">
+      <div class="video-latest-list video-wrapper" data-id="{{ID}}" data-views="{{VIEWS}}">
+         <div class="video-thumb">      
+            <img src="{{THUMBNAIL}}" alt="{{TITLE}}">
+         </div>
+
+         <div class="play-lists-overlay">
+          
+         </div>
+         <div class="play-lists-count">
+          <span>       
+              <b>{{COUNT}}</b>
+              <i class="fa fa-play-circle-o" aria-hidden="true"></i>
+          </span>
+         </div>
+      </div>
+   </a> 
+   <div class="video-title">
+      <a href="{{URL}}" data-load="?link1=watch&id={{VIDEO_ID_}}&list={{LIST_ID}}">{{TITLE}}</a> 
+      <?php if (IS_LOGGED == true && $pt->isowner == true): ?> 
+        <div class="ddown-menu pull-right">
+          <div class="dropdown">
+              <span class="dropdown-toggle pointer" data-toggle="dropdown">
+                <i class="fa fa-caret-down"></i>
+              </span>
+              <ul class="dropdown-menu pull-left">
+                <li onclick="PT_EditList('{{ID}}');">
+                   <span>
+                      <i class="fa fa-pencil-square-o"></i> {{LANG edit}}
+                   </span>
+                </li>
+                <li onclick="PT_DeleteList('{{ID}}');">
+                   <span>
+                      <i class="fa fa-trash-o"></i> {{LANG delete}}
+                   </span>
+                </li>
+              </ul>
+          </div>
+        </div>
+      <?php endif; ?>
+   </div>
+</div>

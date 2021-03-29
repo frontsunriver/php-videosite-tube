@@ -1,0 +1,128 @@
+<div class="wo_about_wrapper_parent">
+	<div class="wo_about_wrapper"> 
+		<div class="hero hero-overlay"> 
+			<div class="container">
+				<h1 class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-video"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg> {{TITLE}}</h1>
+			</div> 
+		</div>
+		<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 3510.8 349.9" xml:space="preserve"><style type="text/css">.st0{opacity:0.35;fill:#f5f5f5;}.st1{fill:#f5f5f5;}</style><path class="st0" d="M1538.6,349.9c-8.5-5.8-17-11.5-25.4-17.2c-201.1-134-443.1-203.1-683.1-195.3	c-227.5,7.5-446.5,85.8-635.3,212.4H1538.6z"/><path class="st1" d="M3510.8,204.2c-20.4-11.2-41.6-21.2-62.2-29.5c-82.7-33.3-189.3-48.1-283.7-29.4
+	c-145.5,29-226.9,126.3-365.6,165.7c-122,34.6-266.8,18.4-392.2-11.3c-243.9-57.8-476.4-125.1-746.4-111c-148,7.7-291,38.8-421.4,82
+	c-134.5,44.6-293.8,106.7-448.7,58.3c-131.8-41.3-200.4-132.1-322.4-182c-91.2-37.3-207.8-50.7-315.1-36.3
+	C98,118.1,45.7,132.9,0,153.3v197.2h3510.8V204.2z"/><path class="st0" d="M3510.8,282.8c-117.5-97.4-255.6-201.2-413.4-176.4c-111.4,17.5-184.7,114-282.7,161
+	c-127.3,61-227.1-16.9-341-69.3c-153.7-70.6-343.6-51.4-480.7,48.6c-42.4,31-83,70-125.2,103.2h1643V282.8z"/><path class="st0" d="M3510.8,161.9c-21.6-2.7-43-3.1-62.3-1.6c-73,5.5-142.2,33.4-209.5,62.3c-67.3,28.9-134.9,59.4-207.2,70.9
+	c-241.2,38.3-440.7-133.6-663.5-189c-201.9-50.2-415.8-6.8-611.8,62.6c-199.5,70.6-405.5,169.7-612.9,127.5
+	c-146-29.7-268.2-125.9-403.1-189.1C501.4-6.7,247.5-4.2,0,50.1v299.8h3510.8V161.9z"/></svg>
+	</div>
+</div>
+<div class="content pt_shadow pt_page_margin" style="padding-top: 25px;">
+	<div class="col-md-12">
+		<?php if ($pt->page == 'category' && $pt->show_sub == true) { ?>
+			<div class="pull-right col-md-3 no-padding-left">
+					<select name="type" class="form-control form-group" id="sub_categories_">
+	                    <?php echo $pt->sub_categories_array["'".$_GET['id']."'"]; ?>
+	                </select>
+				</div>
+				<div class="pull-right col-md-2 col-sm-2 text-right"><h5>{{LANG sub_category}}</h5></div>
+				<div class="clear"></div>
+			</h4>
+	        <div class="clear"></div>
+			<hr>
+		<?php } ?>
+		<?php if ($pt->page == 'top') { ?>
+			<div class="tp_vid_fltr_tabs">
+				<ul class="list-unstyled">
+					<li class="<?php echo ($pt->cat_type == 'all_time') ? 'selected': '';?>">
+						<a href="{{CONFIG site_url}}/videos/top" data-load="?link1=videos&page=top">{{LANG all_time}}</a>
+					</li>
+					<li class="<?php echo ($pt->cat_type == 'today') ? 'selected': '';?>">
+						<a href="{{CONFIG site_url}}/videos/top?type=today" data-load="?link1=videos&page=top&type=today">{{LANG today}}</a>
+					</li>
+					<li class="<?php echo ($pt->cat_type == 'this_week') ? 'selected': '';?>">
+						<a href="{{CONFIG site_url}}/videos/top?type=this_week" data-load="?link1=videos&page=top&type=this_week">{{LANG this_week}}</a>
+					</li>
+					<li class="<?php echo ($pt->cat_type == 'this_month') ? 'selected': '';?>">
+						<a href="{{CONFIG site_url}}/videos/top?type=this_month" data-load="?link1=videos&page=top&type=this_month">{{LANG this_month}}</a>
+					</li>
+					<li class="<?php echo ($pt->cat_type == 'this_year') ? 'selected': '';?>">
+						<a href="{{CONFIG site_url}}/videos/top?type=this_year" data-load="?link1=videos&page=top&type=this_year">{{LANG this_year}}</a>
+					</li>
+				</ul>
+			</div>
+	        <div class="clear"></div>
+			<hr>
+		<?php } ?>
+		<div class="videos-latest-list row">
+      	{{VIDEOS}}
+		</div>
+		<?php if ($pt->total_pages > 1) { ?>
+			<div>
+				<hr>
+				<div class="pull-left showing_pages">
+		        	<?php echo "Showing $pt->page_number out of " . $pt->total_pages; ?>
+		        </div>
+		        <div class="pull-right">
+		        	<nav class="showing_nav">
+		                <ul class="pagination">
+		                	<li>
+		                        <a href="{{LINK videos/{{TYPE}}<?php echo($pt->page == 'category' && !empty($_GET['id']) ? '/'.$_GET['id'] : '')  ?><?php echo($pt->page == 'category' && !empty($_GET['id']) && !empty($_GET['sub_id']) ? '/'.$_GET['sub_id'] : '')  ?>}}?page_id=1<?php echo($pt->page == 'top' && !empty($pt->cat_type) && $pt->cat_type != 'all_time' ? '&type='.$pt->cat_type : '')  ?>"	data-load="?link1=videos&page={{TYPE}}&page_id=1<?php echo($pt->page == 'category' && !empty($_GET['id']) ? '&id='.$_GET['id'] : '')  ?><?php echo($pt->page == 'category' && !empty($_GET['id']) && !empty($_GET['sub_id']) ? '&sub_id='.$_GET['sub_id'] : '')  ?><?php echo($pt->page == 'top' && !empty($pt->cat_type) && $pt->cat_type != 'all_time' ? '&type='.$pt->cat_type : '')  ?>" class="waves-effect" title='First Page'>
+		                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-left"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
+		                        </a>
+		                    </li>
+		                    <?php if ($pt->page_number > 1) {  ?>
+		                    <li>
+		                        <a href="{{LINK videos/{{TYPE}}<?php echo($pt->page == 'category' && !empty($_GET['id']) ? '/'.$_GET['id'] : '')  ?><?php echo($pt->page == 'category' && !empty($_GET['id']) && !empty($_GET['sub_id']) ? '/'.$_GET['sub_id'] : '')  ?>}}?page_id=<?php echo($pt->page_number - 1) ?><?php echo($pt->page == 'top' && !empty($pt->cat_type) && $pt->cat_type != 'all_time' ? '&type='.$pt->cat_type : '')  ?>" data-load="?link1=videos&page={{TYPE}}&page_id=<?php echo($pt->page_number - 1) ?><?php echo($pt->page == 'category' && !empty($_GET['id']) ? '&id='.$_GET['id'] : '')  ?><?php echo($pt->page == 'category' && !empty($_GET['id']) && !empty($_GET['sub_id']) ? '&sub_id='.$_GET['sub_id'] : '')  ?><?php echo($pt->page == 'top' && !empty($pt->cat_type) && $pt->cat_type != 'all_time' ? '&type='.$pt->cat_type : '')  ?>" class="waves-effect" title='Previous Page'>
+		                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg>
+		                        </a>
+		                    </li>
+		                    <?php  } ?>
+		                    <?php 
+		                    $nums = 0;
+		                    $nums_pages = ($pt->page_number > 3) ? ($pt->page_number - 3) : $pt->page_number;
+		                    for ($i=$nums_pages; $i <= $pt->total_pages; $i++) { 
+		                    	if ($nums < 4) {
+		                    	?>
+		                    	<li class="<?php echo ($pt->page_number == $i) ? 'active' : ''; ?>"><a href="{{LINK videos/{{TYPE}}<?php echo($pt->page == 'category' && !empty($_GET['id']) ? '/'.$_GET['id'] : '')  ?><?php echo($pt->page == 'category' && !empty($_GET['id']) && !empty($_GET['sub_id']) ? '/'.$_GET['sub_id'] : '')  ?>}}?page_id=<?php echo($i); ?><?php echo($pt->page == 'top' && !empty($pt->cat_type) && $pt->cat_type != 'all_time' ? '&type='.$pt->cat_type : '')  ?>" data-load="?link1=videos&page={{TYPE}}&page_id=<?php echo($i) ?><?php echo($pt->page == 'category' && !empty($_GET['id']) ? '&id='.$_GET['id'] : '')  ?><?php echo($pt->page == 'category' && !empty($_GET['id']) && !empty($_GET['sub_id']) ? '&sub_id='.$_GET['sub_id'] : '')  ?><?php echo($pt->page == 'top' && !empty($pt->cat_type) && $pt->cat_type != 'all_time' ? '&type='.$pt->cat_type : '')  ?>" class="waves-effect"><?php echo $i ?></a></li>
+		                    	<?php
+		                    	}
+		                    	$nums++;
+		                    }
+		                    ?>
+		                    <?php if ($pt->total_pages > $pt->page_number) { ?>
+		                    <li>
+		                        <a href="{{LINK videos/{{TYPE}}<?php echo($pt->page == 'category' && !empty($_GET['id']) ? '/'.$_GET['id'] : '')  ?><?php echo($pt->page == 'category' && !empty($_GET['id']) && !empty($_GET['sub_id']) ? '/'.$_GET['sub_id'] : '')  ?>}}?page_id=<?php echo ($pt->page_number + 1); ?><?php echo($pt->page == 'top' && !empty($pt->cat_type) && $pt->cat_type != 'all_time' ? '&type='.$pt->cat_type : '')  ?>" data-load="?link1=videos&page={{TYPE}}&page_id=<?php echo($pt->page_number + 1) ?><?php echo($pt->page == 'category' && !empty($_GET['id']) ? '&id='.$_GET['id'] : '')  ?><?php echo($pt->page == 'category' && !empty($_GET['id']) && !empty($_GET['sub_id']) ? '&sub_id='.$_GET['sub_id'] : '')  ?><?php echo($pt->page == 'top' && !empty($pt->cat_type) && $pt->cat_type != 'all_time' ? '&type='.$pt->cat_type : '')  ?>" class="waves-effect" title="Next Page">
+		                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+		                        </a>
+		                    </li>
+		                    <?php } ?>
+		                    <li>
+		                        <a href="{{LINK videos/{{TYPE}}<?php echo($pt->page == 'category' && !empty($_GET['id']) ? '/'.$_GET['id'] : '')  ?><?php echo($pt->page == 'category' && !empty($_GET['id']) && !empty($_GET['sub_id']) ? '/'.$_GET['sub_id'] : '')  ?>}}?page_id=<?php echo ($pt->total_pages); ?><?php echo($pt->page == 'top' && !empty($pt->cat_type) && $pt->cat_type != 'all_time' ? '&type='.$pt->cat_type : '')  ?>" data-load="?link1=videos&page={{TYPE}}&page_id=<?php echo($pt->total_pages) ?><?php echo($pt->page == 'category' && !empty($_GET['id']) ? '&id='.$_GET['id'] : '')  ?><?php echo($pt->page == 'category' && !empty($_GET['id']) && !empty($_GET['sub_id']) ? '&sub_id='.$_GET['sub_id'] : '')  ?><?php echo($pt->page == 'top' && !empty($pt->cat_type) && $pt->cat_type != 'all_time' ? '&type='.$pt->cat_type : '')  ?>" class="waves-effect" title='Last Page'>
+		                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+		                        </a>
+		                    </li>
+		                </ul>
+		            </nav>
+		        </div>
+			</div>
+		        
+        <?php } ?>
+		<?php if ($pt->videos_count > 1) { ?>
+			<!-- <div class="watch-video-show-more desc load-more" data-type="{{TYPE}}" {{CATEGORY_ID}} data-sub-category-id="<?php echo( (!empty($_GET["sub_id"])) ? $_GET["sub_id"] : '' ); ?>">
+                {{LANG show_more}}
+            </div> -->
+        <?php } ?>
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+</div>
+<?php if ($pt->page == 'category' && $pt->show_sub == true) { ?>
+<script type="text/javascript">
+$(document).on('change', '#category_id', function(event) {
+	event.preventDefault();
+	id = $(this).val();
+	$('#sub_category_id').html(sub_categories_array["'"+id+"'"]);
+});
+$(document).on('change','#sub_categories_', function(event) {
+	window.location.href = site_url+'/videos/category/<?php echo($_GET['id']) ?>/'+$('#sub_categories_').val();
+});
+</script>
+<?php } ?>

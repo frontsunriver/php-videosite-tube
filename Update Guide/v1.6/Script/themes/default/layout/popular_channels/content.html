@@ -1,0 +1,50 @@
+<div class="content pt_shadow">
+	<div class="col-md-12">
+		<div class="upload-head">
+			<h4><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg> {{LANG popular_channels}}
+			</h4>
+	        <div class="clear"></div>
+			<hr>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-7 vid_pop_chnl_filtr">
+				<span>{{LANG filter_by}}</span>
+				<select name="type" class="form-group form-control" id="sort_channels_by">
+					<option value="views" <?php echo ($pt->type == 'views') ? 'selected': '';?>>{{LANG views}}</option>
+					<option value="subscribers" <?php echo ($pt->type == 'subscribers') ? 'selected': '';?>>{{LANG subscribers}}</option>
+					<option value="most_active" <?php echo ($pt->type == 'most_active') ? 'selected': '';?>>{{LANG most_active}}</option>
+				</select>
+				<select id="sort_channels_type" name="type" class="form-group form-control">
+					<option value="today" <?php echo ($pt->cat_type == 'today') ? 'selected': '';?>>{{LANG today}}</option>
+					<option value="this_week" <?php echo ($pt->cat_type == 'this_week') ? 'selected': '';?>>{{LANG this_week}}</option>
+					<option value="this_month" <?php echo ($pt->cat_type == 'this_month') ? 'selected': '';?>>{{LANG this_month}}</option>
+					<option value="this_year" <?php echo ($pt->cat_type == 'this_year') ? 'selected': '';?>>{{LANG this_year}}</option>
+					<option value="all_time" <?php echo ($pt->cat_type == 'all_time') ? 'selected': '';?>>{{LANG all_time}}</option>
+				</select>
+				<button id="submit" name="submit" class="btn btn-main">{{LANG submit}}</button>
+	       </div> 
+		   <div class="col-md-2"></div>
+		   <div class="col-md-3"></div>
+		</div>
+		
+		<div class="row author-list">
+      		{{CHANNELS}}
+		</div>
+		<div class="clear"></div>
+		<?php if ($pt->channels_count > 1) { ?>
+			<div class="watch-video-show-more desc load-more" data-type="popular_channels" data-sort-by="<?php echo ($pt->type);?>" <?php if (!empty($pt->cat_type)) { ?> data-sort-type="<?php echo ($pt->cat_type);?>"<?php } ?>>
+	            {{LANG show_more}}
+	        </div>
+		<?php } ?>
+	</div>
+	<div class="clear"></div>
+</div>
+<script type="text/javascript">
+	$('#submit').on('click', function(event) {
+		var sort_by = $('#sort_channels_by').val();
+		var sort_type = $('#sort_channels_type').val();
+		$('#link_redirect_to_page').attr('data-load', '?link1=popular_channels&type='+sort_by+'&sort_type='+sort_type);
+		$('#link_redirect_to_page').click();
+	});
+</script>

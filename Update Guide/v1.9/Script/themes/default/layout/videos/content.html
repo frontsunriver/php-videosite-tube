@@ -1,0 +1,161 @@
+<div class="wo_about_wrapper_parent">
+	<div class="wo_about_wrapper"> 
+		<div class="hero hero-overlay"> 
+			<div class="container">
+				<h1 class="text-center">{{TITLE}}</h1>
+			</div> 
+		</div>
+		<svg class="wave" width="100%" height="50px" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 75"> <defs> <style> .a { fill: none; } .b { clip-path: url(#a); } .c, .d { fill: #04abf2; } .d { opacity: 0.5; isolation: isolate; } </style> <clipPath id="a"> <rect class="a" width="1920" height="75"></rect> </clipPath> </defs> <title>wave</title> <g class="b"> <path class="c" d="M1963,327H-105V65A2647.49,2647.49,0,0,1,431,19c217.7,3.5,239.6,30.8,470,36,297.3,6.7,367.5-36.2,642-28a2511.41,2511.41,0,0,1,420,48"></path> </g> <g class="b"> <path class="d" d="M-127,404H1963V44c-140.1-28-343.3-46.7-566,22-75.5,23.3-118.5,45.9-162,64-48.6,20.2-404.7,128-784,0C355.2,97.7,341.6,78.3,235,50,86.6,10.6-41.8,6.9-127,10"></path> </g> <g class="b"> <path class="d" d="M1979,462-155,446V106C251.8,20.2,576.6,15.9,805,30c167.4,10.3,322.3,32.9,680,56,207,13.4,378,20.3,494,24"></path> </g> <g class="b"> <path class="d" d="M1998,484H-243V100c445.8,26.8,794.2-4.1,1035-39,141-20.4,231.1-40.1,378-45,349.6-11.6,636.7,73.8,828,150"></path> </g> </svg>
+	</div>
+</div>
+<div class="content pt_shadow pt_page_margin pt_vid_lst_page">
+	<div class="col-md-12">
+		<?php if ($pt->page == 'category' && $pt->show_sub == true) { ?>
+			<div class="pull-right col-md-3 no-padding-left">
+					<select name="type" class="form-control form-group" id="sub_categories_">
+	                    <?php echo $pt->sub_categories_array["'".$_GET['id']."'"]; ?>
+	                </select>
+				</div>
+				<div class="pull-right col-md-2 col-sm-2 text-right"><h5>{{LANG sub_category}}</h5></div>
+				<div class="clear"></div>
+			</h4>
+	        <div class="clear"></div>
+			<hr>
+		<?php } ?>
+		<?php if ($pt->page == 'top') { ?>
+			<div class="tp_vid_fltr_tabs">
+				<ul class="list-unstyled">
+					<li class="<?php echo ($pt->cat_type == 'all_time') ? 'selected': '';?>">
+						<a href="{{CONFIG site_url}}/videos/top" data-load="?link1=videos&page=top">{{LANG all_time}}</a>
+					</li>
+					<li class="<?php echo ($pt->cat_type == 'today') ? 'selected': '';?>">
+						<a href="{{CONFIG site_url}}/videos/top?type=today" data-load="?link1=videos&page=top&type=today">{{LANG today}}</a>
+					</li>
+					<li class="<?php echo ($pt->cat_type == 'this_week') ? 'selected': '';?>">
+						<a href="{{CONFIG site_url}}/videos/top?type=this_week" data-load="?link1=videos&page=top&type=this_week">{{LANG this_week}}</a>
+					</li>
+					<li class="<?php echo ($pt->cat_type == 'this_month') ? 'selected': '';?>">
+						<a href="{{CONFIG site_url}}/videos/top?type=this_month" data-load="?link1=videos&page=top&type=this_month">{{LANG this_month}}</a>
+					</li>
+					<li class="<?php echo ($pt->cat_type == 'this_year') ? 'selected': '';?>">
+						<a href="{{CONFIG site_url}}/videos/top?type=this_year" data-load="?link1=videos&page=top&type=this_year">{{LANG this_year}}</a>
+					</li>
+				</ul>
+			</div>
+	        <div class="clear"></div>
+			<hr>
+		<?php } ?>
+		<?php if ($pt->page == 'stock') { ?>
+			<div class="vid_move_filtr pt_stock_vid_setts" id="filter_settings">
+				<form class="search_filter_form pt_forms" method="GET">
+					<div class="mov_filtr_cont">
+						<p class="pull-left term">Search Term:</p>
+						<input type="text" class="form-control" id="stock_keyword" name="keyword" placeholder="{{LANG movies_page_search}}" autocomplete="off" value="<?php echo(!empty($_GET['keyword']) ? strip_tags($_GET['keyword']) : '') ?>"> 
+						<div class="pt_mv_page_selct_holdr">
+							<div class="selects-container">
+								<p>{{LANG min_price}}</p>
+								<input type="number" id="min_price" name="min_price" class="form-control" min="0" max="1000000" step="0.1" placeholder="{{LANG min_price}}" value="<?php echo(!empty($_GET['min_price']) && is_numeric($_GET['min_price']) && $_GET['min_price'] >= 0 ? $_GET['min_price'] : '') ?>">
+							</div>
+							<div class="selects-container">
+								<p>{{LANG max_price}}</p>
+								<input id="max_price" name="max_price" type="number" placeholder="{{LANG max_price}}" class="form-control input-md"  min="0" max="1000000" value="<?php echo(!empty($_GET['max_price']) && is_numeric($_GET['max_price']) && $_GET['max_price'] >= 0 ? $_GET['max_price'] : '') ?>">
+							</div>
+							<div class="selects-container">
+								<p>{{LANG license_type}}</p>
+								<select class="form-control show-tick" id="license" name="license">
+									<option value="0">{{LANG license_type}}</option>
+		                            <option value="rights_managed_license" <?php echo(!empty($_GET['license']) && $_GET['license'] == 'rights_managed_license' ? "selected" : '') ?>>{{LANG rights_managed_license}}</option>
+		                            <option value="editorial_use_license" <?php echo(!empty($_GET['license']) && $_GET['license'] == 'editorial_use_license' ? "selected" : '') ?>>{{LANG editorial_use_license}}</option>
+		                            <option value="royalty_free_license" <?php echo(!empty($_GET['license']) && $_GET['license'] == 'royalty_free_license' ? "selected" : '') ?>>{{LANG royalty_free_license}}</option>
+		                            <option value="royalty_free_extended_license" <?php echo(!empty($_GET['license']) && $_GET['license'] == 'royalty_free_extended_license' ? "selected" : '') ?>>{{LANG royalty_free_extended_license}}</option>
+		                            <option value="creative_commons_license" <?php echo(!empty($_GET['license']) && $_GET['license'] == 'creative_commons_license' ? "selected" : '') ?>>{{LANG creative_commons_license}}</option>
+		                            <option value="public_domain" <?php echo(!empty($_GET['license']) && $_GET['license'] == 'public_domain' ? "selected" : '') ?>>{{LANG public_domain}}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<input type="hidden" name="page_id" value="1" id="page_id">
+					<div class="last-sett-btn">
+						<button id="submit" type="button" class="btn btn-main setting-panel-mdbtn" onclick="GoToStock()">{{LANG search}}</button>
+					</div>
+				</form>
+			</div>
+			<div class="clear"></div>
+		    <?php } ?>
+		<div class="videos-latest-list row">
+      	{{VIDEOS}}
+		</div>
+		<?php if ($pt->total_pages > 1) { ?>
+			<hr>
+			<div class="text-center">
+				<div class="showing_pages">
+		        	<?php echo "Showing $pt->page_number out of " . $pt->total_pages; ?>
+		        </div>
+				<nav class="showing_nav">
+					<a href="{{LINK videos/{{TYPE}}<?php echo($pt->page == 'category' && !empty($_GET['id']) ? '/'.$_GET['id'] : '')  ?><?php echo($pt->page == 'category' && !empty($_GET['id']) && !empty($_GET['sub_id']) ? '/'.$_GET['sub_id'] : '')  ?>}}?page_id=1<?php echo($pt->page == 'top' && !empty($pt->cat_type) && $pt->cat_type != 'all_time' ? '&type='.$pt->cat_type : '')  ?><?php echo($pt->stock_link) ?>" data-load="?link1=videos&page={{TYPE}}&page_id=1<?php echo($pt->page == 'category' && !empty($_GET['id']) ? '&id='.$_GET['id'] : '')  ?><?php echo($pt->page == 'category' && !empty($_GET['id']) && !empty($_GET['sub_id']) ? '&sub_id='.$_GET['sub_id'] : '')  ?><?php echo($pt->page == 'top' && !empty($pt->cat_type) && $pt->cat_type != 'all_time' ? '&type='.$pt->cat_type : '')  ?><?php echo($pt->stock_link) ?>" class="btn" title='First Page'>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+					</a>
+					<ul class="pagination">
+						<?php if ($pt->page_number > 1) {  ?>
+							<li>
+								<a href="{{LINK videos/{{TYPE}}<?php echo($pt->page == 'category' && !empty($_GET['id']) ? '/'.$_GET['id'] : '')  ?><?php echo($pt->page == 'category' && !empty($_GET['id']) && !empty($_GET['sub_id']) ? '/'.$_GET['sub_id'] : '')  ?>}}?page_id=<?php echo($pt->page_number - 1) ?><?php echo($pt->page == 'top' && !empty($pt->cat_type) && $pt->cat_type != 'all_time' ? '&type='.$pt->cat_type : '')  ?><?php echo($pt->stock_link) ?>" data-load="?link1=videos&page={{TYPE}}&page_id=<?php echo($pt->page_number - 1) ?><?php echo($pt->page == 'category' && !empty($_GET['id']) ? '&id='.$_GET['id'] : '')  ?><?php echo($pt->page == 'category' && !empty($_GET['id']) && !empty($_GET['sub_id']) ? '&sub_id='.$_GET['sub_id'] : '')  ?><?php echo($pt->page == 'top' && !empty($pt->cat_type) && $pt->cat_type != 'all_time' ? '&type='.$pt->cat_type : '')  ?><?php echo($pt->stock_link) ?>" title='Previous Page'>
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" /></svg>
+								</a>
+							</li>
+						<?php  } ?>
+						<?php 
+							$nums = 0;
+							$nums_pages = ($pt->page_number > 3) ? ($pt->page_number - 3) : $pt->page_number;
+							for ($i=$nums_pages; $i <= $pt->total_pages; $i++) { 
+								if ($nums < 4) {
+						?>
+							<li class="<?php echo ($pt->page_number == $i) ? 'active' : ''; ?>"><a href="{{LINK videos/{{TYPE}}<?php echo($pt->page == 'category' && !empty($_GET['id']) ? '/'.$_GET['id'] : '')  ?><?php echo($pt->page == 'category' && !empty($_GET['id']) && !empty($_GET['sub_id']) ? '/'.$_GET['sub_id'] : '')  ?>}}?page_id=<?php echo($i); ?><?php echo($pt->page == 'top' && !empty($pt->cat_type) && $pt->cat_type != 'all_time' ? '&type='.$pt->cat_type : '')  ?><?php echo($pt->stock_link) ?>" data-load="?link1=videos&page={{TYPE}}&page_id=<?php echo($i) ?><?php echo($pt->page == 'category' && !empty($_GET['id']) ? '&id='.$_GET['id'] : '')  ?><?php echo($pt->page == 'category' && !empty($_GET['id']) && !empty($_GET['sub_id']) ? '&sub_id='.$_GET['sub_id'] : '')  ?><?php echo($pt->page == 'top' && !empty($pt->cat_type) && $pt->cat_type != 'all_time' ? '&type='.$pt->cat_type : '')  ?><?php echo($pt->stock_link) ?>"><?php echo $i ?></a></li>
+						<?php } $nums++; } ?>
+						<?php if ($pt->total_pages > $pt->page_number) { ?>
+							<li>
+								<a href="{{LINK videos/{{TYPE}}<?php echo($pt->page == 'category' && !empty($_GET['id']) ? '/'.$_GET['id'] : '')  ?><?php echo($pt->page == 'category' && !empty($_GET['id']) && !empty($_GET['sub_id']) ? '/'.$_GET['sub_id'] : '')  ?>}}?page_id=<?php echo ($pt->page_number + 1); ?><?php echo($pt->page == 'top' && !empty($pt->cat_type) && $pt->cat_type != 'all_time' ? '&type='.$pt->cat_type : '')  ?><?php echo($pt->stock_link) ?>" data-load="?link1=videos&page={{TYPE}}&page_id=<?php echo($pt->page_number + 1) ?><?php echo($pt->page == 'category' && !empty($_GET['id']) ? '&id='.$_GET['id'] : '')  ?><?php echo($pt->page == 'category' && !empty($_GET['id']) && !empty($_GET['sub_id']) ? '&sub_id='.$_GET['sub_id'] : '')  ?><?php echo($pt->page == 'top' && !empty($pt->cat_type) && $pt->cat_type != 'all_time' ? '&type='.$pt->cat_type : '')  ?><?php echo($pt->stock_link) ?>" title="Next Page">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+								</a>
+							</li>
+						<?php } ?>
+					</ul>
+					<a href="{{LINK videos/{{TYPE}}<?php echo($pt->page == 'category' && !empty($_GET['id']) ? '/'.$_GET['id'] : '')  ?><?php echo($pt->page == 'category' && !empty($_GET['id']) && !empty($_GET['sub_id']) ? '/'.$_GET['sub_id'] : '')  ?>}}?page_id=<?php echo ($pt->total_pages); ?><?php echo($pt->page == 'top' && !empty($pt->cat_type) && $pt->cat_type != 'all_time' ? '&type='.$pt->cat_type : '')  ?><?php echo($pt->stock_link) ?>" data-load="?link1=videos&page={{TYPE}}&page_id=<?php echo($pt->total_pages) ?><?php echo($pt->page == 'category' && !empty($_GET['id']) ? '&id='.$_GET['id'] : '')  ?><?php echo($pt->page == 'category' && !empty($_GET['id']) && !empty($_GET['sub_id']) ? '&sub_id='.$_GET['sub_id'] : '')  ?><?php echo($pt->page == 'top' && !empty($pt->cat_type) && $pt->cat_type != 'all_time' ? '&type='.$pt->cat_type : '')  ?><?php echo($pt->stock_link) ?>" class="btn" title='Last Page'>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" /></svg>
+					</a>
+				</nav>
+			</div>
+		        
+        <?php } ?>
+		<?php if ($pt->videos_count > 1) { ?>
+			<!-- <div class="watch-video-show-more desc load-more" data-type="{{TYPE}}" {{CATEGORY_ID}} data-sub-category-id="<?php echo( (!empty($_GET["sub_id"])) ? $_GET["sub_id"] : '' ); ?>">
+                {{LANG show_more}}
+            </div> -->
+        <?php } ?>
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+</div>
+<?php if ($pt->page == 'category' && $pt->show_sub == true) { ?>
+<script type="text/javascript">
+$(document).on('change', '#category_id', function(event) {
+	event.preventDefault();
+	id = $(this).val();
+	$('#sub_category_id').html(sub_categories_array["'"+id+"'"]);
+});
+$(document).on('change','#sub_categories_', function(event) {
+	window.location.href = site_url+'/videos/category/<?php echo($_GET['id']) ?>/'+$('#sub_categories_').val();
+});
+</script>
+<?php } ?>
+<?php if ($pt->page == 'stock') { ?>
+<script type="text/javascript">
+	function GoToStock() {
+		var keyword = $('#stock_keyword').val();
+		var min_price = $('#min_price').val();
+		var max_price = $('#max_price').val();
+		var license = $('#license').val();
+		var link = "{{LINK videos/stock}}?page_id=1&keyword="+keyword+"&min_price="+min_price+"&max_price="+max_price+"&license="+license;
+		location.href = link;
+	}
+</script>
+<?php } ?>

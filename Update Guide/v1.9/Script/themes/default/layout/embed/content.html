@@ -1,0 +1,231 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/player/css/mediaelementplayer.min.css" />
+    <script src="{{CONFIG theme_url}}/player/js/mediaelement-and-player.min.js"></script>
+    <script src="{{CONFIG theme_url}}/player/plugins/speed/speed.min.js"></script>
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/player/plugins/speed/speed.min.css" />
+    <script src="{{CONFIG theme_url}}/player/plugins/speed/speed-i18n.js"></script>
+    <script src="{{CONFIG theme_url}}/player/plugins/jump/jump-forward.min.js"></script>
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/player/plugins/jump/jump-forward.min.css" />
+    <script src="{{CONFIG theme_url}}/player/plugins/ads/ads.min.js"></script>
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/player/plugins/ads/ads.min.css" />
+    <script src="{{CONFIG theme_url}}/player/plugins/ads/ads-i18n.js"></script>
+    <script src="{{CONFIG theme_url}}/player/plugins/vast/ads-vast-vpaid.js"></script>
+    <script src="{{CONFIG theme_url}}/player/plugins/quality/quality.min.js"></script>
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/player/plugins/quality/quality.min.css" /> 
+    <?php if (!empty($pt->get_video->twitch)) {  ?>
+    <script src= "https://player.twitch.tv/js/embed/v1.js"></script>
+  <?php }  ?>
+  <title>{{TITLE}}</title>
+</head>
+<body>
+  <div class="video-player embed-video-player {{USR_AD_TRANS}}" style="overflow: hidden;">
+        <?php if (!empty($pt->config->watermark)) { ?>
+        <div class="watermark">
+          <a href="{{CONFIG site_url}}" target="_blank"><img src="{{CONFIG watermark}}" alt='watermark logo'></a>
+        </div>
+        <?php } ?>
+        <?php if (!empty($pt->get_video->vimeo)) {?>
+            <iframe src="http://player.vimeo.com/video/{{VIDEO_ID}}?api=1;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1" width="100%" height="<?php echo $pt->height;?>" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+         <?php } else if (!empty($pt->get_video->daily)) { ?>
+            <iframe frameborder="0" width="100%" height="<?php echo $pt->height;?>" src="//www.dailymotion.com/embed/video/{{VIDEO_ID}}?PARAMS" allowfullscreen></iframe>
+         <?php } else if (!empty($pt->get_video->twitch)) { 
+                  if ($pt->get_video->twitch_type != 'streams') {
+                     if ($pt->get_video->twitch_type == 'videos') {
+                        $link = 'https://player.twitch.tv/?video='.$pt->get_video->twitch;
+                     }
+                     else{
+                        $link = 'https://clips.twitch.tv/embed?clip='.$pt->get_video->twitch;
+                     }
+               ?>
+               <div class="pt_vdo_plyr"><div class="embed-responsive embed-responsive-16by9"><iframe width="100%" src="<?php echo($link) ?>&autoplay=false" allowfullscreen></iframe></div></div>
+               <?php }else{ ?>
+                  <div class="pt_vdo_plyr"><div class="embed-responsive embed-responsive-16by9"><div id="twitch_player__"></div></div></div>
+                  <script type="text/javascript">
+                    var options = {
+                      width: '100%',
+                      channel: "<?php echo($pt->get_video->twitch) ?>",
+                    };
+                    var player = new Twitch.Player("twitch_player__", options);
+                  </script>
+               <?php } ?>
+            <?php } else { ?>
+            <video id="my-video" controls style="width:100%; height:<?php echo $pt->height;?>" poster="{{THUMBNAIL}}" <?php echo ($pt->autoplay == 1) ? "autoplay='true'" : ""?>>
+               <?php if (!empty($pt->video_4096)) { ?>
+                     <source src="{{VIDEO_LOCATION_4096}}" type="{{VIDEO_TYPE}}" data-quality="4K" title='4K' label='4K' res='4096'>
+                     <?php } ?>
+                     <?php if (!empty($pt->video_2048)) { ?>
+                     <source src="{{VIDEO_LOCATION_2048}}" type="{{VIDEO_TYPE}}" data-quality="2K" title='2K' label='2K' res='2048'>
+                     <?php } ?>
+                     <?php if (!empty($pt->video_1080)) { ?>
+                     <source src="{{VIDEO_LOCATION_1080}}" type="{{VIDEO_TYPE}}" data-quality="1080p" title='1080p' label='1080p' res='1080'>
+                     <?php } ?>
+                     <?php if (!empty($pt->video_720)) { ?>
+                     <source src="{{VIDEO_LOCATION_720}}" type="{{VIDEO_TYPE}}" data-quality="720p" title='720p' label='720p' res='720'>
+                     <?php } ?>
+                     <?php if (!empty($pt->video_480)) { ?>
+                     <source src="{{VIDEO_LOCATION_480}}" type="{{VIDEO_TYPE}}" data-quality="480p" title='480p' label='480p' res='480'>
+                     <?php } ?>
+                     <?php if (!empty($pt->video_360)) { ?>
+                     <source src="{{VIDEO_LOCATION_360}}" type="{{VIDEO_TYPE}}" data-quality="360p" title='360p' label='360p' res='360'>
+                     <?php } ?>
+                     <?php if (!empty($pt->video_240)) { ?>
+                     <source src="{{VIDEO_LOCATION_240}}" type="{{VIDEO_TYPE}}" data-quality="240p" title='240p' label='240p' res='240'>
+                     <?php } ?>
+                     <?php if (!empty($pt->get_video->youtube) || (!empty($pt->get_video->video_location) && empty($pt->video_360))) { ?>
+                     <source src="{{VIDEO_LOCATION}}" type="{{VIDEO_TYPE}}" data-quality="360p" title='360p' label='360p' res='360'>
+                     <?php } ?> Your browser does not support HTML5 video.
+               <!-- //src="http://www.youtube.com/watch?v=nOEw9iiopwI" type="video/youtube" -->
+            </video>
+         <?php } ?>
+         <?php if (!empty($pt->ad_image)) {
+          ?>
+            <a href="{{AD_P_LINK}}" class="ad-link" target="_blank">
+               <div class="ad-image">
+                  <div class="ads-test"><i class="fa fa-bullhorn"></i> Advertisement will close in <span class="timer">(<span>{{AD_SKIP_NUM}}</span>)</span></div>
+                  <img src="{{AD_IMAGE}}" alt="Ads">
+               </div>
+            </a>
+            <?php } ?>
+    </div>
+</body>
+</html>
+<style>
+body {
+  margin: 0;
+  padding: 0;
+}
+video {
+  width: 100%;
+  height: 100%;
+
+}
+.watermark {
+  position: absolute;
+  z-index: 10;
+  left: 20px;
+  top: 20px;
+  transition: all 0.5s;
+  display: none;
+}
+.ad-image { width: 100%; height: 100%; background-color: #fcfcfc; text-align: center; z-index: 9; line-height: 100%; position: absolute; overflow: hidden; top: 0; }
+.ad-image img { text-align: center; max-width: 100%; margin-top: 5%; vertical-align: middle; }
+.ads-test { color: #ffcc7f; width: 100%; padding: 10px; background-color: rgba(0, 0, 0, 0.5); }
+.embed-video-player{position: relative;}
+.mejs__container
+{width: 100% !important; height: 100% !important;}
+</style>
+<script>
+$(".video-player").hover(
+    function(e){
+      $('.watermark').css('display', 'block');
+     }, 
+    function(e){
+      setTimeout(function () {
+        if ($('.video-player:hover').length == 0) {
+          $('.watermark').css('display', 'none');
+        }
+      }, 1000);
+     } 
+);
+// $('video, audio').mediaelementplayer({
+//   // Do not forget to put a final slash (/)
+//   pluginPath: 'https://cdnjs.com/libraries/mediaelement/',
+//   // this will allow the CDN to use Flash without restrictions
+//   // (by default, this is set as `sameDomain`)
+//   shimScriptAccess: 'always',
+
+//   features: ['playpause','progress','current','duration','tracks','volume'<?php echo ($pt->autoplay == 1) ? ",'fullscreen'" : ""?>],
+
+//   success: function (media) {
+//      var isYoutube = ~media.rendererName.indexOf('youtube');
+//   }
+//   // more configuration
+// });
+
+
+function pt_elexists(el){
+  return ($(el).length > 0);
+}
+var played = false;
+$('video').mediaelementplayer({
+      pluginPath: 'https://cdnjs.com/libraries/mediaelement-plugins/',
+      shimScriptAccess: 'always',
+      autoplay: true,
+      features: ['playpause', 'current', 'progress', 'duration', 'speed', 'skipback', 'jumpforward', 'tracks', 'markers', 'volume', 'chromecast', 'contextmenu', 'flash' <?php echo ($pt->config->ffmpeg_system == 'on' && empty($pt->get_video->youtube)) ? ", 'quality'" : ''?> {{ADS}} {{VAT}}, 'fullscreen'],
+      vastAdTagUrl: '{{VAST_URL}}',
+      vastAdsType: '{{VAST_TYPE}}',
+      jumpForwardInterval: 20,
+      adsPrerollMediaUrl: [{{AD_MEDIA}}],
+      adsPrerollAdUrl: [{{AD_LINK}}],
+      adsPrerollAdEnableSkip: {{AD_SKIP}},
+      adsPrerollAdSkipSeconds: {{AD_SKIP_NUM}},
+      success: function (media) {
+          media.addEventListener('ended', function (e) {
+            if ('{{VAST_TYPE}}' == 'vast' && played == false) {
+              
+              setTimeout(function () {
+                $('video').attr('src', '{{VIDEO_LOCATION}}');
+                $('video')[0].play();
+                played = true;
+              },100)
+
+              
+            }
+          }, false);
+
+          media.addEventListener('playing', function (e) {
+            if (pt_elexists('.ads-overlay-info')) {
+              $('.ads-overlay-info').remove();
+            }
+
+            $('.ads-test').remove();
+             
+            if ($('body').attr('resized') == 'true') {
+                PT_Resize(true);
+            }
+            $('#mep_0').css('height', ($('#mep_0').width() / 1.77176216) + 'px');
+            $('video, iframe').css('height', '100%');
+
+          }); 
+      },
+    });
+if ('{{VAST_TYPE}}' == 'vast' && played == false) {
+  $('.mejs__ads-skip-button').click(function(event) {
+    $('video').attr('src', '{{VIDEO_LOCATION}}');
+    played = true;
+  });
+}
+
+
+
+$('.ad-link').on('click', function(event) {
+  $('.ad-link').remove();
+  $('video')[0].play();
+});
+
+<?php if (!empty($pt->ad_image)) { ?>
+var counter = {{AD_SKIP_NUM}};
+var interval = setInterval(function() {
+    counter--;
+    $('.timer span').text(counter);
+    if (counter == 0) {
+        $('.ad-link').remove();
+         $('video')[0].play();
+        
+        clearInterval(interval);
+    }
+}, 1000);
+<?php } ?>
+$('.rad-transaction').click(function(event) {
+      $(this).off("click").removeClass('rad-transaction');
+      $.get('{{LINK aj/ads/rad-transaction}}', function(data){ /* pass */ });
+    });
+
+
+
+
+
+</script>

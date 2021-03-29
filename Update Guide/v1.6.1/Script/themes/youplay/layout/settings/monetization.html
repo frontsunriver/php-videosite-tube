@@ -1,0 +1,41 @@
+<div class="user-setting-panel pt_shadow">
+	<div class="yp_sett_header">
+		<div class="ava_combo">
+			<div class="ava">
+				<img src="{{USER avatar}}" alt="{{USER id}}" />
+			</div>
+			<div class="logo_svg">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M404 160H108c-33.1 0-60 26.9-60 60v168c0 33.1 26.9 60 60 60h296c33.1 0 60-26.9 60-60V220c0-33.1-26.9-60-60-60zM342.9 65L108 110.9c-18 4-44 22.1-44 44.1 0 0 15-19 49-19h287v-20.5c0-12.6-5-28.7-13.9-37.6-11.3-11.3-27.5-16.2-43.2-12.9z"></path></svg>
+			</div>
+		</div>
+		<h4>{{LANG monetization}}</h4>
+	</div>
+	<form id="toggle-video-monetization-form" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-md-2" for="monetization">{{LANG monetization}}</label>
+			<div class="col-md-6">
+				<input type="checkbox" <?php echo ($pt->settings->video_mon == '1') ? 'checked': '';?> data-toggle="toggle" data-onstyle="success" data-on="{{LANG enabled}}" data-off="{{LANG disabled}}" id="toggle-video-monetization">
+			</div>
+		</div>
+		<div class="clear"></div>
+	</form>
+	<hr>
+	<div class="alert alert-info">
+     {{LANG earn_mon}}
+	</div>
+</div>
+
+<script>
+    jQuery(document).ready(function($) {
+	$('#toggle-video-monetization').bootstrapToggle();
+        //$("#withdrawal-requests").DataTable();
+
+        $("#toggle-video-monetization").change(function(event) {
+            let hash_id = $('.main_session').val();
+            let url     = "{{LINK aj/user/video-monetization}}?hash=" + hash_id;
+            $.post(url,{user_id:'<?php echo($pt->settings->id);?>'}, function(data, textStatus, xhr) { /* pass */});
+        });
+
+    });
+
+</script>

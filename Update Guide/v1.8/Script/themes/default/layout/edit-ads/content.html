@@ -1,0 +1,125 @@
+<div class="create-new-ad-container">
+    <div class="user-ads-list-header">
+      <span>
+        <a href="{{LINK ads}}">
+          <i class="material-icons">dvr</i> {{LANG ads}} 
+        </a>
+      </span>
+      <span  class="pointer">
+          <i class="material-icons">keyboard_arrow_right</i> {{LANG edit_ad}} ({{NAME}})
+      </span>
+    </div>
+    <form class="user-ads-settings-form" method="POST">
+      <div class="user-ads-settings-alert">
+        
+      </div>
+      <div class="col-lg-8 col-md-8">   
+          <div class="body">
+              <div class="alert alert-success ads-settings-alert"></div>
+                  <div class="form-group">
+                  	  <label class="form-label col-md-2" for="name">{{LANG name}}</label>
+                      <div class="col-md-10">
+                      	<input type="text" id="name" name="name" class="form-control" value="{{NAME}}">
+                      </div>       
+                  </div>
+                  <div class="form-group">
+                      <label class="form-label col-md-2" for="url">URL</label>
+                      <div class="col-md-10">
+                      	<input type="text" id="url" name="url" class="form-control" value="{{URL}}">
+                      </div> 
+                  </div>
+
+                  <div class="form-group">
+                      <label class="form-label col-md-2" for="title">{{LANG title}}</label>
+                      <div class="col-md-10">
+                      	<input type="text" id="title" name="title" class="form-control" value="{{TITLE}}">
+                      </div> 
+                  </div>
+
+                  <div class="form-group">
+                      <label class="form-label col-md-2" for="desc">{{LANG description}}</label>
+                      <div class="col-md-10">
+                      	<textarea name="desc" id="desc" rows="4" class="form-control">{{DESC}}</textarea>
+                      </div> 
+                  </div>
+          </div>
+          <div class="clearfix"></div>
+      </div>
+      <div class="col-lg-4 col-md-4">
+    		<div class="form-group-rs">
+            <select class="form-control selectpicker show-menu-arrow show-tick" multiple name="audience-list[]" data-live-search="true" title="{{LANG traget_audience}}" data-actions-box="true" name="audience-list[]">
+              	<?php foreach ($countries_name as $country_id => $country_name): ?>
+                  <?php if (in_array($country_id, $pt->audience)): ?>
+                    <option value="<?php echo($country_id); ?>" selected>
+                      <span>
+                        <?php echo($country_name); ?>
+                      </span>
+                    </option> 
+                  <?php else: ?>
+                		<option value="<?php echo($country_id); ?>">
+                			<span>
+                				<?php echo($country_name); ?>
+                			</span>
+                		</option>
+                  <?php endif ?>
+              	<?php endforeach; ?>
+          	</select>
+            <div class="clear"></div>
+    		</div>
+        <div class="form-group">
+            <label class="form-label" for="day_limit">{{LANG ad_day_limit}}</label>
+            <div>
+              <input type="number" id="day_limit" name="day_limit" class="form-control" placeholder="0" value="{{DAY_LIMIT}}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+            </div> 
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="lifetime_limit">{{LANG ad_lifetime_limit}}</label>
+            <div>
+              <input type="number" id="lifetime_limit" name="lifetime_limit" class="form-control" placeholder="0" value="{{LIFETIME_LIMIT}}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+            </div> 
+        </div>
+      	<div class="form-group">
+      		<button type="submit" class="btn btn-main" id="submit-btn"><i class="fa fa-floppy-o"></i> <span>{{LANG save}}</span></button>
+      		<a href="{{LINK ads}}">
+          <button type="button" class="btn btn-default"><i class="fa fa-ban"></i> {{LANG cancel}}</button>  
+          </a>
+      	</div>
+      </div>       
+    </form>     
+    <div class="clear"></div>
+</div>
+<br>
+<script>
+	jQuery(document).ready(function($) {
+	  $('.selectpicker').selectpicker({});
+
+
+    $('.user-ads-settings-form').ajaxForm({
+      url: '{{LINK aj/ads/edit}}?hash=' + $('.main_session').val(),
+      dataType:"json",
+      data:{id:"{{ID}}"},
+      beforeSend: function() {
+        $('#submit-btn').attr('disabled', true).find('span').text("{{LANG please_wait}}");
+      },
+      success: function(data) {
+        scrollToTop();
+        
+        if (data.status == 200){
+          $(".user-ads-settings-alert").html('<div class="alert alert-success bg-success"><i class="fa fa-check"></i> '+
+            data.message
+            +'</div>');
+          PT_Delay(function(){
+            window.location.href = '{{LINK ads}}';
+          },2000);
+          
+        }
+        else {
+          $('#submit-btn').removeAttr('disabled').find('span').text('{{LANG save}}');
+          $(".user-ads-settings-alert").html('<div class="alert alert-danger bg-danger"><i class="fa fa-info-circle"></i> '+
+            data.message
+            +'</div>');
+        }
+      }
+    });
+	});
+</script>

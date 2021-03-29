@@ -1,0 +1,9 @@
+<tr class="setting-postlist" id="{{ID}}">
+   <td>{{ID}}</td>
+   <td><a href="<?php echo PT_Link('site-pages/'); ?>{{NAME}}">{{NAME}}</a></td>
+   <td>{{TITLE}}</td>
+   <td>
+      <a class="btn btn-info waves-effect waves-light" href="<?php echo PT_LoadAdminLinkSettings('edit-custom-page?id='); ?>{{NAME}}">EDIT</a>
+      <button class="btn btn-danger waves-effect waves-light" onclick="DeleteCustomPage({{ID}});">DELETE</button>
+   </td>
+</tr>

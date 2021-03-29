@@ -1,0 +1,272 @@
+<style>
+.navbar-default.second-header-layout {background: #ee457e; }
+</style>
+<div class="wo_about_wrapper_parent">
+	<div class="wo_about_wrapper"> 
+		<div class="hero hero-overlay" style="background-color: #ee457e;"> 
+			<div class="container">
+				<h1 class="text-center">{{LANG import_new_video}}</h1>
+			</div> 
+		</div>
+		<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 3510.8 349.9" xml:space="preserve"><style type="text/css">.st0{opacity:0.35;fill:#f5f5f5;}.st1{fill:#f5f5f5;}</style><path class="st0" d="M1538.6,349.9c-8.5-5.8-17-11.5-25.4-17.2c-201.1-134-443.1-203.1-683.1-195.3	c-227.5,7.5-446.5,85.8-635.3,212.4H1538.6z"/><path class="st1" d="M3510.8,204.2c-20.4-11.2-41.6-21.2-62.2-29.5c-82.7-33.3-189.3-48.1-283.7-29.4
+	c-145.5,29-226.9,126.3-365.6,165.7c-122,34.6-266.8,18.4-392.2-11.3c-243.9-57.8-476.4-125.1-746.4-111c-148,7.7-291,38.8-421.4,82
+	c-134.5,44.6-293.8,106.7-448.7,58.3c-131.8-41.3-200.4-132.1-322.4-182c-91.2-37.3-207.8-50.7-315.1-36.3
+	C98,118.1,45.7,132.9,0,153.3v197.2h3510.8V204.2z"/><path class="st0" d="M3510.8,282.8c-117.5-97.4-255.6-201.2-413.4-176.4c-111.4,17.5-184.7,114-282.7,161
+	c-127.3,61-227.1-16.9-341-69.3c-153.7-70.6-343.6-51.4-480.7,48.6c-42.4,31-83,70-125.2,103.2h1643V282.8z"/><path class="st0" d="M3510.8,161.9c-21.6-2.7-43-3.1-62.3-1.6c-73,5.5-142.2,33.4-209.5,62.3c-67.3,28.9-134.9,59.4-207.2,70.9
+	c-241.2,38.3-440.7-133.6-663.5-189c-201.9-50.2-415.8-6.8-611.8,62.6c-199.5,70.6-405.5,169.7-612.9,127.5
+	c-146-29.7-268.2-125.9-403.1-189.1C501.4-6.7,247.5-4.2,0,50.1v299.8h3510.8V161.9z"/></svg>
+	</div>
+</div>
+<div class="col-md-2"></div>
+<div class="col-md-8 pt_page_margin">
+	<div class="content pt_shadow">
+		<div class="col-md-12 pt_import_vdo">
+			<div class="col-md-12" id="fetch-form">
+				<form action="" class="form-horizontal" method="POST">
+					<div class="text-center"><svg fill="#999" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" class="feather feather-import"><path d="M17,13L12,18L7,13H10V9H14V13M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14A6,6 0 0,0 6,20H19A5,5 0 0,0 24,15C24,12.36 21.95,10.22 19.35,10.03Z" /></svg></div>
+					<div class="row">
+						<div class="col-md-9">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+							<input id="url" name="url" type="text" placeholder="{{LANG video_url}}" class="form-control input-md"> 
+							<span class="help-block">{{LANG url_desc}}, <?php echo ($pt->config->facebook_import == 'on') ? 'Facebook, ': '';?>mp4<?php echo ($pt->config->ok_import == 'on') ? ',ok.ru': '';?></span>
+						</div>
+						<div class="col-md-3">
+							<button type="button" class="btn btn-main fetch-url">{{LANG fetch_Video}}</button>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</form>
+			</div>
+			<div class="col-md-12 import-form-content hidden">
+				<div class="row">
+					<div class="col-md-7" id="import-form">
+						<form action="" class="form-horizontal setting-panel pt_forms" method="POST" id="submit-imported-video">
+							<div class="form-group">
+								<label class="col-md-12" for="title">{{LANG video_title}}</label>  
+								<div class="col-md-12">
+									<input id="title" name="title" type="text" placeholder="" class="form-control input-md">
+									<span class="help-block">{{LANG video_title_help}}</span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-12" for="description">{{LANG video_descritpion}}</label>  
+								<div class="col-md-12">
+									<textarea name="description" id="description" cols="30" rows="8" class="form-control"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-12" for="category_id">{{LANG category}}</label>  
+								<div class="col-md-12">
+									<select name="category_id" id="category_id" class="form-control">
+										<?php foreach($pt->categories as $key => $category) {?>
+											<option value="<?php echo $key?>"><?php echo $category?></option>
+										<?php } ?>
+									</select>
+								</div>
+							</div>
+                     <div class="form-group">
+                          <label class="col-md-12" for="sub_category_id">{{LANG sub_category}}</label>
+                          <div class="col-md-12">
+                              <select name="sub_category_id" id="sub_category_id" class="form-control">
+                                 <?php echo $pt->sub_categories_array["'1'"]; ?>
+                              </select>
+                          </div>
+                      </div>
+                      <?php if ($pt->config->geo_blocking == 'on') {
+                       ?>
+                      <div class="form-group">
+                        <label class="col-md-12" for="geo_blocking">{{LANG geo_blocking}}</label>
+                        <div class="col-md-12">
+                          <div class="form-group-rs" id="geo_blocking">
+                                <select class="form-control selectpicker show-menu-arrow show-tick" multiple name="continents-list[]" data-live-search="true" title="{{LANG geo_blocking}}" data-actions-box="true">
+                                    <?php 
+                                    foreach ($pt->continents as $key => $name): 
+                                      ?>
+                                      <option value="<?php echo($name); ?>">
+                                        <span>
+                                          <?php echo($name); ?>
+                                        </span>
+                                      </option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                      </div>
+                      <?php } ?>
+                      <div class="form-group">
+                        <label class="col-md-12" for="privacy">{{LANG privacy}}</label>  
+                        <div class="col-md-12">
+                           <select name="privacy" id="privacy" class="form-control">
+                              <option value="0">{{LANG public}}</option>
+                              <option value="1">{{LANG private}}</option>
+                              <option value="2">{{LANG unlisted}}</option>
+                           </select>
+                        </div>
+                     </div>
+                      <div class="form-group">
+                        <label class="col-md-12" for="age_restriction">{{LANG age_restriction}}</label>  
+                        <div class="col-md-12">
+                           <select name="age_restriction" id="age_restriction" class="form-control">
+                              <option value="1" selected>{{LANG all_ages}}</option>
+                              <option value="2">{{LANG only_18}}</option>
+                           </select>
+                        </div>
+                     </div>
+							<div class="form-group">
+								<label class="col-md-12" for="tags">{{LANG tags}}</label>  
+								<div class="col-md-12">
+									<input id="mySingleFieldTags" name="tags" type="text" placeholder="" class="form-control input-md">
+									<span class="help-block">{{LANG tags_help}}</span>
+								</div>
+							</div>
+              <div class="form-group hidden" id="duration_format">
+                <label class="col-md-12" for="duration">{{LANG duration}}</label>  
+                <div class="col-md-12">
+                  <input id="duration" name="duration" type="text" placeholder="" class="form-control input-md duration">
+                  <span class="help-block">EX : 03:30</span>
+                </div>
+              </div>
+                    
+							<input type="hidden" name="thumbnail-image" class="thumbnail">
+							<input type="hidden" name="video-type" class="type">
+							<input type="hidden" name="video-id" class="video-id">
+              <input type="hidden" name="twitch_type" class="twitch_type">
+							<!-- <input type="hidden" name="duration" class="duration"> -->
+							<input id="thumbnail" name="thumbnail" type="file" accept="image/*" class="hidden">
+							<div class="last-sett-btn modal-footer">
+								<button type="submit" class="btn btn-main submit-url setting-panel-mdbtn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> {{LANG publish}}</button>
+							</div>
+                     <div class="clear"></div>
+               </form>
+            </div>
+            <div class="col-md-5">
+               <div class="thumbnail-preview edit-thumb thumbnail-preview-renderer">
+                 <img src="" alt="Picture">
+               </div>
+               <div class="video-title">
+                  <p></p>
+               </div>
+               <div class="video-description">
+                  <p></p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="clear"></div>
+</div>
+</div>
+<div class="col-md-2"></div>
+<script>
+$('.selectpicker').selectpicker({});
+<?php 
+$js_array = json_encode($pt->sub_categories_array);
+echo "var sub_categories_array = ". $js_array . ";\n";
+?>
+$(document).on('change', '#category_id', function(event) {
+   event.preventDefault();
+   id = $(this).val();
+   $('#sub_category_id').html(sub_categories_array["'"+id+"'"]);
+});
+
+
+$(function () {
+   $('.edit-thumb').on('click', function(event) {
+      $('#thumbnail').trigger('click');
+   });
+
+   $('#thumbnail').on('change', function(event) {
+      readURL(this);
+   });
+
+   $('#submit-imported-video').ajaxForm({
+       url: '{{LINK aj/submit-imported-video}}?hash=' + $('.main_session').val(),
+       beforeSend: function() {
+         $('.submit-url').attr('disabled', true);
+         $('.submit-url').text("{{LANG please_wait}}");
+       },
+       success: function(data) {
+         if (data.status == 200) {
+            window.location.href = data.link;
+         } 
+         else {
+            $('.submit-url').attr('disabled', false);
+             $('.submit-url').html('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> {{LANG publish}}');
+			Snackbar.show({text: '<div>'+ data.message +'</div>'});
+         }
+       }
+   });
+   $('#description').keyup(function(event) {
+      str = $(this).val().replace(/(?:\r\n|\r|\n)/g, '<br />');
+      $('.video-description p').html(str);
+   });
+   $('#title').keyup(function(event) {
+      $('.video-title p').html($(this).val());
+   });
+   $('#mySingleFieldTags').tagit({
+      allowSpaces: true
+   });
+	$('.fetch-url').on('click', function () {
+		$(this).text("{{LANG please_wait}}");
+		$.post('{{CONFIG site_url}}/aj/fetch-video', {link: $('#url').val()}, function(data, textStatus, xhr) {
+			$('.fetch-url').text('{{LANG fetch_Video}}');
+			if (data.status == 200) {
+            if ($("#mySingleFieldTags").val()) {
+               $(".tagit-choice").remove();
+            }
+            $('.alert-danger').empty();
+				$('#title').val(data.title);
+            $('.video-title p').html(data.title);
+            $('#description').val(data.description);
+            $('.video-description p').html(data.description_br);
+            $('#mySingleFieldTags').val(data.tags);
+            $('.duration').val(data.duration);
+            if (data.type == 'mp4') {
+              $('#duration_format').removeClass('hidden');
+            }
+            else{
+              $('#duration_format').addClass('hidden');
+            }
+            var partsOfStr = data.tags.split(',');
+            for (i = 0; i < partsOfStr.length; i++) {
+               $('#mySingleFieldTags').tagit("createTag", partsOfStr[i]);
+            }
+            $('.thumbnail').val(data.thumbnail);
+            
+            $('.thumbnail-preview img').attr('src', data.full_thumb);
+            $('.video-id').val(data.video_id);
+            $('.twitch_type').val(data.twitch_type);
+            $('.type').val(data.type);
+            $('.import-form-content').removeClass('hidden');
+			$('.pt_page_margin').addClass('w-100');
+			} 
+
+         else if(data.status == 401){
+            swal({
+               title: '{{LANG oops}}!',
+               text: "{{LANG import_limit_reached}}!",
+               type: 'info',
+               showCancelButton: true,
+               confirmButtonColor: '#3085d6',
+               cancelButtonColor: '#d33',
+               confirmButtonText: '{{LANG upgrade_now}}',
+               cancelButtonText: '{{LANG cancel}}',
+               confirmButtonClass: 'btn btn-success margin-right',
+               cancelButtonClass: 'btn',
+               buttonsStyling: false
+            }).then(function(){
+               window.location.href = '{{LINK go_pro}}';
+            },
+            function() {
+               window.location.href = '{{LINK }}';
+            });
+            
+         }
+         else {
+				Snackbar.show({text: '<div>'+ data.message +'</div>'});
+			}
+		},dataType = 'json');
+	});
+});
+</script>

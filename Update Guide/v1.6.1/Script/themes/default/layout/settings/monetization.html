@@ -1,0 +1,56 @@
+<div class="col-md-3"></div>
+<div class="user-setting-panel col-md-6 pt_shadow">
+	<form id="toggle-video-monetization-form" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-md-2" for="monetization">{{LANG monetization}}</label>
+			<div class="col-md-6">
+				<input type="checkbox" <?php echo ($pt->settings->video_mon == '1') ? 'checked': '';?> data-toggle="toggle" data-onstyle="success" data-on="{{LANG enabled}}" data-off="{{LANG disabled}}" id="toggle-video-monetization">
+			</div>
+		</div>
+		<div class="clear"></div>
+	</form>
+	<hr>
+	<div class="alert alert-info">
+     {{LANG earn_mon}}
+	</div>
+</div>
+<div class="col-md-3"></div>
+<script>
+
+    jQuery(document).ready(function($) {
+        $('#toggle-video-monetization').bootstrapToggle();
+        //$("#withdrawal-requests").DataTable();
+
+        $("#toggle-video-monetization").change(function(event) {
+            let hash_id = $('.main_session').val();
+            let url     = "{{LINK aj/user/video-monetization}}?hash=" + hash_id;
+            $.post(url,{user_id:'<?php echo($pt->settings->id);?>'}, function(data, textStatus, xhr) { /* pass */});
+        });
+
+        var form = $('form#monetization-settings');
+        form.ajaxForm({
+            url: '{{LINK aj/user/request-withdrawal}}?hash=' + $('.main_session').val(),
+            dataType:'json',
+            beforeSend: function() {
+                form.find('button').text("{{LANG please_wait}}");
+            },
+            success: function(data) {
+                scrollToTop();
+                if (data.status == 200) {
+                    $('.monetization-settings-alert').html('<div class="alert alert-success bg-success">' + data.message + '</div>');
+                    $('.alert-success').fadeIn('fast', function() {
+                        $(this).delay(2500).slideUp(500, function() {
+                            $(this).remove();
+                        });
+                    });
+                } 
+                else if (data.status == 400) {
+                    $('.monetization-settings-alert').html('<div class="alert alert-danger bg-danger">' + data.message + '</div>');
+                    $('.alert-danger').fadeIn(300);
+                }
+                form.find('button').html('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> {{LANG submit_withdrawal_request}}');
+            }
+        });
+    });
+
+</script>

@@ -1,0 +1,675 @@
+<?php 
+$pt->config->ffmpeg  = is_executable($pt->config->ffmpeg_binary_file);
+function isEnabled($func) {
+    return is_callable($func) && false === stripos(ini_get('disable_functions'), $func);
+}
+$enabled = true;
+if (!isEnabled('shell_exec')) {
+    $enabled = false;
+}
+
+
+?>
+
+<div class="container-fluid">
+    <div>
+        <h3>General Settings</h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="#">Settings</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">General Settings</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- Vertical Layout -->
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Main Settings</h6>
+                    <div class="video-settings-alert"></div>
+                    <form class="video-settings" method="POST">
+
+                        <label for="upload_system">Upload Videos System</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" id="upload_system-enabled" value="on" name="upload_system" <?php echo ($pt->config->upload_system == 'on') ? 'checked': '';?>>
+                              <label class="form-check-label" for="upload_system-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" id="upload_system-disabled" value="off" name="upload_system" <?php echo ($pt->config->upload_system == 'off') ? 'checked': '';?>>
+                              <label class="form-check-label" for="upload_system-disabled">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="import_system">Import Videos System</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" name="import_system" id="import_system-enabled" value="on" <?php echo ($pt->config->import_system == 'on') ? 'checked': '';?>>
+                                <label for="import_system-enabled"  class="form-check-label">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="import_system" id="import_system-disabled" value="off" <?php echo ($pt->config->import_system == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="import_system-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="resize_video">Resize Video Player</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="resize_video" id="resize_video-enabled" value="on" <?php echo ($pt->config->resize_video == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="resize_video-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="resize_video" id="resize_video-disabled" value="off" <?php echo ($pt->config->resize_video == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="resize_video-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+
+
+                        <label for="autoplay_system">Autoplay System</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="autoplay_system" id="autoplay_system-enabled" value="on" <?php echo ($pt->config->autoplay_system == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="autoplay_system-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="autoplay_system" id="autoplay_system-disabled" value="off" <?php echo ($pt->config->autoplay_system == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="autoplay_system-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="embed_system">Embed Video System</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="embed_system" id="embed_system-enabled" value="on" <?php echo ($pt->config->embed_system == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="embed_system-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="embed_system" id="embed_system-disabled" value="off" <?php echo ($pt->config->embed_system == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="embed_system-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="history_system">History System</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="history_system" id="history_system-enabled" value="on" <?php echo ($pt->config->history_system == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="history_system-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="history_system" id="history_system-disabled" value="off" <?php echo ($pt->config->history_system == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="history_system-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="article_system">Article System</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="article_system" id="article_system-enabled" value="on" <?php echo ($pt->config->article_system == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="article_system-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="article_system" id="article_system-disabled" value="off" <?php echo ($pt->config->article_system == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="article_system-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="download_videos">Download Videos System</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="download_videos" id="download_videos-enabled" value="on" <?php echo ($pt->config->download_videos == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="download_videos-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="download_videos" id="download_videos-disabled" value="off" <?php echo ($pt->config->download_videos == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="download_videos-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="facebook_import">Import Facebook videos</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="facebook_import" id="facebook_import-enabled" value="on" <?php echo ($pt->config->facebook_import == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="facebook_import-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="facebook_import" id="facebook_import-disabled" value="off" <?php echo ($pt->config->facebook_import == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="facebook_import-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="ok_import">Import ok.ru videos</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="ok_import" id="ok_import-enabled" value="on" <?php echo ($pt->config->ok_import == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="ok_import-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="ok_import" id="ok_import-disabled" value="off" <?php echo ($pt->config->ok_import == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="ok_import-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="twitch_import">Import Twitch videos</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="twitch_import" id="twitch_import-enabled" value="on" <?php echo ($pt->config->twitch_import == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="twitch_import-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="twitch_import" id="twitch_import-disabled" value="off" <?php echo ($pt->config->twitch_import == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="twitch_import-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="donate_system">Donate to channel</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="donate_system" id="donate_system-enabled" value="on" <?php echo ($pt->config->donate_system == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="donate_system-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="donate_system" id="donate_system-disabled" value="off" <?php echo ($pt->config->donate_system == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="donate_system-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="approve_videos">Approve videos before publishing</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="approve_videos" id="approve_videos-enabled" value="on" <?php echo ($pt->config->approve_videos == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="approve_videos-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="approve_videos" id="approve_videos-disabled" value="off" <?php echo ($pt->config->approve_videos == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="approve_videos-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="two_factor_setting">Two-Factor Settings</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="two_factor_setting" id="two_factor_setting-enabled" value="on" <?php echo ($pt->config->two_factor_setting == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="two_factor_setting-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="two_factor_setting" id="two_factor_setting-disabled" value="off" <?php echo ($pt->config->two_factor_setting == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="two_factor_setting-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="popular_channels">Popular Channels</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="popular_channels" id="popular_channels-enabled" value="on" <?php echo ($pt->config->popular_channels == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="popular_channels-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="popular_channels" id="popular_channels-disabled" value="off" <?php echo ($pt->config->popular_channels == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="popular_channels-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="geo_blocking">Geo-Blocking</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="geo_blocking" id="geo_blocking-enabled" value="on" <?php echo ($pt->config->geo_blocking == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="geo_blocking-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="geo_blocking" id="geo_blocking-disabled" value="off" <?php echo ($pt->config->geo_blocking == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="geo_blocking-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="all_create_articles">Users Can Create Articles</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="all_create_articles" id="all_create_articles-enabled" value="on" <?php echo ($pt->config->all_create_articles == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="all_create_articles-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="all_create_articles" id="all_create_articles-disabled" value="off" <?php echo ($pt->config->all_create_articles == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="all_create_articles-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="movies_videos">Movies Videos</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="movies_videos" id="movies_videos-enabled" value="on" <?php echo ($pt->config->movies_videos == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="movies_videos-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="movies_videos" id="movies_videos-disabled" value="off" <?php echo ($pt->config->movies_videos == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="movies_videos-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="block_system">Block System</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="block_system" id="block_system-enabled" value="on" <?php echo ($pt->config->block_system == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="block_system-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="block_system" id="block_system-disabled" value="off" <?php echo ($pt->config->block_system == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="block_system-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="pop_up_18">+18 Pop-up</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="pop_up_18" id="pop_up_18-enabled" value="on" <?php echo ($pt->config->pop_up_18 == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="pop_up_18-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="pop_up_18" id="pop_up_18-disabled" value="off" <?php echo ($pt->config->pop_up_18 == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="pop_up_18-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="number" id="time_18" name="time_18" class="form-control" value="{{CONFIG time_18}}" oninput="this.value = this.value.replace(/[^1-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                <label class="form-label">+18 Block Time <small>(Hour)</small></label>
+                            </div>
+                        </div>
+                        <label for="lang_modal">Language Modal</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="lang_modal" id="lang_modal-enabled" value="on" <?php echo ($pt->config->lang_modal == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="lang_modal-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="lang_modal" id="lang_modal-disabled" value="off" <?php echo ($pt->config->lang_modal == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="lang_modal-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="report_copyright">Report Copyright</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="report_copyright" id="report_copyright-enabled" value="on" <?php echo ($pt->config->report_copyright == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="report_copyright-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="report_copyright" id="report_copyright-disabled" value="off" <?php echo ($pt->config->report_copyright == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="report_copyright-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="require_login">Require Login To Watch Video</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="require_login" id="require_login-enabled" value="on" <?php echo ($pt->config->require_login == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="require_login-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="require_login" id="require_login-disabled" value="off" <?php echo ($pt->config->require_login == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="require_login-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="who_upload">Who Can Upload Videos</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="who_upload" id="who_upload-enabled" value="all" <?php echo ($pt->config->who_upload == 'all') ? 'checked': '';?>>
+                                <label class="form-check-label" for="who_upload-enabled">All Users</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="who_upload" id="who_upload-disabled" value="admin" <?php echo ($pt->config->who_upload == 'admin') ? 'checked': '';?>>
+                                <label class="form-check-label" for="who_upload-disabled" class="m-l-20">Admin</label>
+                            </div>
+                        </div>
+                        <label for="playlist_subscribe">Subscribe To Playlist System</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="playlist_subscribe" id="playlist_subscribe-enabled" value="on" <?php echo ($pt->config->playlist_subscribe == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="playlist_subscribe-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="playlist_subscribe" id="playlist_subscribe-disabled" value="off" <?php echo ($pt->config->playlist_subscribe == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="playlist_subscribe-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="require_subcription">Require Subscription To Access Site <small>(Pro system should be enabled)</small></label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="require_subcription" id="require_subcription-enabled" value="on" <?php echo ($pt->config->require_subcription == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="require_subcription-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="require_subcription" id="require_subcription-disabled" value="off" <?php echo ($pt->config->require_subcription == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="require_subcription-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="post_system">Create Post System</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="post_system" id="post_system-enabled" value="on" <?php echo ($pt->config->post_system == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="post_system-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="post_system" id="post_system-disabled" value="off" <?php echo ($pt->config->post_system == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="post_system-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="show_articles">Show Articles In Home Page</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="show_articles" id="show_articles-enabled" value="on" <?php echo ($pt->config->show_articles == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="show_articles-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="show_articles" id="show_articles-disabled" value="off" <?php echo ($pt->config->show_articles == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="show_articles-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <style type="text/css">
+                                div .show-menu-arrow .open{overflow: unset !important;}
+                            </style>
+                            <label class="col-md-12" for="geo_blocking">{{LANG fav_category}}</label>
+                            <div class="col-md-12">
+                                <div class="form-group-rs" id="geo_blocking">
+                                <select class="form-control js-example-basic-single" multiple name="fav_category[]" data-live-search="true" title="{{LANG fav_category}}" data-actions-box="true">
+                                    <?php 
+                                    foreach ($pt->categories as $key => $name): 
+                                    if($key != 'other'){
+                                        ?>
+                                        <option value="<?php echo($key); ?>" <?php if (in_array($key, $pt->config->fav_category)) {echo "selected";} ?>>
+                                            <span>
+                                                <?php echo($name); ?>
+                                            </span>
+                                        </option>
+                                    <?php } ?>
+                                    <?php endforeach; ?>
+                                </select>
+                                <span class="help-block" style="opacity: 1;margin-top: 10px;">{{LANG choose_which_categories}}</span>
+                                <div class="clear"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <label for="sticky_video">Sticky Video</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="sticky_video" id="sticky_video-enabled" value="on" <?php echo ($pt->config->sticky_video == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="sticky_video-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="sticky_video" id="sticky_video-disabled" value="off" <?php echo ($pt->config->sticky_video == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="sticky_video-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <label for="pro_google">Pro Users Can Have Google Analytics</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="pro_google" id="pro_google-enabled" value="on" <?php echo ($pt->config->pro_google == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="pro_google-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="pro_google" id="pro_google-disabled" value="off" <?php echo ($pt->config->pro_google == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="pro_google-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">Save</button>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-lg-6 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">API Settings</h6>
+                    <div class="api-settings-alert"></div>
+                    <form class="api-settings" method="POST">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">YouTube API key</label>
+                                <input type="text" id="yt_api" name="yt_api" class="form-control" value="{{CONFIG yt_api}}">
+                                
+                            </div>
+                        </div>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Dailymotion verification ID</label>
+                                <input type="text" id="dailymotion_id" name="dailymotion_id" class="form-control" value="{{CONFIG dailymotion_id}}">
+                                
+                            </div>
+                        </div>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Twitch Client Id</label>
+                                <input type="text" id="twitch_api" name="twitch_api" class="form-control" value="{{CONFIG twitch_api}}">
+                                
+
+                            </div>
+                            <?php if ($pt->config->twitch_import == 'on' && empty($pt->config->twitch_api)) { ?>
+                                    <br>
+                                <div class="alert alert-warning">
+                                <i class="fa fa-fw fa-exclamation-triangle"></i> <strong>Note:</strong> please put your Twitch Client Id to start import videos from Twitch.
+                              </div>
+                              <?php } ?>
+                        </div>
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">Save</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Server Settings</h6>
+                    <div class="server-settings-alert"></div>
+                    <form class="server-settings" method="POST">
+                        <label for="server">Messaging & Notifications Server</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="server" id="server-enabled" value="nodejs" <?php echo ($pt->config->server == 'nodejs') ? 'checked': '';?>>
+                                <label class="form-check-label" for="server-enabled">WebSockets (Nodejs required)</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="server" id="server-disabled" value="ajax" <?php echo ($pt->config->server == 'ajax') ? 'checked': '';?>>
+                                <label class="form-check-label" for="server-disabled" class="m-l-20">Ajax</label>
+                            </div>
+                        </div>
+                         <a href="https://docs.playtubescript.com/faqs.html#a-sdfsdf5" target="_blank">How to run and install Nodejs/forever/npm on your server?</a><br><br>
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">Save</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Comment Settings</h6>
+                    <div class="comment-settings-alert"></div>
+                    <form class="comment-settings" method="POST">
+                        <label for="comment_system">Comemnt System</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="comment_system" id="comment_system-both" value="both" <?php echo ($pt->config->comment_system == 'both') ? 'checked': '';?>>
+                                <label class="form-check-label" for="comment_system-both">Both</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="comment_system" id="comment_system-own" value="default" <?php echo ($pt->config->comment_system == 'default') ? 'checked': '';?>>
+                                <label class="form-check-label" for="comment_system-own" class="m-l-20">Site Comments System</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="comment_system" id="comment_system-facebook" value="fb" <?php echo ($pt->config->comment_system == 'fb') ? 'checked': '';?>>
+                                <label class="form-check-label" for="comment_system-facebook" class="m-l-20">Facebook</label>
+                            </div>
+                        </div>
+                        <label for="comments_default_num">Default Showen Comments</label>
+                        <select class="form-control show-tick" id="comments_default_num" name="comments_default_num">
+                            <option value="">-- Please select --</option>
+                            <option value="10" <?php echo ($pt->config->comments_default_num == '10') ? 'selected': '';?>>10</option>
+                            <option value="20" <?php echo ($pt->config->comments_default_num == '20') ? 'selected': '';?>>20</option>
+                            <option value="30" <?php echo ($pt->config->comments_default_num == '30') ? 'selected': '';?>>30</option>
+                            <option value="40" <?php echo ($pt->config->comments_default_num == '40') ? 'selected': '';?>>40</option>
+                            <option value="50" <?php echo ($pt->config->comments_default_num == '50') ? 'selected': '';?>>50</option>
+                        </select>
+                        <br>
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">Save</button>
+                    </form>
+                </div>
+            </div>
+
+            
+            
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Paid Subscribers Settings</h6>
+                    <div class="payed-settings-alert"></div>
+                    <form class="payed-settings" method="POST">
+                        <label for="payed_subscribers">Paid Subscribers</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="payed_subscribers" id="payed_subscribers-enabled" value="on" <?php echo ($pt->config->payed_subscribers == 'on') ? 'checked': '';?>>
+                                <label class="form-check-label" for="payed_subscribers-enabled">Enabled</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input  class="form-check-input" type="radio" name="payed_subscribers" id="payed_subscribers-disabled" value="off" <?php echo ($pt->config->payed_subscribers == 'off') ? 'checked': '';?>>
+                                <label class="form-check-label" for="payed_subscribers-disabled" class="m-l-20">Disabled</label>
+                            </div>
+                        </div>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Commission (Leave it 0 if you don't want to get any commissions.)</label>
+                                <input type="text" id="admin_com_subscribers" name="admin_com_subscribers" class="form-control" value="<?php echo ($pt->config->admin_com_subscribers);?>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">Save</button>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<script>
+    
+
+$(function() {
+    $('#upload_system_type').change(function(event) {
+        if ($(this).val() == 1) {
+            $('#p_f_users_').removeClass('hidden');
+            $('#all_users_').addClass('hidden');
+        }
+        else{
+            $('#all_users_').removeClass('hidden');
+            $('#p_f_users_').addClass('hidden');
+        }
+    });
+    var form_videos_settings = $('form.video-settings');
+    
+    var form_user_settings = $('form.user-settings');
+    var form_comment_settings = $('form.comment-settings');
+    var form_api_settings = $('form.api-settings');
+    
+    var server_settings = $('form.server-settings');
+    
+    
+    var payed_settings = $('form.payed-settings');
+    
+
+    payed_settings.ajaxForm({
+        url: '{{LINK aj/ap/save-settings}}',
+        beforeSend: function() {
+            payed_settings.find('button').text("{{LANG please_wait}}");
+        },
+        success: function(data) {
+            if (data.status == 200) {
+                payed_settings.find('button').text('Save');
+                $('.payed-settings-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Settings updated successfully</div>');
+                setTimeout(function () {
+                    $('.payed-settings-alert').empty();
+                }, 2000);
+            }
+        }
+    });
+
+
+    
+   
+
+
+    
+
+    
+
+    server_settings.ajaxForm({
+        url: '{{LINK aj/ap/save-settings}}',
+        beforeSend: function() {
+            server_settings.find('.waves-effect').text("{{LANG please_wait}}");
+        },
+        success: function(data) {
+            if (data.status == 200) {
+                server_settings.find('.waves-effect').text('Save');
+                $('.server-settings-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Settings updated successfully</div>');
+                setTimeout(function () {
+                    $('.server-settings-alert').empty();
+                }, 2000);
+            }
+        }
+    });
+
+    form_videos_settings.ajaxForm({
+        url: '{{LINK aj/ap/save-settings}}',
+        beforeSend: function() {
+            form_videos_settings.find('.waves-effect').text("{{LANG please_wait}}");
+        },
+        success: function(data) {
+            scrollToTop();
+            if (data.status == 200) {
+            	form_videos_settings.find('.waves-effect').text('Save');
+            	$('.video-settings-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Settings updated successfully</div>');
+            	setTimeout(function () {
+            		$('.video-settings-alert').empty();
+            	}, 2000);
+            }
+            else{
+                form_videos_settings.find('.waves-effect').text('Save');
+                $('.video-settings-alert').html('<div class="alert alert-danger"><i class="fa fa-check"></i> Settings updated successfully</div>');
+                setTimeout(function () {
+                    $('.video-settings-alert').empty();
+                }, 2000);
+            }
+        }
+    });
+
+    form_user_settings.ajaxForm({
+        url: '{{LINK aj/ap/save-settings}}',
+        beforeSend: function() {
+            form_user_settings.find('button').text("{{LANG please_wait}}");
+        },
+        success: function(data) {
+            if (data.status == 200) {
+                form_user_settings.find('button').text('Save');
+                $('.user-settings-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Settings updated successfully</div>');
+                setTimeout(function () {
+                    $('.user-settings-alert').empty();
+                }, 2000);
+            }
+        }
+    });
+
+    form_api_settings.ajaxForm({
+        url: '{{LINK aj/ap/save-settings}}',
+        beforeSend: function() {
+            form_api_settings.find('button').text("{{LANG please_wait}}");
+        },
+        success: function(data) {
+            if (data.status == 200) {
+                form_api_settings.find('button').text('Save');
+                $('.api-settings-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Settings updated successfully</div>');
+                setTimeout(function () {
+                    $('.api-settings-alert').empty();
+                }, 2000);
+            }
+        }
+    });
+
+    form_comment_settings.ajaxForm({
+        url: '{{LINK aj/ap/save-settings}}',
+        beforeSend: function() {
+            form_comment_settings.find('.waves-effect').text("{{LANG please_wait}}");
+        },
+        success: function(data) {
+            if (data.status == 200) {
+                form_comment_settings.find('.waves-effect').text('Save');
+                $('.comment-settings-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Settings updated successfully</div>');
+                setTimeout(function () {
+                    $('.comment-settings-alert').empty();
+                }, 2000);
+            }
+        }
+    });
+    
+});
+</script>

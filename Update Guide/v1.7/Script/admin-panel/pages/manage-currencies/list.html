@@ -1,0 +1,19 @@
+<tr class="setting-banlist" id="currency_<?php echo $pt->currency_value?>" >
+   <td><?php echo $pt->currency_key?></td>
+   <td>
+      <div>
+         <?php echo $pt->currency_value;?>
+      </div>
+   </td>
+   <td>
+     <?php echo $pt->config->currency_symbol_array[$pt->currency_value] ?>
+   </td>
+   <td>
+     <?php echo ($pt->currency_value == $pt->config->payment_currency) ? '<span class="label label-success">Default</span>': '';?>
+   </td>
+   <td>
+      <a href="javascript:void()" onclick="make_default('<?php echo $pt->currency_value; ?>')" class="btn btn-success waves-effect">Set Default</a>
+      <a href="javascript:void()" onclick="open_edit_currency('<?php echo $pt->currency_value; ?>','<?php echo($pt->config->currency_symbol_array[$pt->currency_value]) ?>','<?php echo $pt->currency_key?>')" class="btn btn-info waves-effect">Edit</a>
+      <a href="javascript:void()" onclick="delete_currency('<?php echo $pt->currency_value; ?>')" class="btn btn-danger waves-effect">DELETE</a>
+   </td>
+</tr>

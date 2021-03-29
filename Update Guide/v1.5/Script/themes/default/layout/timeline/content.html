@@ -1,0 +1,44 @@
+<div class="profile-container">
+	<div class="card-container">
+		<div class="cover-container">
+			<img src="{{USER cover}}" alt="{{USER name}}">
+		</div>
+		<?php if ($pt->isowner == true) { ?>
+		<div class="edit-cover-container hidden">
+			<a href="{{LINK settings/avatar}}" data-load="?link1=settings&page=avatar"><i class="fa fa-camera"></i></a>
+		</div>
+		<?php } ?>
+	</div>
+	<div class="pt_chnl_info">
+		<div class="avatar-container">
+			<img src="{{USER avatar}}" alt="{{USER name}}">
+		</div>
+		<div class="info-container">
+			<h4><a href="{{USER url}}" data-load="?link1=timeline&id={{USER username}}">{{USER name_v}}</a></h4>
+			{{MESSAGE_BUTTON}}
+		</div>
+		<div class="subscribe-btn-container">
+			{{SUBSCIBE_BUTTON}}
+		</div>
+	</div>
+	<div class="links-container">
+		<ul>
+			<li>
+				<a href="{{LINK @{{USER username}}?page=videos}}" class="<?php echo ($pt->second_page == 'videos') ? 'active' : ''?>" data-load="?link1=timeline&id={{USER username}}&page=videos">{{LANG videos}}</a>
+			</li>
+			<li>
+				<a href="{{LINK @{{USER username}}?page=play-lists}}" class="<?php echo ($pt->second_page == 'play-lists') ? 'active' : ''?>" data-load="?link1=timeline&id={{USER username}}&page=play-lists">{{LANG play_lists}}</a>
+			</li>
+			<li>
+				<a href="{{LINK @{{USER username}}?page=liked-videos}}" class="<?php echo ($pt->second_page == 'liked-videos') ? 'active' : ''?>" data-load="?link1=timeline&id={{USER username}}&page=liked-videos">{{LANG liked_videos}}</a>
+			</li>
+			<li>
+				<a href="{{LINK @{{USER username}}?page=about}}" class="<?php echo ($pt->second_page == 'about') ? 'active' : ''?>" data-load="?link1=timeline&id={{USER username}}&page=about">{{LANG about_profile}}</a>
+			</li>
+		</ul>
+	</div>
+	<div class="page-container content pt_shadow">
+		{{SECOND_PAGE}}
+	</div>
+	<input type="hidden" id="profile-id" value="{{USER id}}">
+</div>

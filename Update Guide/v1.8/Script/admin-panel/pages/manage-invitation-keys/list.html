@@ -1,0 +1,19 @@
+<tr class="setting-invitation" data-invitation="<?php echo $pt->key_info->id; ?>">
+  <td >
+     <?php echo PT_Time_Elapsed_String($pt->key_info->posted); ?>
+  </td>
+  <td>
+     <?php echo $pt->key_info->code; ?>
+  </td>
+  <td>
+    <?php if ($pt->key_info->status == 0) { ?>
+      <span class="label label-danger">Pending</span>
+    <?php }else{ ?>
+      <span class="label label-success">Invited</span>
+    <?php } ?>
+  </td>
+  <td>
+     <button class="btn btn-info waves-effect copy-invitation-url" id="<?php echo $pt->key_info->id; ?>" data-link="<?php echo $pt->key_info->url; ?>">COPY LINK</button>
+     <button class="btn btn-danger waves-effect delete-admin-invitation" id="<?php echo $pt->key_info->id; ?>">DELETE</button>
+  </td>
+</tr>

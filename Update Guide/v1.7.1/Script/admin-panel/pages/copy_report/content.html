@@ -1,0 +1,142 @@
+<?php 
+$page          = (!empty($_GET['page-id'])) ? $_GET['page-id'] : 1;
+$db->pageLimit = 15;
+$total_reports = $db->getValue(T_COPYRIGHT, 'COUNT(*)');
+$video_reports = $db->orderBy('id','ASC')->paginate(T_COPYRIGHT,$page);
+
+if (($page > $db->totalPages) && !empty($_GET['page-id'])) {
+    header("Location: " . PT_LoadAdminLinkSettings('copy_report'));
+    exit();
+}
+?>
+
+<div class="container-fluid">
+    <div class="block-header">
+        <h2>Reports &gt; Manage Video Reports</h2>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h2>Manage Video Reports</h2>
+                </div>
+                <div class="body">
+                   <div class="table-responsive1">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr role="row">
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>Reported</th>
+                                    <th>Video</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                    foreach ($video_reports as $key => $pt->report) {
+                                        $user_data  = PT_UserData($pt->report->user_id);
+                                        $video_data = PT_GetVideoByID($pt->report->video_id,0,0,2);
+                                        echo PT_LoadAdminPage('copy_report/list',array(
+                                            'ID' => $pt->report->id,
+                                            'VIDEO_ID' => $pt->report->video_id,
+                                            'USERNAME' => $user_data->name,
+                                            'URL' => $video_data->url,
+                                            'TITLE' => PT_ShortText($video_data->title,60),
+                                            'DATE' => date("Y-F-d",$pt->report->time),
+                                        ));
+                                    }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                    
+                <div class="admincp-pagination">
+                	<div class="pull-left">
+                        <?php echo "Showing $page out of " . $db->totalPages; ?>
+                    </div>
+                    <nav class="pull-right">
+                        <ul class="pagination">
+                            <li>
+                                <a href="<?php echo PT_LoadAdminLinkSettings('copy_report?page-id=1'); ?>" class="waves-effect" title='First Page'>
+                                    <i class="material-icons">first_page</i>
+                                </a>
+                            </li>
+                            <?php if ($page > 1) {  ?>
+                            <li>
+                                <a href="<?php echo PT_LoadAdminLinkSettings('copy_report?page-id=' . ($page - 1)); ?>" class="waves-effect" title='Previous Page'>
+                                    <i class="material-icons">chevron_left</i>
+                                </a>
+                            </li>
+                            <?php  } ?>
+                            <?php 
+                            $nums = 0;
+                            $nums_pages = ($page > 4) ? ($page - 4) : $page;
+                            for ($i=$nums_pages; $i <= $db->totalPages; $i++) { 
+                                if ($nums < 20) {
+                                ?>
+                                <li class="<?php echo ($page == $i) ? 'active' : ''; ?>"><a href="<?php echo PT_LoadAdminLinkSettings('copy_report?page-id=' . ($i)); ?>" class="waves-effect"><?php echo $i ?></a></li>
+                                <?php
+                                }
+                                $nums++;
+                            }
+                            ?>
+                            <?php if ($db->totalPages > $page) { ?>
+                            <li>
+                                <a href="<?php echo PT_LoadAdminLinkSettings('copy_report?page-id=' . ($page + 1)); ?>" class="waves-effect" title="Next Page">
+                                    <i class="material-icons">chevron_right</i>
+                                </a>
+                            </li>
+                            <?php } ?>
+                            <li>
+                                <a href="<?php echo PT_LoadAdminLinkSettings('copy_report?page-id=' . ($db->totalPages)); ?>" class="waves-effect" title='Last Page'>
+                                    <i class="material-icons">last_page</i>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="clearfix"></div>
+                </div>
+
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<script>
+    function PT_ManageVReports(id,action,self) {
+        if (!id || (action != 1 && action != 2 && action != 3)) {
+            return false;
+        }
+
+        else if (action == 2){
+            $(self).text('Please wait..').attr("disabled","true");
+        }
+
+        else if (action == 3 && confirm("Are you sure you want to delete this report?")){
+        	$("#list-"+id).slideUp(500,function(){
+                $(this).remove();
+            });
+        }
+        else{
+            return false;
+        }
+
+        $.post('{{LINK aj/ap/copy_reports}}', {a:action,id:id}, function(data){ 
+            if (action == 2 && data.status == 200) {
+                swal({
+                    html:true,
+                    title:"",
+                    text:data.html,
+                    showConfirmButton:false,
+                    allowOutsideClick:true,
+                    customClass:"sw-review-data",
+                    animation:false
+                })
+                $(self).text('VIEW').removeAttr('disabled');
+            } 
+         },dataType="json");
+    }
+</script>

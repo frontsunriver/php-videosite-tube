@@ -1,0 +1,46 @@
+<div class="wo_about_wrapper_parent">
+	<div class="wo_about_wrapper"> 
+		<div class="hero hero-overlay"> 
+			<div class="container">
+				<h1 class="text-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-video"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg> {{TITLE}}</h1>
+			</div> 
+		</div>
+		<svg id="wave" viewBox="0 0 1440 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(0.000000, -564.000000)" fill="#499fd0"><g id="Head-background" transform="translate(-168.000000, -346.000000)"><g id="waves-background" transform="translate(888.000000, 934.000000) scale(-1, 1) translate(-888.000000, -934.000000) translate(168.000000, 910.000000)"><path d="M0,14.60779 C101.722445,4.7613277 195.244576,-4.14113188e-14 429,-2.84217094e-14 C732,-1.97619698e-14 798,45.6756592 1089,45.6756592 C1245.83848,45.6756592 1364.64602,29.5028807 1440,14.5904096 C1440,14.60779 1440,48 1440,48 L0,48 C0,48 0.0410082206,34 0,14.60779 Z" id="Path-3-Copy"></path></g></g></g></g></svg>
+	</div>
+</div>
+<div class="content pt_shadow pt_page_margin" style="padding-top: 25px;">
+	<div class="col-md-12">
+		<?php if ($pt->page == 'category' && $pt->show_sub == true) { ?>
+			<div class="pull-right col-md-3 no-padding-left">
+					<select name="type" class="form-control form-group" id="sub_categories_">
+	                    <?php echo $pt->sub_categories_array["'".$_GET['id']."'"]; ?>
+	                </select>
+				</div>
+				<div class="pull-right col-md-2 col-sm-2 text-right"><h5>{{LANG sub_category}}</h5></div>
+				<div class="clear"></div>
+			</h4>
+	        <div class="clear"></div>
+			<hr>
+		<?php } ?>
+		<div class="videos-latest-list row">
+      	{{VIDEOS}}
+		</div>
+		<?php if ($pt->videos_count > 1) { ?>
+			<div class="watch-video-show-more desc load-more" data-type="{{TYPE}}" {{CATEGORY_ID}} data-sub-category-id="<?php echo( (!empty($_GET["sub_id"])) ? $_GET["sub_id"] : '' ); ?>">
+                {{LANG show_more}}
+            </div>
+        <?php } ?>
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+</div>
+<script type="text/javascript">
+$(document).on('change', '#category_id', function(event) {
+	event.preventDefault();
+	id = $(this).val();
+	$('#sub_category_id').html(sub_categories_array["'"+id+"'"]);
+});
+$(document).on('change','#sub_categories_', function(event) {
+	window.location.href = site_url+'/videos/category/<?php echo($_GET["id"]) ?>/'+$('#sub_categories_').val();
+});
+</script>

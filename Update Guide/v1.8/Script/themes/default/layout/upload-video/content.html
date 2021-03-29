@@ -1,0 +1,590 @@
+<div class="wo_about_wrapper_parent">
+	<div class="wo_about_wrapper"> 
+		<div class="hero hero-overlay" style="background-color: #b228c9;"> 
+			<div class="container">
+				<h1 class="text-center">{{LANG upload_new_video}}</h1>
+			</div> 
+		</div>
+		<svg class="wave" width="100%" height="50px" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 75"> <defs> <style> .a { fill: none; } .b { clip-path: url(#a); } .c, .d { fill: #b228c9; } .d { opacity: 0.5; isolation: isolate; } </style> <clipPath id="a"> <rect class="a" width="1920" height="75"></rect> </clipPath> </defs> <title>wave</title> <g class="b"> <path class="c" d="M1963,327H-105V65A2647.49,2647.49,0,0,1,431,19c217.7,3.5,239.6,30.8,470,36,297.3,6.7,367.5-36.2,642-28a2511.41,2511.41,0,0,1,420,48"></path> </g> <g class="b"> <path class="d" d="M-127,404H1963V44c-140.1-28-343.3-46.7-566,22-75.5,23.3-118.5,45.9-162,64-48.6,20.2-404.7,128-784,0C355.2,97.7,341.6,78.3,235,50,86.6,10.6-41.8,6.9-127,10"></path> </g> <g class="b"> <path class="d" d="M1979,462-155,446V106C251.8,20.2,576.6,15.9,805,30c167.4,10.3,322.3,32.9,680,56,207,13.4,378,20.3,494,24"></path> </g> <g class="b"> <path class="d" d="M1998,484H-243V100c445.8,26.8,794.2-4.1,1035-39,141-20.4,231.1-40.1,378-45,349.6-11.6,636.7,73.8,828,150"></path> </g> </svg>
+	</div>
+</div>
+<div class="col-md-2"></div>
+<div class="col-md-8 pt_page_margin">
+	<div class="content pt_shadow">
+		<div class="col-md-12 pt_upload_vdo">
+			<?php if ($pt->user->admin == 1) { ?>
+				<div class="alert alert-warning">
+					<h4>Just admins can see this message</h4>
+					<p>Note: Your server max upload size is: <?php echo ini_get('upload_max_filesize')?>, means you can't upload files that are larger than: <?php echo ini_get('upload_max_filesize')?><br><br> If you want to increase the limit or If you can't upload large files, go to Admin Settings > Settings > Site Settings > Max upload size and increase the value, if you still can't upload large files, please contact your host provider and let them increase the upload limit and max_execution_time.</p>
+				</div>
+			<?php } ?>
+			<div class="upload" data-block="video-drop-zone">
+				<div>
+					<svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" class="feather feather-upload"><path d="M14,13V17H10V13H7L12,8L17,13M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14A6,6 0 0,0 6,20H19A5,5 0 0,0 24,15C24,12.36 21.95,10.22 19.35,10.03Z" /></svg>
+					<h4>{{LANG darg_drop_video}}</h4>
+					<p>{{LANG or}} {{LANG click_2choose_file}}</p>
+					<button class="btn btn-main">{{LANG upload}}</button>
+				</div>
+			</div>
+			<div class="progress hidden">
+				<span class="percent">0%</span>
+				<div class="progress_bar_parent">
+					<div class="bar upload-progress-bar progress-bar active"></div> 
+				</div>
+				<div class="clear"></div>
+				<div class="text-center pt_prcs_vdo"></div>
+			</div>
+		
+			<form action="" method="POST" id="upload-video" style="visibility: hidden;">
+				<input type="file" name="video" accept="video/*" class="upload-video-file">
+			</form>
+     
+			<div class="col-md-12 hidden" id="upload-form">
+				<form action="" class="form-horizontal setting-panel pt_forms" method="POST">
+					<?php if (PT_IsAdmin() && $pt->config->movies_videos == 'on') { ?>
+                  
+                  <div class="form-group">
+                     <label class="col-md-12" for="is_movie">{{LANG is_movie}}</label>  
+                     <div class="col-md-12">
+                        <select name="is_movie" id="is_movie" class="form-control" onchange="ShowForm(this)">
+                           <option value="0">{{LANG no}}</option>
+                           <option value="1">{{LANG yes}}</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div id="movie_fields" style="display: none;">
+                     <div class="form-group">
+                        <label class="col-md-12" for="movie_title">{{LANG movie_title}}</label>
+                        <div class="col-md-12">
+                           <input id="movie_title" name="movie_title" type="text" placeholder="{{LANG movie_title}}" class="form-control input-md">
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-md-12" for="description">{{LANG description}}</label>  
+                        <div class="col-md-12">
+                           <textarea name="movie_description" id="description" cols="30" rows="5" class="form-control move_description"></textarea>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-md-12" for="stars">{{LANG stars}}</label>
+                        <div class="col-md-12">
+                           <input id="stars" name="stars" type="text" placeholder="{{LANG stars}} {{LANG by_comma}}" class="form-control input-md">
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-md-12" for="producer">{{LANG producer}}</label>
+                        <div class="col-md-12">
+                           <input id="producer" name="producer" type="text" placeholder="{{LANG producer}}" class="form-control input-md">
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-md-12" for="release">{{LANG release}}</label>
+                        <div class="col-md-12">
+                           <input id="release" name="release" type="number" placeholder="{{LANG release}}" class="form-control input-md"  min="1910" max="<?php echo date('Y') ?>">
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-md-12" for="country">{{LANG country}}</label>
+                        <div class="col-md-12">
+                           <select class="form-control show-tick" id="country" name="country">
+                              <?php foreach ($countries_name as $key => $value) : ?>
+                              <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+                              <?php  endforeach; ?>
+                           </select>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-md-12" for="quality">{{LANG quality}}</label>
+                        <div class="col-md-12">
+                           <select class="form-control show-tick" id="quality" name="quality">
+                              <option value="CAMRip">CAMRip</option>
+                              <option value="TS">TS</option>
+                              <option value="VHSRip">VHSRip</option>
+                              <option value="WP">WP</option>
+                              <option value="SCR (VHSScr)">SCR (VHSScr)</option>
+                              <option value="DVDScr">DVDScr</option>
+                              <option value="TC">TC</option>
+                              <option value="LDRip">LDRip</option>
+                              <option value="TVRip">TVRip</option>
+                              <option value="SATRip">SATRip</option>
+                              <option value="DVBRip">DVBRip</option>
+                              <option value="DTVRip">DTVRip</option>
+                              <option value="DVD">DVD</option>
+                              <option value="HDRip">HDRip</option>
+                              <option value="WEB-DL">WEB-DL</option>
+                              <option value="HD-TV">HD-TV</option>
+                              <option value="HD DVD">HD DVD</option>
+                           </select>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-md-12" for="category">{{LANG category}}</label>
+                        <div class="col-md-12">
+                           <select class="form-control show-tick" id="category" name="category">
+                              <?php foreach ($pt->movies_categories as $cat_id => $category): ?>
+                                 <option value="<?php echo $cat_id;?>"><?php echo $category;?></option>
+                              <?php endforeach;?>
+                           </select>
+                        </div>
+                     </div> 
+                     <div class="form-group">
+                        <label class="col-md-12" for="rating">{{LANG rating}} {{LANG rating_btween}}</label>
+                        <div class="col-md-12">
+                           <input type="number" id="rating" name="rating" class="form-control" min="1" max="10" step="0.1">
+                        </div>
+                     </div> 
+                     <?php if ((($pt->config->usr_v_mon == 'on' && $pt->config->user_mon_approve == 'off') || ($pt->config->usr_v_mon == 'on' && $pt->config->user_mon_approve == 'on' && $pt->user->monetization == '1')) && $pt->config->sell_videos_system == 'on') { ?>
+                     <div class="form-group">
+						<label class="col-md-12" for="buy_price">{{LANG set_p_v}}</label>  
+						<div class="col-md-12">
+							<input id="mySingleFieldTags_" name="buy_price" type="text" placeholder="" class="form-control input-md">
+						</div>
+					</div>
+					<?php } ?>
+
+					<?php if ((($pt->config->usr_v_mon == 'on' && $pt->config->user_mon_approve == 'off') || ($pt->config->usr_v_mon == 'on' && $pt->config->user_mon_approve == 'on' && $pt->user->monetization == '1')) && $pt->config->rent_videos_system == 'on') { ?>
+					<div class="form-group">
+						<label class="col-md-12" for="movie_rent_price">{{LANG rent_price}}</label>  
+						<div class="col-md-12">
+							<input id="mySingleFieldTags_movie" name="movie_rent_price" type="text" placeholder="" class="form-control input-md">
+							<span class="help-block"><?php if($pt->config->admin_com_rent_videos > 0){ ?>{{LANG p_m_than_}} {{CURRENCY}}<?php echo($pt->config->com_type == 0 ? $pt->config->admin_com_rent_videos : 0) ?> <?php }?></span>
+						</div>
+					</div>
+					<?php } ?>
+                  </div>
+                  <?php } ?>
+                  <div id="video_fields">
+
+						<div class="form-group">
+							<label class="col-md-12" for="title">{{LANG video_title}}</label>  
+							<div class="col-md-12">
+								<input id="title" name="title" type="text" placeholder="" class="form-control input-md">
+								<span class="help-block">{{LANG video_title_help}}</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-12" for="description">{{LANG video_descritpion}}</label>  
+							<div class="col-md-12">
+								<textarea name="description" id="description" cols="30" rows="5" class="form-control description"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-12" for="category_id">{{LANG category}}</label>  
+							<div class="col-md-12">
+								<select name="category_id" id="category_id" class="form-control">
+									<?php foreach($pt->categories as $key => $category) {?>
+									<option value="<?php echo $key?>"><?php echo $category?></option>
+									<?php } ?>
+								</select>
+							</div>
+						</div>
+						<div class="form-group" <?php if (empty($pt->sub_categories_array["'1'"])) { ?> style="display: none;"<?php } ?> id="sub_category_div">
+							<label class="col-md-12" for="sub_category_id">{{LANG sub_category}}</label>
+							<div class="col-md-12">
+								<select name="sub_category_id" id="sub_category_id" class="form-control">
+									<?php echo $pt->sub_categories_array["'1'"]; ?>
+								</select>
+							</div>
+						</div>
+						<?php if ($pt->config->geo_blocking == 'on') {
+						 ?>
+						<div class="form-group">
+							<label class="col-md-12" for="geo_blocking">{{LANG geo_blocking}}</label>
+							<div class="col-md-12">
+								<div class="form-group-rs" id="geo_blocking">
+					            <select class="form-control selectpicker show-menu-arrow show-tick" multiple name="continents-list[]" data-live-search="true" title="{{LANG geo_blocking}}" data-actions-box="true">
+					              	<?php 
+					              	foreach ($pt->continents as $key => $name): 
+					              		?>
+					              		<option value="<?php echo($name); ?>">
+					              			<span>
+					              				<?php echo($name); ?>
+					              			</span>
+					              		</option>
+					              	<?php endforeach; ?>
+					          	</select>
+					            <div class="clear"></div>
+					    		</div>
+							</div>
+						</div>
+						<?php } ?>
+						<div class="form-group">
+		                     <label class="col-md-12" for="privacy">{{LANG privacy}}</label>  
+		                     <div class="col-md-12">
+		                        <select name="privacy" id="privacy" class="form-control">
+		                           <option value="0">{{LANG public}}</option>
+		                           <option value="1">{{LANG private}}</option>
+		                           <option value="2">{{LANG unlisted}}</option>
+		                        </select>
+		                     </div>
+		                  </div>
+		                  <div class="form-group">
+		                     <label class="col-md-12" for="age_restriction">{{LANG age_restriction}}</label>  
+		                     <div class="col-md-12">
+		                        <select name="age_restriction" id="age_restriction" class="form-control">
+		                           <option value="1" selected>{{LANG all_ages}}</option>
+		                           <option value="2">{{LANG only_18}}</option>
+		                        </select>
+		                     </div>
+		                  </div>
+						<div class="form-group">
+							<label class="col-md-12" for="tags">{{LANG tags}}</label>  
+							<div class="col-md-12">
+								<input id="mySingleFieldTags" name="tags" type="text" placeholder="" class="form-control input-md">
+							</div>
+						</div>
+						<?php if (($pt->config->sell_videos_system == 'on' && $pt->config->who_sell == 'pro_users' && ($pt->user->is_pro || $pt->user->admin)) || ($pt->config->sell_videos_system == 'on' && $pt->config->who_sell == 'users') ) { ?>
+						<?php if ((($pt->config->usr_v_mon == 'on' && $pt->config->user_mon_approve == 'off') || ($pt->config->usr_v_mon == 'on' && $pt->config->user_mon_approve == 'on' && $pt->user->monetization == '1'))) { ?>
+						<div class="form-group">
+							<label class="col-md-12" for="set_p_v">{{LANG set_p_v}}</label>  
+							<div class="col-md-12">
+								<input id="mySingleFieldTags_" name="set_p_v" type="text" placeholder="" class="form-control input-md">
+								<span class="help-block"><?php if($pt->config->admin_com_sell_videos > 0){ ?>{{LANG p_m_than_}} {{CURRENCY}}<?php echo($pt->config->com_type == 0 ? $pt->config->admin_com_sell_videos : 0) ?> <?php }?></span>
+							</div>
+						</div>
+						<?php } ?>
+						<?php } ?>
+						<?php if (($pt->config->rent_videos_system == 'on' && $pt->config->who_sell == 'pro_users' && ($pt->user->is_pro || $pt->user->admin)) || ($pt->config->rent_videos_system == 'on' && $pt->config->who_sell == 'users') ) { ?>
+						<?php if ((($pt->config->usr_v_mon == 'on' && $pt->config->user_mon_approve == 'off') || ($pt->config->usr_v_mon == 'on' && $pt->config->user_mon_approve == 'on' && $pt->user->monetization == '1'))) { ?>
+						<div class="form-group">
+							<label class="col-md-12" for="rent_price">{{LANG rent_price}}</label>  
+							<div class="col-md-12">
+								<input id="mySingleFieldTags_" name="rent_price" type="text" placeholder="" class="form-control input-md">
+								<span class="help-block"><?php if($pt->config->admin_com_rent_videos > 0){ ?>{{LANG p_m_than_}} {{CURRENCY}}<?php echo($pt->config->com_type == 0 ? $pt->config->admin_com_rent_videos : 0) ?> <?php }?></span>
+							</div>
+						</div>
+						<?php } ?>
+						<?php } ?>
+					</div>
+
+					<?php if ((($pt->config->usr_v_mon == 'on' && $pt->config->user_mon_approve == 'off') || ($pt->config->usr_v_mon == 'on' && $pt->config->user_mon_approve == 'on' && $pt->user->monetization == '1')) &&  $pt->user->video_mon == '1') { ?>
+
+					<div class="form-group">
+	                    <label class="col-md-12" for="monetization">{{LANG monetization}}</label>  
+	                    <div class="col-md-12">
+	                        <select name="monetization" id="monetization" class="form-control">
+	                           <option value="1">{{LANG enable}}</option>
+	                           <option value="0">{{LANG disable}}</option>
+	                        </select>
+	                    </div>
+	                </div>
+	                <?php } ?>
+
+					<div class="form-group">
+						<label class="col-md-12" for="thumbnail">{{LANG thumbnail}}</label>  
+						<div class="col-md-12">
+							<div class="upload-product-image pull-left" onclick="document.getElementById('thumbnail').click(); return false">
+								<div class="upload-image-content">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-camera"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+								</div>
+							</div>
+							<div style="overflow-x: auto;width: calc(100% - 112px);">
+								<div id="productimage-holder"></div>
+							</div>
+							<input id="thumbnail" name="thumbnail" type="file" class="hidden" accept="image/*">
+							<span class="help-block">jpg, png, gif</span>
+						</div>
+					</div>
+					<div class="last-sett-btn modal-footer" style="margin: 0px -40px -10px -40px;">
+						<button type="submit" id="submit-btn" class="btn btn-main setting-panel-mdbtn" disabled><svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-check-circle'><path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path><polyline points='22 4 12 14.01 9 11.01'></polyline></svg> {{LANG publish}}</button>
+					</div>
+					<input type="hidden" name="video-location" id="video-location" value="">
+					<input type="hidden" name="uploaded_id" id="uploaded_id" value="">
+				</form>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<div class="col-md-2"></div>
+<script>
+	var el = $(".description").emojioneArea({
+		pickerPosition: "bottom",
+	    tonesStyle: "radio",
+	    events: {
+	     	keyup: function (editor, event) {
+		    }
+	    },
+	    filters: {
+	        flags : false,
+	        objects : false,
+	        travel_places : false,
+	        activity : false
+	    }
+	});
+	var el2 = $(".move_description").emojioneArea({
+		pickerPosition: "bottom",
+	    tonesStyle: "radio",
+	    events: {
+	     	keyup: function (editor, event) {
+		    }
+	    },
+	    filters: {
+	        flags : false,
+	        objects : false,
+	        travel_places : false,
+	        activity : false
+	    }
+	});
+<?php if (PT_IsAdmin()) { ?>
+function ShowForm(self) {
+
+   if ($(self).val() == 1 && $("#video_fields").is(":visible") == true) {
+      $("#video_fields").hide();
+      $("#movie_fields").show();
+   }
+   else if($(self).val() == 0 && $("#movie_fields").is(":visible") == true){
+      $("#video_fields").show();
+      $("#movie_fields").hide();
+   }
+}
+<?php } ?>
+$('.selectpicker').selectpicker({});
+<?php 
+$js_array = json_encode($pt->sub_categories_array);
+echo "var sub_categories_array = ". $js_array . ";\n";
+?>
+$(document).on('change', '#category_id', function(event) {
+	event.preventDefault();
+	id = $(this).val();
+	if (typeof(sub_categories_array["'"+id+"'"]) == 'undefined') {
+		$('#sub_category_div').hide();
+	    $('#sub_category_id').html('');
+   }
+   else{
+     	$('#sub_category_div').show();
+	    $('#sub_category_id').html(sub_categories_array["'"+id+"'"]);
+  }
+});
+
+$(document).ready(function() {
+	$("#thumbnail").on('change', function() {
+	//Get count of selected files
+	var product_countFiles = $(this)[0].files.length;
+	var product_imgPath = $(this)[0].value;
+	var extn = product_imgPath.substring(product_imgPath.lastIndexOf('.') + 1).toLowerCase();
+	var product_image_holder = $("#productimage-holder");
+	product_image_holder.empty();
+	if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+		if (typeof(FileReader) != "undefined") {
+		//loop for each file selected for uploaded.
+		for (var i = 0; i < product_countFiles; i++) 
+		{
+			var product_reader = new FileReader();
+			product_reader.onload = function(e) {
+				$("<img />", {
+                    "src": e.target.result,
+                    "class": "thumb-image"
+                  }).appendTo(product_image_holder);
+                }
+                product_image_holder.show();
+                product_reader.readAsDataURL($(this)[0].files[i]);
+              }
+            } else {
+              product_image_holder.html("<p>This browser does not support FileReader.</p>");
+            }
+         }
+	});
+});
+
+$(function () {
+	$("#mySingleFieldTags").tagit({
+		allowSpaces: true
+	});
+	var bar         = $('.bar');
+   var percent     = $('.percent');
+   var prcsvdo		= $('.pt_prcs_vdo');
+   var is_uploaded = false;
+
+   var video_drop_block = $("[data-block='video-drop-zone']");
+
+   if (typeof(window.FileReader)){
+      video_drop_block[0].ondragover = function() {
+         video_drop_block.addClass('hover');
+         return false;
+      };
+          
+      video_drop_block[0].ondragleave = function() {
+         video_drop_block.removeClass('hover');
+         return false;
+      };
+
+      video_drop_block[0].ondrop = function(event) {
+         event.preventDefault();
+         video_drop_block.removeClass('hover');
+         var file = event.dataTransfer.files;
+         $('#upload-video').find('input').prop('files', file);
+         $('#upload-video').submit();
+      };
+   }
+
+	$('#upload-video').submit(function(event) {
+      var file_size = $(".upload-video-file").prop('files')[0].size;
+      if (file_size > "{{CONFIG max_upload}}") {
+         swal({
+            title: '{{LANG error}}',
+            text:  "{{LANG file_is_too_big}} <?php echo pt_size_format($pt->config->max_upload); ?>",
+            type: 'error',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'OK',
+            buttonsStyling: true,
+            confirmButtonClass: 'btn btn-success',
+         }).then(function(){
+            swal.close();
+            $('.upload-video-file').val('');
+         },
+         function() {
+            swal.close();
+            $('.upload-video-file').val('');
+         });
+         return false;
+      }
+      else{
+         var filename = $('.upload').val().split('\\').pop();
+         $('#title').val(filename);
+         <?php if (PT_IsAdmin()) { ?>
+         $('#movie_title').val(filename);
+         <?php } ?>
+         $('#upload-form').removeClass('hidden');
+         $('.upload').addClass('hidden');
+      }
+   });
+
+   $('#upload-video').ajaxForm({
+	    url: '{{LINK aj/upload-video}}?hash=' + $('.main_session').val(),
+       dataType:'json',
+	    beforeSend: function() {
+	    	   $('.progress').removeClass('hidden');
+            var percentVal = '0%';
+            bar.width(percentVal);
+            percent.html(percentVal);
+	    },
+	    uploadProgress: function(event, position, total, percentComplete) {
+	         if(percentComplete > 50) {
+	            percent.addClass('white');
+	         }
+            var percentVal = percentComplete + '%';
+            bar.width(percentVal);
+            percent.html(percentVal);
+
+            if (percentComplete == 100) {
+               prcsvdo.html('<svg width="30" height="10" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg" fill="#000"><circle cx="15" cy="15" r="15"><animate attributeName="r" from="15" to="15" begin="0s" dur="0.8s" values="15;9;15" calcMode="linear" repeatCount="indefinite" /><animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="0.8s" values="1;.5;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="60" cy="15" r="9" fill-opacity="0.3"><animate attributeName="r" from="9" to="9" begin="0s" dur="0.8s" values="9;15;9" calcMode="linear" repeatCount="indefinite" /><animate attributeName="fill-opacity" from="0.5" to="0.5" begin="0s" dur="0.8s" values=".5;1;.5" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="105" cy="15" r="15"><animate attributeName="r" from="15" to="15" begin="0s" dur="0.8s" values="15;9;15" calcMode="linear" repeatCount="indefinite" /><animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="0.8s" values="1;.5;1" calcMode="linear" repeatCount="indefinite" /></circle></svg> {{LANG porcessing_video}}');
+               $('.progress').find('.bar').removeClass('upload-progress-bar');
+            }
+        },
+	    success: function(data) {
+   	    	percentVal = '0%';
+   	    	bar.width(percentVal);
+            $('.progress').addClass('hidden');
+            if (data.status == 200) {
+            	$('#video-location').val(data.file_path);
+            	$('#uploaded_id').val(data.uploaded_id);
+				Snackbar.show({text: '<i class="fa fa-check"></i> ' + data.file_name + ' {{LANG successfully_uplaoded}}'});
+            	$('#submit-btn').attr('disabled', false);
+            	$('.upload-video-file').val('');
+                $('#title').val(data.file_name);
+                <?php if (PT_IsAdmin()) { ?>
+		        $('#movie_title').val(data.file_name);
+		        <?php } ?>
+            }
+            else if(data.status == 401){
+               swal({
+                  title: '{{LANG oops}}!',
+                  text: "{{LANG upload_limit_reached}}!",
+                  type: 'info',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: '{{LANG upgrade_now}}',
+                  cancelButtonText: '{{LANG cancel}}',
+                  confirmButtonClass: 'btn btn-success margin-right',
+                  cancelButtonClass: 'btn',
+                  buttonsStyling: false
+               }).then(function(){
+                  //Go pro
+                  window.location.href = '{{LINK go_pro}}';
+               },
+               function() {
+                  window.location.href = '{{LINK }}';
+               });
+            }
+            else if(data.status == 402){
+               swal({
+                  title: '{{LANG error}}',
+                  text: data.message,
+                  type: 'error',
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'OK',
+                  buttonsStyling: true,
+                  confirmButtonClass: 'btn btn-success',
+               }).then(function(){
+                  swal.close();
+                  $('.upload-video-file').val('');
+               },
+               function() {
+                  swal.close();
+                  $('.upload-video-file').val('');
+               });
+            }
+            else {
+				Snackbar.show({showAction: false,backgroundColor: '#e22e40',text: '<div>'+ data.error +'</div>'});
+            }
+	    }
+	});
+
+	$('#upload-form form').ajaxForm({
+	    url: '{{LINK aj/submit-video}}?hash=' + $('.main_session').val(),
+	    beforeSend: function() {
+	    	$('#submit-btn').attr('disabled', true);
+	    	$('#submit-btn').val("{{LANG please_wait}}");
+	    },
+	    success: function(data) {
+	    	if (data.status == 200) {
+	    		window.location.href = data.link;
+	    	} 
+         else if(data.status == 402){
+            swal({
+               title: '{{LANG error}}',
+               text: data.message,
+               type: 'error',
+               confirmButtonColor: '#3085d6',
+               cancelButtonColor: '#d33',
+               confirmButtonText: 'OK',
+               buttonsStyling: true,
+               confirmButtonClass: 'btn btn-success',
+            }).then(function(){
+               window.location.href = '{{LINK upload-video}}';
+            },
+            function() {
+               window.location.href = '{{LINK }}';
+            });
+         }
+         else {
+	    		$('#submit-btn').attr('disabled', false);
+	    	    $('#submit-btn').val('{{LANG publish}}');
+				Snackbar.show({text: '<div>'+ data.message +'</div>'});
+	    	}
+	    }
+	});
+
+	$('.upload-video-file').on('change', function() {
+   	$('#upload-video').submit();
+	});
+});
+
+function PT_OpenUploadForm() {
+	$('#upload-video').find('input').trigger('click');
+}
+
+jQuery(function($) {
+	$(document).ready(function() {
+		$( '.upload' ).on('click', function(e) {
+			$( '.upload-video-file' ).trigger("click");
+		});
+	});
+});
+</script>
+<style>.upload-s3-progressing{background: #4c9dd3;}</style>

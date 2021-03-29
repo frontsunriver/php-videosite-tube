@@ -1,0 +1,321 @@
+<nav class="navbar navbar-findcond navbar-fixed-top header-layout">
+	<div class="watch-container" id="header_change" style="margin: auto;">
+		<div class="navbar-header pull-left">
+			<?php if ($pt->page != 'login') { ?>
+			<!--<ul class="nav navbar-nav">
+				<li>
+				   <div id="open_slide" class="pt_opn_sid_menu">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+				   </div>
+				</li>
+			</ul>-->
+			<?php } ?>
+			<a class="navbar-brand logo-img" href="{{LINK }}" itemprop="url">
+				<?php if ((!empty($pt->get_video) && $pt->get_video->is_movie) || $pt->page == 'movies') { ?>
+					<img itemprop="logo" src="{{CONFIG theme_url}}/img/logo-light.png" alt="{{CONFIG title}}">
+				<?php } else { ?>
+					<img itemprop="logo" src="{{CONFIG theme_url}}/img/<?php echo ($pt->mode != 'night') ? 'logo' : 'logo-light';?>.png" alt="{{CONFIG title}}">
+				<?php } ?>
+			</a>
+			<form class="navbar-form navbar-left search-header" role="search" action="{{LINK search}}" method="GET">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="search-bar" name="keyword" placeholder="{{LANG search_keyword}}" autocomplete="off" value="{{SEARCH_KEYWORD}}"> 
+                    <?php
+                    if (!empty($_GET['is_channel'])) {
+                    ?>
+                    <input type="hidden" name="is_channel" value="true">
+                    <?php } ?>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search" onclick="javascript:$('.search-header input').focus();"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </div>
+                <div class="search-dropdown hidden"></div>
+            </form>
+			<!--<ul class="nav navbar-nav">
+				<li class="dropdown hide-from-mobile" id="category_menu_">
+				   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{LANG categories}} <span class="caret"></span></a>
+				   <ul class="dropdown-menu categories-drop-down" role="menu">
+				    <?php foreach($pt->categories as $key => $category) { 
+					    if (1) { ?>
+					    <li class="hide-from-mobile">
+						   <a class="category" href="{{LINK videos/category/<?php echo $key?>}}" data-load="?link1=videos&page=category&id=<?php echo $key?>"><?php echo $category?></a>
+						</li>
+					<?php } }?>
+				   </ul>
+				</li>
+			</ul>-->
+		</div>
+		<div class="pull-right">
+			<ul class="nav navbar-nav navbar-right">
+				<?php if ($pt->config->upload_system == 'on') { ?> 
+			    <li class="hide-from-mobile">
+					<a href="{{LINK upload-video}}" class="btn upload-button" data-load="?link1=upload-video">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M14,13V17H10V13H7L12,8L17,13M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14A6,6 0 0,0 6,20H19A5,5 0 0,0 24,15C24,12.36 21.95,10.22 19.35,10.03Z" /></svg>
+						<span class="hide-in-mobile">{{LANG upload}}</span>
+					</a>
+				</li>
+				<?php } ?>
+				<?php if ($pt->config->import_system == 'on') { ?> 
+			    <li class="hide-from-mobile">
+					<a href="{{LINK import-video}}" class="btn import-button" data-load="?link1=import-video">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,13L12,18L7,13H10V9H14V13M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14A6,6 0 0,0 6,20H19A5,5 0 0,0 24,15C24,12.36 21.95,10.22 19.35,10.03Z" /></svg>
+						<span class="hide-in-mobile">{{LANG import}}</span>
+					</a>
+				</li>
+				<?php } ?>
+				<?php if ($pt->config->night_mode == 'both' || $pt->config->night_mode == 'night_default'): ?>
+				<!--<li class="toggle-mode hidden-xs pull-left top-header">
+					<label class="switch" data-toggle="tooltip" data-placement="bottom" title="{{LANG mode}}">
+						<input type="checkbox" {{MODE}} id="toggle-mode">
+						<span class="slider round">
+							<svg fill="#009da0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" class="feather feather-bulb"><path d="M12,6A6,6 0 0,1 18,12C18,14.22 16.79,16.16 15,17.2V19A1,1 0 0,1 14,20H10A1,1 0 0,1 9,19V17.2C7.21,16.16 6,14.22 6,12A6,6 0 0,1 12,6M14,21V22A1,1 0 0,1 13,23H11A1,1 0 0,1 10,22V21H14M20,11H23V13H20V11M1,11H4V13H1V11M13,1V4H11V1H13M4.92,3.5L7.05,5.64L5.63,7.05L3.5,4.93L4.92,3.5M16.95,5.63L19.07,3.5L20.5,4.93L18.37,7.05L16.95,5.63Z" /></svg>
+						</span>
+					</label>
+				</li>-->
+				<?php endif; ?> 
+				<li class="show-in-mobile pull-left top-header">
+					<a href="#" class="search-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg> </a>
+				</li>
+				<?php if (IS_LOGGED): ?>
+				<li class="hide-from-mobile pull-left top-header">
+					 <a href="{{LINK messages}}"  data-load="?link1=messages">
+				   		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,12V3A1,1 0 0,0 16,2H3A1,1 0 0,0 2,3V17L6,13H16A1,1 0 0,0 17,12M21,6H19V15H6V17A1,1 0 0,0 7,18H18L22,22V7A1,1 0 0,0 21,6Z" /></svg>
+				   		<span id="new-messages"></span>
+				    </a>
+				</li>
+				<li class="hide-from-mobile dropdown pull-left top-header">
+				    <a href="javascript:void(0);"  id="get-notifications" class=" dropdown-toggle" data-toggle="dropdown">
+				   		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21" /></svg>
+				   		<span id="new-notifications"></span>
+				    </a>
+				    <ul class="dropdown-menu notfi-dropdown" id="notifications">
+					    <li>
+					    	<h5>
+					    		<b id="all-notifications"></b> {{LANG notifications}}
+					    		<i class="fa fa-circle-o-notch spin hidden"></i>
+					    	</h5>
+					    </li>
+					    <li>
+					    	<ul id="notifications-list"></ul>
+					    </li>
+				    </ul>
+				</li>
+				<?php endif; ?>
+				{{SIDE_HEADER}}
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<nav class="navbar navbar-findcond navbar-fixed-top header-layout hidden search-bar" style="margin-top: 56px;">
+    <div class="container-fluid" id="header_change_2">
+		<div class="navbar-header">
+			<form class="search-header-mobile" role="search" action="{{LINK search}}" method="GET">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="search-bar-mobile" name="keyword" placeholder="{{LANG search_keyword}}" autocomplete="off" value="{{SEARCH_KEYWORD}}"> 
+                </div>
+                <div class="search-dropdown hidden"></div>
+            </form>
+		</div>
+	</div>
+</nav>
+<?php if ($pt->page != 'login') { ?>
+<nav class="navbar navbar-findcond navbar-default second-header-layout">
+    <div class="watch-container"  style="margin: auto">
+		<div class="navbar-inner" id="navbar">
+			<ul class="nav navbar-nav">
+			    <li class="hide-from-mobile <?php echo ($pt->page == 'home') ? 'active': '';?>" id="home_menu_">
+					<a href="{{LINK }}" data-load="?link1=home"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"></path></svg> {{LANG home}}</a>
+				</li>
+				<li class="hide-from-mobile <?php echo ($pt->page == 'latest') ? 'active': '';?>" id="latest_menu_">
+					<a href="{{LINK videos/latest}}" data-load="?link1=videos&page=latest"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,10.5V7A1,1 0 0,0 16,6H4A1,1 0 0,0 3,7V17A1,1 0 0,0 4,18H16A1,1 0 0,0 17,17V13.5L21,17.5V6.5L17,10.5Z"></path></svg> {{LANG latest_videos}}</a>
+				</li>
+				<li class="hide-from-mobile <?php echo ($pt->page == 'top') ? 'active': '';?>" id="top_menu_">
+					<a href="{{LINK videos/top}}" data-load="?link1=videos&page=top"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M13 6h2v11h-2zM17 3h2v14h-2zM9 9h2v8H9zM5 12h2v5H5zM4 19h16v2H4z"></path></svg> {{LANG top_videos}}</a>
+				</li>
+				<li class="hide-from-mobile <?php echo ($pt->page == 'trending') ? 'active': '';?>" id="trending_menu_">
+					<a href="{{LINK videos/trending}}" data-load="?link1=videos&page=trending"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16,6L18.29,8.29L13.41,13.17L9.41,9.17L2,16.59L3.41,18L9.41,12L13.41,16L19.71,9.71L22,12V6H16Z"></path></svg> {{LANG trending}}</a>
+				</li>
+				<li class="dropdown hide-from-mobile <?php echo ($pt->page == 'category') ? 'active': '';?>" id="category_menu_">
+				   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M5.5,7A1.5,1.5 0 0,1 4,5.5A1.5,1.5 0 0,1 5.5,4A1.5,1.5 0 0,1 7,5.5A1.5,1.5 0 0,1 5.5,7M21.41,11.58L12.41,2.58C12.05,2.22 11.55,2 11,2H4C2.89,2 2,2.89 2,4V11C2,11.55 2.22,12.05 2.59,12.41L11.58,21.41C11.95,21.77 12.45,22 13,22C13.55,22 14.05,21.77 14.41,21.41L21.41,14.41C21.78,14.05 22,13.55 22,13C22,12.44 21.77,11.94 21.41,11.58Z"></path></svg> {{LANG categories}} <span class="caret"></span></a>
+				   <ul class="dropdown-menu categories-drop-down" role="menu">
+				    <?php foreach($pt->categories as $key => $category) { 
+					    if (1) { ?>
+					    <li class="hide-from-mobile">
+						   <a class="category" href="{{LINK videos/category/<?php echo $key?>}}" data-load="?link1=videos&page=category&id=<?php echo $key?>"><?php echo $category?></a>
+						</li>
+					<?php } }?>
+				   </ul>
+				</li>
+				<?php if ($pt->config->article_system == 'on'): ?>
+				<li class="hide-from-mobile <?php echo ($pt->page == 'articles') ? 'active': '';?>" id="articles_menu_">
+				   <a href="{{LINK articles}}" data-load="?link1=articles"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M20,11H4V8H20M20,15H13V13H20M20,19H13V17H20M11,19H4V13H11M20.33,4.67L18.67,3L17,4.67L15.33,3L13.67,4.67L12,3L10.33,4.67L8.67,3L7,4.67L5.33,3L3.67,4.67L2,3V19A2,2 0 0,0 4,21H20A2,2 0 0,0 22,19V3L20.33,4.67Z"></path></svg> {{LANG articles}}</a>
+				</li>
+				<?php endif ?>
+				<?php if ($pt->config->movies_videos == 'on') { ?>
+					<li class="hide-from-mobile <?php echo ($pt->page == 'movies') ? 'active': '';?>" id="movies_menu_">
+						<a href="{{LINK movies}}" data-load="?link1=movies">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M18,9H16V7H18M18,13H16V11H18M18,17H16V15H18M8,9H6V7H8M8,13H6V11H8M8,17H6V15H8M18,3V5H16V3H8V5H6V3H4V21H6V19H8V21H16V19H18V21H20V3H18Z" /></svg> {{LANG movies}}
+						</a>
+					</li>
+				<?php } ?>
+				<?php if ( $pt->config->popular_channels == 'on') { ?>
+				<li class="hide-from-mobile <?php echo ($pt->page == 'popular_channels') ? 'active': '';?>" id="popular_channels_menu_">
+				   <a href="{{LINK popular_channels}}" data-load="?link1=popular_channels"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M22,3H2C0.91,3.04 0.04,3.91 0,5V19C0.04,20.09 0.91,20.96 2,21H22C23.09,20.96 23.96,20.09 24,19V5C23.96,3.91 23.09,3.04 22,3M22,19H2V5H22V19M14,17V15.75C14,14.09 10.66,13.25 9,13.25C7.34,13.25 4,14.09 4,15.75V17H14M9,7A2.5,2.5 0 0,0 6.5,9.5A2.5,2.5 0 0,0 9,12A2.5,2.5 0 0,0 11.5,9.5A2.5,2.5 0 0,0 9,7M14,7V8H20V7H14M14,9V10H20V9H14M14,11V12H18V11H14"></path></svg> {{LANG popular_channels}}</a>
+				</li>
+				<?php } ?>
+			</ul>
+			
+			<!--<ul class="nav navbar-nav pull-right">
+				<?php if ($pt->config->upload_system == 'on') { ?> 
+			    <li class="hide-from-mobile">
+					<a href="{{LINK upload-video}}" class="btn upload-button" data-load="?link1=upload-video">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+						<span class="hide-in-mobile">{{LANG upload}}</span>
+					</a>
+				</li>
+				<?php } ?>
+				<?php if ($pt->config->import_system == 'on') { ?> 
+			    <li class="hide-from-mobile">
+					<a href="{{LINK import-video}}" class="btn import-button" data-load="?link1=import-video">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download-cloud"><polyline points="8 17 12 21 16 17"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"></path></svg> 
+						<span class="hide-in-mobile">{{LANG import}}</span>
+					</a>
+				</li>
+				<?php } ?>
+			</ul>-->
+			
+		</div>
+	</div>
+</nav>
+<?php } ?>
+
+<?php if (IS_LOGGED): ?>
+<script>
+	jQuery(document).ready(function($) {
+		pt_get_notifications({type:'new'});
+		
+		$("#get-notifications").click(function(event) {
+			if ($('#notifications').css('display') == 'none') {
+				var notfi_cont = $("ul.notfi-dropdown");
+				
+				if ($("span#new-notifications").html() != '') {
+					$(this).find('span#new-notifications').empty();
+				}
+
+				pt_get_notifications({sa:1});
+			}
+		});
+
+		setInterval(function(){
+			pt_get_notifications({type:'new'});
+		}, 6000);
+	});
+
+	function pt_get_notifications(args){
+		if (!args) {
+			args = {};
+		}
+		var notfi_cont = $("ul.notfi-dropdown");
+		var notfi_set  = $("ul#notifications");
+		
+		defparams = {
+			type: false,
+			sa:false
+		}
+
+		options = Object.assign(defparams,args);
+		data    = {'hash':$('.main_session').val()};
+
+		if (options['type']) {
+			data['t'] = options['type'];
+		}
+
+		if (options['sa']) {
+			data['sa'] = options['sa'];
+			notfi_set.find('i.spin').removeClass('hidden');
+		}
+
+		$.ajax({
+			url: '{{LINK aj/get_notifications}}',
+			type: 'GET',
+			dataType: 'json',
+			data:data
+		})
+		.done(function(data) {
+			if (data.status == 200) {
+				if (data.new) {
+					$("span#new-notifications").html($('<b>',{
+						text:data.new
+					}));
+				}
+				else{
+					notfi_set.find('b').text(data.len);
+					notfi_set.find('ul').html(data.html);
+				}			
+			}
+			else if(data.status == 304 && options['sa']){
+				notfi_set.find('ul').html($("<li>",{
+					class:'no-notifications',
+					text: "{{LANG no_notifications}}"
+				}));
+			}
+
+			if (data.count_messages > 0) {
+				$('#new-messages').html('<b>' + data.count_messages + '</b>');
+			} else {
+				$('#new-messages').html('');
+			}
+
+			if (options['sa']) {notfi_set.find('i.spin').addClass('hidden');}
+			
+		})
+		.fail(function() {
+			console.log("error");
+		});
+	}
+</script>
+<?php endif ?>
+
+<script>
+$('.search-icon').on('click', function(event) {
+	event.preventDefault();
+	$('.search-bar').toggleClass('hidden');
+});
+
+$('#open_slide').on('click', function(event) {
+	event.preventDefault();
+	$('body').toggleClass('side_open');
+});
+
+$('#search-bar').keyup(function(event) {
+	var search_value = $(this).val();
+	var search_dropdown = $('.search-dropdown');
+	if (search_value == '') {
+		search_dropdown.addClass('hidden');
+		search_dropdown.empty();
+		return false;
+	} else {
+		search_dropdown.removeClass('hidden');
+	}
+    $.post('{{LINK aj/search}}', {search_value: search_value}, function(data, textStatus, xhr) {
+    	if (data.status == 200) {
+    		search_dropdown.html(data.html);
+    	} else {
+	       search_dropdown.addClass('hidden');
+		   search_dropdown.empty();
+		   return false;
+    	}
+    });
+});
+
+jQuery(document).click(function(event){
+    if (!(jQuery(event.target).closest(".search-dropdown").length)) {
+        jQuery('.search-dropdown').addClass('hidden');
+    }
+});
+
+jQuery(document).click(function(event){
+    if (!(jQuery(event.target).closest("#open_slide, .yp_side_drawer").length)) {
+        jQuery('body').removeClass('side_open');
+    }
+});
+</script>

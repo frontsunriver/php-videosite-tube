@@ -1,0 +1,25 @@
+<li class="notifications-list">
+	<a href="{{URL}}" class="fluid" style="display: block;">
+		<div class="avatar">
+			<?php if ($pt->notify['type'] == 'bank_wallet' || $pt->notify['type'] == 'bank_pro' || $pt->notify['type'] == 'bank_decline') { ?>
+				<img src="{{CONFIG theme_url}}/img/icon.png" alt="Avatar" class="full-size">
+			<?php }else{ ?>
+				<img src="{{USER avatar}}" alt="Avatar" class="full-size">
+			<?php } ?>
+		</div>
+		<div class="notifications-info">
+			<p>
+				<?php if ($pt->notify['type'] == 'bank_wallet' || $pt->notify['type'] == 'bank_pro' || $pt->notify['type'] == 'bank_decline') { ?>
+				<span class="main-color">{{CONFIG title}}</span>
+			<?php }else{ ?>
+				<span class="main-color">{{USER name}}</span>
+			<?php } ?>
+				<span>{{TITLE}}</span>
+				<span>{{TEXT}}</span>
+			</p>
+			<time>
+				{{ICON}} {{TIME}}
+			</time>
+		</div>
+	</a>
+</li>

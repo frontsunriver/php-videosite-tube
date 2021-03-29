@@ -1,0 +1,233 @@
+<div class="create-new-ad-container">
+    <div class="user-ads-list-header">
+      <span>
+        <a href="{{LINK ads}}" data-load="?link1=ads">
+          <i class="material-icons">dvr</i>  {{LANG ads}}
+        </a>
+      </span>
+      <span  class="pointer">
+          <i class="material-icons">keyboard_arrow_right</i> {{LANG create_new_ad}} 
+      </span>
+    </div>
+        <?php 
+        if ($pt->user->wallet == '0.00' || $pt->user->wallet == '0') {
+          ?>
+          <div class="alert alert-warning">
+            {{LANG balance_is_0}} <a href="{{LINK ads}}" data-load="?link1=ads">{{LANG top_up}}</a>
+          </div>
+          <?php
+        }
+        ?>
+    <form class="user-ads-settings-form" method="POST">
+      <div class="user-ads-settings-alert">
+        
+      </div>
+      <div class="progress hidden">
+         <div class="upload-progress-bar bar progress-bar progress-bar-striped active"></div>
+         <div class="percent">0%</div>
+      </div>
+      <div class="col-lg-8 col-md-8">   
+          <div class="body">
+              <div class="alert alert-success ads-settings-alert"></div>
+                  <div class="form-group">
+                  	  <label class="form-label col-md-2" for="name">{{LANG name}}</label>
+                      <div class="col-md-10">
+                      	<input type="text" id="name" name="name" class="form-control" <?php if ($pt->user->wallet == '0.00' || $pt->user->wallet == '0') { echo 'disabled'; }?>>
+                      </div>       
+                  </div>
+                  <div class="form-group">
+                      <label class="form-label col-md-2" for="url">URL</label>
+                      <div class="col-md-10">
+                      	<input type="text" id="url" name="url" class="form-control" <?php if ($pt->user->wallet == '0.00' || $pt->user->wallet == '0') { echo 'disabled'; }?>>
+                      </div> 
+                  </div>
+
+                  <div class="form-group">
+                      <label class="form-label col-md-2" for="title">{{LANG title}}</label>
+                      <div class="col-md-10">
+                      	<input type="text" id="title" name="title" class="form-control" <?php if ($pt->user->wallet == '0.00' || $pt->user->wallet == '0') { echo 'disabled'; }?>>
+                      </div> 
+                  </div>
+
+                  <div class="form-group">
+                      <label class="form-label col-md-2" for="desc">{{LANG description}}</label>
+                      <div class="col-md-10">
+                      	<textarea name="desc" id="desc" rows="4" class="form-control" <?php if ($pt->user->wallet == '0.00' || $pt->user->wallet == '0') { echo 'disabled'; }?>></textarea>
+                      </div> 
+                  </div>
+                  
+                  <div class="form-group">
+                      <label class="form-label col-md-2">{{LANG select_media}}</label>
+                      <div class="col-md-10" <?php if ($pt->user->wallet == '0.00' || $pt->user->wallet == '0') { echo 'disabled'; }?>>
+                      	<input type="file" class="media" id="ad-media" name="media" accept="image/* video/*" <?php if ($pt->user->wallet == '0.00' || $pt->user->wallet == '0') { echo 'disabled'; }?>>
+                      </div> 
+                      <br>
+                  </div>
+          </div>
+          <div class="clearfix"></div>
+      </div>
+      <div class="col-lg-4 col-md-4">
+    		<div class="form-group-rs">
+            <select class="form-control selectpicker show-menu-arrow show-tick" multiple name="audience-list[]" data-live-search="true" title="{{LANG traget_audience}}" data-actions-box="true" name="audience-list[]" <?php if ($pt->user->wallet == '0.00' || $pt->user->wallet == '0') { echo 'disabled'; }?>>
+              	<?php foreach ($countries_name as $country_id => $country_name): ?>
+              		<option value="<?php echo($country_id); ?>">
+              			<span>
+              				<?php echo($country_name); ?>
+              			</span>
+              		</option>
+              	<?php endforeach; ?>
+          	</select>
+            <div class="clear"></div>
+    		</div>
+
+      	<div class="form-group">
+      		<label for="ad-placement">{{LANG placement}}</label>
+      		<div>
+      			<select name="placement" id="ad-placement" class="form-control" <?php if ($pt->user->wallet == '0.00' || $pt->user->wallet == '0') { echo 'disabled'; }?>>
+  					<option value="1">{{LANG video_ad}}</option>
+  					<option value="2">{{LANG page_ad}}</option>
+  				</select>
+      		</div>
+      	</div>
+      	<div class="form-group">
+      		<label for="cost">{{LANG pricing}}</label>
+      		<div>
+      			<select name="cost" id="cost" class="form-control">
+    					<option value="1">{{LANG cost_click}} ({{CURRENCY}} {{CONFIG ad_c_price}})</option>
+    					<option value="2">{{LANG cost_view}} ({{CURRENCY}} {{CONFIG ad_v_price}})</option>
+    				</select>
+      		</div>
+      	</div>
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="form-label" for="day_limit">{{LANG ad_day_limit}}</label>
+					<div>
+						<input type="number" id="day_limit" name="day_limit" class="form-control" placeholder="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+					</div> 
+				</div>
+			</div>
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="form-label" for="lifetime_limit">{{LANG ad_lifetime_limit}}</label>
+					<div>
+						<input type="number" id="lifetime_limit" name="lifetime_limit" class="form-control" placeholder="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+					</div> 
+				</div>
+			</div>
+		</div>
+      	<div class="form-group">
+      		<button type="submit" class="btn btn-main" id="submit-btn" <?php if ($pt->user->wallet == '0.00' || $pt->user->wallet == '0') { echo 'disabled'; }?>><i class="fa fa-plus"></i> <span>{{LANG publish}}</span></button>
+      		<button type="reset" class="btn btn-default"><i class="fa fa-ban"></i> {{LANG cancel}}</button>
+      	</div>
+      </div>       
+    </form>     
+    <div class="clear"></div>
+</div>
+<br>
+<style>
+  .create-new-ad-container .progress{
+    border-radius: 0px;
+  }
+</style>
+
+<script>
+  var bar         = $('.bar');
+  var percent     = $('.percent');
+
+	jQuery(document).ready(function($) {
+	  $('.selectpicker').selectpicker({});
+
+    $("#ad-placement").change(function(event) {
+      if ($(this).val() == 2) {
+        $("#cost").find("option[value='2']").removeAttr('selected').attr('disabled', 'disabled');
+      }
+      
+      else{
+        $("#cost").find("option").removeAttr('disabled');
+      }
+    });
+
+    $('.user-ads-settings-form').submit(function(event) {
+      if ($("#ad-placement").val() == 2 && $("#ad-media").val() != ''){  
+        var mediafile = PT_HasExtension('#ad-media', ['.jpg', '.gif', '.png', '.jpeg']);
+        if (!mediafile){
+          scrollToTop();
+          $('#ad-media').val('');
+          $(".user-ads-settings-alert").html('<div class="alert alert-danger bg-danger"><i class="fa fa-info-circle"></i> {{LANG invalid_pagead_media}}</div>');
+          return false;
+        }
+      }
+    });
+
+    $('.user-ads-settings-form').ajaxForm({
+      url: '{{LINK aj/ads/create}}?hash=' + $('.main_session').val(),
+      dataType:"json",
+      beforeSend: function() {
+
+        var mediafile = $("#ad-media").prop('files');
+        if (mediafile[0].size > "{{CONFIG max_upload}}") {
+           swal({
+              title: '{{LANG error}}',
+              text:  "{{LANG file_is_too_big}} <?php echo pt_size_format($pt->config->max_upload); ?>",
+              type: 'error',
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'OK',
+              buttonsStyling: true,
+              confirmButtonClass: 'btn btn-success',
+           }).then(function(){
+              swal.close();
+              $("#ad-media").val('');
+           },
+           function() {
+              swal.close();
+              $("#ad-media").val('');
+           });
+           return false;
+        }
+
+        if ($("#ad-media").val()) {
+          $(".user-ads-settings-alert").html($('.progress').clone(true).addClass('progress-clone').removeClass('hidden'));
+          bar     = $('.progress-clone').find('.bar');
+          percent = $('.progress-clone').find('.percent');
+        }
+
+        $('#submit-btn').attr('disabled', true).find('span').text("{{LANG please_wait}}");
+        
+      },
+      uploadProgress: function(event, position, total, percentComplete) {
+          if(percentComplete > 50) {
+            percent.addClass('white');
+          }
+          var percentVal = percentComplete + '%';
+          bar.width(percentVal);
+          percent.html(percentVal);
+
+          if (percentComplete == 100) {
+            $(".user-ads-settings-alert").empty();
+          }
+      },
+      success: function(data) {
+        scrollToTop();
+        if (data.status == 200){
+          $(".user-ads-settings-alert").html('<div class="alert alert-success bg-success"><i class="fa fa-check"></i> '+
+            data.message
+            +'</div>');
+          PT_Delay(function(){
+            window.location.href = '{{LINK ads}}';
+          },2000);
+          
+        }
+        else {
+          $('#submit-btn').removeAttr('disabled').find('span').text('{{LANG publish}}');
+          $(".user-ads-settings-alert").html('<div class="alert alert-danger bg-danger"><i class="fa fa-info-circle"></i> '+
+            data.message
+            +'</div>');
+        }
+      }
+    });
+	});
+</script>
+
+

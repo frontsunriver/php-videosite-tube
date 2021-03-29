@@ -1,0 +1,98 @@
+l<div class="container login-page">
+    <div class="login-form">
+        <h4>{{LANG lets_get_started}}</h4>
+    	<form action="{{LINK register}}" method="POST">
+    	    <div class="errors form-group">{{ERRORS}}</div>
+    	     <div class="errors success form-group">{{SUCCESS}}</div>
+			<div class="form-group">
+				<input type="text" name="username" id="username" placeholder="{{LANG username}}" required value="{{USERNAME}}">
+			</div>
+			<div class="form-group">
+				<input type="text" name="email" id="email" placeholder="{{LANG email_address}}" required value="{{EMAIL}}">
+			</div>
+			<div class="form-group">
+				<input type="password" name="password" id="password" placeholder="{{LANG password}}" required>
+			</div>
+			<div class="form-group">
+				<input type="password" name="c_password"  id="c_password" placeholder="{{LANG confirm_password}}" required>
+			</div>
+			<div class="form-group">
+				<select name="gender" id="gender" required>
+					<option value="male">{{LANG male}}</option>
+					<option value="female">{{LANG female}}</option>
+				</select>
+			</div>
+			{{CUSTOM_FIELDS}}
+			<div class="terms" style="color: #fff">
+		      <label for="accept_terms" style="font-size: 12px; cursor: pointer;"><input type="checkbox" style="float: left; width: auto; display: inline-block; margin-right: 5px; margin-top: 2px;" name="accept_terms" id="accept_terms"> 
+		       {{LANG terms_agreement}}
+		       <a style="color: #fff; text-decoration: underline;" href="{{LINK terms/terms}}">{{LANG terms_of_use}}</a> & <a href="{{LINK terms/privacy-policy}}" style="color: #fff; text-decoration: underline;">{{LANG privacy_policy}}</a>
+		       </label>
+		       <div class="clear"></div>
+		     </div>
+
+			<div class="recaptcha">{{RECAPTCHA}}</div>
+			<div class="form-group">
+				<input type="submit" class="button" value ="{{LANG sign_up}}">
+			</div>
+			<div class="new-here text-center">
+				{{LANG already_have_account}} <a class="dec" href="{{LINK login}}">{{LANG login_}}</a>
+			</div>
+			<?php if (isset($_GET['invite'])): ?>
+				<input type="text" class="hidden" value="<?php echo $_GET['invite']; ?>" name="invited">
+			<?php endif; ?>
+		</form>
+    </div>    
+</div>
+<ul class="bg-bubbles">
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+</ul>
+<script>
+$(function() {
+	$('.button').on('click', function () {
+		if ($('#username').val() && $('#password').val() && $('#email').val() && $('#gender').val() && $('#c_password').val()) {
+			$(this).val("{{LANG please_wait}}");
+		}
+	});
+});
+</script>
+<style>
+.bg-bubbles {
+  background: -webkit-linear-gradient(top left, #{{COLOR1}} 0%, #{{COLOR2}} 100%);
+  background: linear-gradient(to bottom right, #{{COLOR1}} 0%, #{{COLOR2}} 100%);
+}
+.login-page {
+	margin-top: 150px;
+}
+.login-form input[type=submit] {
+	color: #{{COLOR1}} !important;
+}
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #fff;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #fff;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #fff;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #fff;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color:    #fff;
+}
+</style>

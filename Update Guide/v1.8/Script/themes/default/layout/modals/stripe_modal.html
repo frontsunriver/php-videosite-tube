@@ -1,0 +1,62 @@
+<div class="modal fade matdialog" id="stripe_modal" role="dialog" data-keyboard="false" style="overflow-y: auto;">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></button>
+            <h4 class="modal-title">{{LANG credit_card}}</h4>
+         </div>
+         <form class="form form-horizontal" method="post" id="stripe_form" action="#">
+            <div class="modal-body twocheckout_modal">
+               <div id="stripe_alert"></div>
+               <div class="clear"></div>
+               <div class="sun_input col-md-6">
+                  <input class="form-control shop_input" type="text" placeholder="{{LANG Name}}"  value="{{ME name}}" id="stripe_name">
+               </div>
+               <div class="sun_input col-md-6">
+                  <input class="form-control shop_input" type="email" placeholder="{{LANG Email}}" value="{{ME email}}" id="stripe_email">
+               </div>
+               <div class="clear"></div>
+               <hr>
+               <div class="row two_check_card">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M20,8H4V6H20M20,18H4V12H20M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" /></svg>
+                  <div class="sun_input col-xs-12">
+                     <input id="stripe_number" class="form-control shop_input" type="text" placeholder="{{LANG card_number}}">
+                  </div>
+                  <div class="sun_input col-xs-4">
+                     <select id="stripe_month" type="text" class="form-control shop_input" autocomplete="off" placeholder="{{LANG Month}} (01)">
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                     </select>
+                  </div>
+                  <div class="sun_input col-xs-4 no-padding-both">
+                     <select id="stripe_year" type="text" class="form-control shop_input" autocomplete="off" placeholder="{{LANG Year}} (2019)">
+                            <?php for ($i=date('Y'); $i <= date('Y')+15; $i++) {  ?>
+                           <option value="<?php echo($i) ?>"><?php echo($i) ?></option>
+                        <?php } ?>
+                        </select>
+                  </div>
+                  <div class="sun_input col-xs-4">
+                     <input id="stripe_cvc" type="text" class="form-control shop_input" autocomplete="off" placeholder="CVC" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                  </div>
+               </div>
+               <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+            <div class="modal-footer">
+               <div class="ball-pulse"><div></div><div></div><div></div></div>
+               <button type="button" class="btn btn-main" onclick="SH_StripeCardRequest()" id="stripe_btn">{{LANG pay}}</button>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>

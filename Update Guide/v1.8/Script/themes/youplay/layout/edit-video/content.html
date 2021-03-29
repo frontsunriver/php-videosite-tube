@@ -1,0 +1,399 @@
+<div class="wo_about_wrapper_parent">
+	<div class="wo_about_wrapper"> 
+		<div class="hero hero-overlay"></div>
+	</div>
+</div>
+<div class="pt_page_margin">
+	<div class="mat_header">
+		<h1><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg> {{LANG edit_video}}</h1>
+	</div>
+	<div class="content pt_shadow">
+		<div class="col-md-12">
+			<div class="upload-head">
+				<h4>{{TITLE}}</h4>
+				<hr>
+			</div>
+		</div>
+		<div id="video-success" class="alert alert-success"></div>
+		<div class="errors alert alert-danger"></div>
+		<div class="col-md-8" id="edit-form">
+			<form action="" class="form-horizontal setting-panel pt_forms" method="POST">
+				<?php if (PT_IsAdmin() && $pt->video->is_movie) { ?>
+                  <div id="movie_fields">
+                     <div class="form-group">
+                        <label class="col-md-12" for="movie_title">{{LANG movie_title}}</label>
+                        <div class="col-md-12">
+                           <input id="movie_title" name="movie_title" type="text" placeholder="{{LANG movie_title}}"  value="{{TITLE}}" class="form-control input-md">
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-md-12" for="description">{{LANG description}}</label>  
+                        <div class="col-md-12">
+                           <textarea name="movie_description" id="description" cols="30" rows="5" class="form-control move_description">{{DESC}}</textarea>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-md-12" for="stars">{{LANG stars}}</label>
+                        <div class="col-md-12">
+                           <input id="stars" name="stars" type="text" placeholder="{{LANG stars}} {{LANG by_comma}}" class="form-control input-md" value="<?php echo($pt->video->stars) ?>">
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-md-12" for="producer">{{LANG producer}}</label>
+                        <div class="col-md-12">
+                           <input id="producer" name="producer" type="text" placeholder="{{LANG producer}}" class="form-control input-md" value="<?php echo($pt->video->producer) ?>">
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-md-12" for="release">{{LANG release}}</label>
+                        <div class="col-md-12">
+                           <input id="release" name="release" type="number" placeholder="{{LANG release}}" class="form-control input-md"  min="1910" max="<?php echo date('Y') ?>" value="<?php echo($pt->video->movie_release) ?>">
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-md-12" for="country">{{LANG country}}</label>
+                        <div class="col-md-12">
+                           <select class="form-control show-tick" id="country" name="country">
+                              <?php foreach ($countries_name as $key => $value) { $selected = ($pt->video->country == $key) ? 'selected' : '';  ?>
+                              <option value="<?php echo $key; ?>" <?php echo $selected?>><?php echo $value; ?></option>
+                              <?php  } ?>
+                           </select>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-md-12" for="quality">{{LANG quality}}</label>
+                        <div class="col-md-12">
+                           <select class="form-control show-tick" id="quality" name="quality">
+                              <option value="CAMRip" <?php echo $pt->video->quality == 'CAMRip' ? 'selected' : ''; ?>>CAMRip</option>
+                              <option value="TS" <?php echo $pt->video->quality == 'TS' ? 'selected' : ''; ?>>TS</option>
+                              <option value="VHSRip" <?php echo $pt->video->quality == 'VHSRip' ? 'selected' : ''; ?>>VHSRip</option>
+                              <option value="WP" <?php echo $pt->video->quality == 'WP' ? 'selected' : ''; ?>>WP</option>
+                              <option value="SCR (VHSScr)" <?php echo $pt->video->quality == 'SCR (VHSScr)' ? 'selected' : ''; ?>>SCR (VHSScr)</option>
+                              <option value="DVDScr" <?php echo $pt->video->quality == 'DVDScr' ? 'selected' : ''; ?>>DVDScr</option>
+                              <option value="TC" <?php echo $pt->video->quality == 'TC' ? 'selected' : ''; ?>>TC</option>
+                              <option value="LDRip" <?php echo $pt->video->quality == 'LDRip' ? 'selected' : ''; ?>>LDRip</option>
+                              <option value="TVRip" <?php echo $pt->video->quality == 'TVRip' ? 'selected' : ''; ?>>TVRip</option>
+                              <option value="SATRip" <?php echo $pt->video->quality == 'SATRip' ? 'selected' : ''; ?>>SATRip</option>
+                              <option value="DVBRip" <?php echo $pt->video->quality == 'DVBRip' ? 'selected' : ''; ?>>DVBRip</option>
+                              <option value="DTVRip" <?php echo $pt->video->quality == 'DTVRip' ? 'selected' : ''; ?>>DTVRip</option>
+                              <option value="DVD" <?php echo $pt->video->quality == 'DVD' ? 'selected' : ''; ?>>DVD</option>
+                              <option value="HDRip" <?php echo $pt->video->quality == 'HDRip' ? 'selected' : ''; ?>>HDRip</option>
+                              <option value="WEB-DL" <?php echo $pt->video->quality == 'WEB-DL' ? 'selected' : ''; ?>>WEB-DL</option>
+                              <option value="HD-TV" <?php echo $pt->video->quality == 'HD-TV' ? 'selected' : ''; ?>>HD-TV</option>
+                              <option value="HD DVD" <?php echo $pt->video->quality == 'HD DVD' ? 'selected' : ''; ?>>HD DVD</option>
+                           </select>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-md-12" for="category">{{LANG category}}</label>
+                        <div class="col-md-12">
+                           <select class="form-control show-tick" id="category" name="category">
+                              <?php foreach($pt->movies_categories as $key => $category) { $selected = ($pt->video->category_id == $key) ? 'selected' : '';?>
+								<option value="<?php echo $key?>" <?php echo $selected?>><?php echo $category?></option>
+								<?php } ?>
+                           </select>
+                        </div>
+                     </div> 
+                     <div class="form-group">
+                        <label class="col-md-12" for="rating">{{LANG rating}} {{LANG rating_btween}}</label>
+                        <div class="col-md-12">
+                           <input type="number" id="rating" name="rating" class="form-control" min="1" max="10" step="0.1" value="<?php echo($pt->video->rating) ?>">
+                        </div>
+                     </div> 
+                  </div>
+                    <?php if ((($pt->config->usr_v_mon == 'on' && $pt->config->user_mon_approve == 'off') || ($pt->config->usr_v_mon == 'on' && $pt->config->user_mon_approve == 'on' && $pt->user->monetization == '1')) && $pt->config->sell_videos_system == 'on') { ?>
+                     <div class="form-group">
+						<label class="col-md-12" for="buy_price">{{LANG set_p_v}}</label>  
+						<div class="col-md-12">
+							<input id="mySingleFieldTags_" name="buy_price" type="text" placeholder="" class="form-control input-md" value="<?php echo($pt->video->sell_video) ?>">
+						</div>
+					</div>
+					<?php } ?>
+					<?php if ((($pt->config->usr_v_mon == 'on' && $pt->config->user_mon_approve == 'off') || ($pt->config->usr_v_mon == 'on' && $pt->config->user_mon_approve == 'on' && $pt->user->monetization == '1')) && $pt->config->rent_videos_system == 'on') { ?>
+						<div class="form-group">
+							<label class="col-md-12" for="movie_rent_price">{{LANG rent_price}}</label>  
+							<div class="col-md-12">
+								<input id="mySingleFieldTags_movie" name="movie_rent_price" type="text" placeholder="" class="form-control input-md" value="<?php echo $pt->video->rent_price ?>">
+								<span class="help-block"><?php if($pt->config->admin_com_rent_videos > 0){ ?>{{LANG p_m_than_}} <?php echo($pt->config->admin_com_rent_videos) ?><?php }?></span>
+							</div>
+						</div>
+						<?php } ?>
+                  <input type="hidden" name="is_movie" class="is_movie" value="1">
+                  <?php }else{ ?>
+				<div class="form-group">
+					<label class="col-md-12" for="title">{{LANG video_title}}</label>  
+					<div class="col-md-12">
+						<input id="title" name="title" type="text" value="{{TITLE}}" class="form-control input-md">
+						<span class="help-block">{{LANG video_title_help}}</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-12" for="description">{{LANG video_descritpion}}</label>  
+					<div class="col-md-12">
+						<textarea name="description" id="description" cols="30" rows="10" class="form-control description">{{DESC}}</textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-12" for="category_id">{{LANG category}}</label>  
+					<div class="col-md-12">
+						<select name="category_id" id="category_id" class="form-control">
+							<?php foreach($pt->categories as $key => $category) { $selected = ($pt->video->category_id == $key) ? 'selected' : '';?>
+							<option value="<?php echo $key?>" <?php echo $selected?>><?php echo $category?></option>
+							<?php } ?>
+						</select>
+					</div>
+				</div>
+				<div class="form-group" <?php if (empty($pt->sub_categories_array["'1'"])) { ?> style="display: none;"<?php } ?> id="sub_category_div">
+					<label class="col-md-12" for="sub_category_id">{{LANG sub_category}}</label>
+					<div class="col-md-12">
+						<select name="sub_category_id" id="sub_category_id" class="form-control">
+							<?php echo $pt->sub_categories_array["'".$pt->video->category_id."'"]; ?>
+						</select>
+					</div>
+				</div>
+				<?php if ($pt->config->geo_blocking == 'on') {
+					 ?>
+					<div class="form-group">
+						<label class="col-md-12" for="geo_blocking">{{LANG geo_blocking}}</label>
+						<div class="col-md-12">
+							<div class="form-group-rs" id="geo_blocking">
+				            <select class="form-control selectpicker show-menu-arrow show-tick" multiple name="continents-list[]" data-live-search="true" title="{{LANG geo_blocking}}" data-actions-box="true">
+				              	<?php 
+				              	foreach ($pt->continents as $key => $name): 
+				              		?>
+				              		<option value="<?php echo($name); ?>" <?php echo (!empty($pt->video->geo_blocking) && in_array($name, json_decode($pt->video->geo_blocking))) ? 'selected' : '' ?>>
+				              			<span>
+				              				<?php echo($name); ?>
+				              			</span>
+				              		</option>
+				              	<?php endforeach; ?>
+				          	</select>
+				            <div class="clear"></div>
+				    		</div>
+						</div>
+					</div>
+					<?php } ?>
+				<?php if (PT_IsAdmin()) { ?>
+				<div class="form-group">
+					<label class="col-md-12" for="featured">{{LANG featured}}</label>  
+					<div class="col-md-12">
+						<select name="featured" id="featured" class="form-control">
+							<option value="0" <?php echo ($pt->video->featured == 0) ? 'selected' : '' ?>>No</option>
+							<option value="1" <?php echo ($pt->video->featured == 1) ? 'selected' : '' ?>>Yes</option>
+						</select>
+					</div>
+				</div>
+				<div class="clear"></div>
+				<div class="form-group" style="position: relative;">
+					<label class="col-md-12" for="assign_to_user">{{LANG assign_to_user}}</label>  
+					<div class="col-md-12 vid_edit_assign">
+						<input id="assign_to_user" name="assign_to_user" type="text" placeholder="{{LANG username}}" class="form-control input-md">
+						<div class="search-dropdown_ hidden"></div>
+					</div>
+				</div>
+				<?php } ?>
+				<div class="form-group">
+					<label class="col-md-12" for="privacy">{{LANG privacy}}</label>  
+					<div class="col-md-12">
+						<select name="privacy" id="privacy" class="form-control">
+							<option value="0" <?php echo ($pt->video->privacy == 0) ? 'selected' : '' ?>>{{LANG public}}</option>
+							<option value="1" <?php echo ($pt->video->privacy == 1) ? 'selected' : '' ?>>{{LANG private}}</option>
+							<option value="2" <?php echo ($pt->video->privacy == 2) ? 'selected' : '' ?>>{{LANG unlisted}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-12" for="age_restriction">{{LANG age_restriction}}</label>  
+					<div class="col-md-12">
+						<select name="age_restriction" id="age_restriction" class="form-control">
+							<option value="1" <?php echo ($pt->video->age_restriction == 1) ? 'selected' : '' ?>>{{LANG all_ages}}</option>
+							<option value="2" <?php echo ($pt->video->age_restriction == 2) ? 'selected' : '' ?>>{{LANG only_18}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-12" for="tags">{{LANG tags}}</label>  
+					<div class="col-md-12">
+						<input id="mySingleFieldTags" name="tags" type="text" value="{{TAGS}}" placeholder="" class="form-control input-md">
+						<span class="help-block">{{LANG tags_help}}</span>
+					</div>
+				</div>
+				<?php if ((($pt->config->usr_v_mon == 'on' && $pt->config->user_mon_approve == 'off') || ($pt->config->usr_v_mon == 'on' && $pt->config->user_mon_approve == 'on' && $pt->user->monetization == '1')) && $pt->config->sell_videos_system == 'on') { ?>
+					<div class="form-group">
+						<label class="col-md-12" for="set_p_v">{{LANG set_p_v}}</label>  
+						<div class="col-md-12">
+							<input id="mySingleFieldTags" name="set_p_v" type="text" placeholder="" class="form-control input-md" value="<?php echo $pt->video->sell_video ?>">
+							<span class="help-block"><?php if($pt->config->admin_com_sell_videos > 0){ ?>{{LANG p_m_than_}} <?php echo($pt->config->admin_com_sell_videos) ?><?php }?></span>
+						</div>
+					</div>
+					<?php } ?>
+					<?php if ((($pt->config->usr_v_mon == 'on' && $pt->config->user_mon_approve == 'off') || ($pt->config->usr_v_mon == 'on' && $pt->config->user_mon_approve == 'on' && $pt->user->monetization == '1')) && $pt->config->rent_videos_system == 'on') { ?>
+						<div class="form-group">
+							<label class="col-md-12" for="rent_price">{{LANG rent_price}}</label>  
+							<div class="col-md-12">
+								<input id="mySingleFieldTags" name="rent_price" type="text" placeholder="" class="form-control input-md" value="<?php echo $pt->video->rent_price ?>">
+								<span class="help-block"><?php if($pt->config->admin_com_rent_videos > 0){ ?>{{LANG p_m_than_}} <?php echo($pt->config->admin_com_rent_videos) ?><?php }?></span>
+							</div>
+						</div>
+						<?php } ?>
+				<?php } ?>
+				<?php if ((($pt->config->usr_v_mon == 'on' && $pt->config->user_mon_approve == 'off') || ($pt->config->usr_v_mon == 'on' && $pt->config->user_mon_approve == 'on' && $pt->user->monetization == '1')) && $pt->user->video_mon == '1') { ?>
+
+				<div class="form-group">
+                    <label class="col-md-12" for="monetization">{{LANG monetization}}</label>  
+                    <div class="col-md-12">
+                        <select name="monetization" id="monetization" class="form-control">
+                           <option value="1" <?php echo ($pt->video->monetization == 1) ? 'selected' : ''  ?>>{{LANG enable}}</option>
+                           <option value="0" <?php echo ($pt->video->monetization == 0) ? 'selected' : ''  ?>>{{LANG disable}}</option>
+                        </select>
+                    </div>
+                </div>
+                <?php } ?>
+				<div class="form-group hidden">
+					<label class="col-md-12" for="thumbnail">{{LANG thumbnail}}</label>  
+					<div class="col-md-12">
+						<input id="thumbnail" name="thumbnail" type="file" accept="image/*">
+						<span class="help-block">jpg, png, gif</span>
+					</div>
+				</div>
+				<div class="last-sett-btn modal-footer" style="margin: 0px -25px -10px -25px;">
+					<button type="button" class="btn btn-delete setting-panel-mdbtn" onclick="PT_DeleteVideo({{ID}}, 'edit-page')">{{LANG delete_videos}}</button>
+					<button type="submit" id="submit-btn" class="btn btn-main setting-panel-mdbtn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> {{LANG publish}}</button>
+				</div>
+				<input type="hidden" name="video-id" class="video-id" value="{{ID}}">
+			</form>
+		</div>
+		<div class="col-md-4">
+			<div class="thumbnail-preview edit-thumb">
+				<img src="{{THUMBNAIL}}" alt="{{TITLE}}">
+			</div>
+			<div class="video-title">
+				<p>{{TITLE}}</p>
+			</div>
+			<div class="video-description">
+				<p>{{DESC_2}}</p>
+			</div>
+		</div>
+		<div class="clear"></div>
+	<div class="clear"></div>
+	</div>
+</div>
+<script>
+	var el = $(".description").emojioneArea({
+		pickerPosition: "bottom",
+	    tonesStyle: "radio",
+	    events: {
+	     	keyup: function (editor, event) {
+		    }
+	    },
+	    filters: {
+	        flags : false,
+	        objects : false,
+	        travel_places : false,
+	        activity : false
+	    }
+	});
+	var el2 = $(".move_description").emojioneArea({
+		pickerPosition: "bottom",
+	    tonesStyle: "radio",
+	    events: {
+	     	keyup: function (editor, event) {
+		    }
+	    },
+	    filters: {
+	        flags : false,
+	        objects : false,
+	        travel_places : false,
+	        activity : false
+	    }
+	});
+$('.selectpicker').selectpicker({});
+<?php 
+$js_array = json_encode($pt->sub_categories_array);
+echo "var sub_categories_array = ". $js_array . ";\n";
+?>
+$(document).on('change', '#category_id', function(event) {
+	event.preventDefault();
+	id = $(this).val();
+	if (typeof(sub_categories_array["'"+id+"'"]) == 'undefined') {
+   	$('#sub_category_div').hide();
+    $('#sub_category_id').html('');
+   }
+   else{
+   	$('#sub_category_div').show();
+    $('#sub_category_id').html(sub_categories_array["'"+id+"'"]);
+  }
+});
+
+
+$(function () {
+	$('.edit-thumb').on('click', function(event) {
+		$('#thumbnail').trigger('click');
+	});
+	$('#thumbnail').on('change', function(event) {
+		readURL(this);
+	});
+	$('#description').keyup(function(event) {
+      str = $(this).val().replace(/(?:\r\n|\r|\n)/g, '<br />');
+      $('.video-description p').html(str);
+   });
+   <?php if (PT_IsAdmin() && $pt->video->is_movie) { ?>
+		$('#movie_title').keyup(function(event) {
+	      $('.video-title p').html($(this).val());
+	   });
+	<?php }else{ ?>
+	   $('#title').keyup(function(event) {
+	      $('.video-title p').html($(this).val());
+	   });
+	<?php } ?>
+	$("#mySingleFieldTags").tagit({
+		allowSpaces: true
+	});
+	$('#edit-form form').ajaxForm({
+	    url: '{{LINK aj/edit-video}}' + '?hash=' + $('.main_session').val(),
+	    beforeSend: function() {
+	    	$('#submit-btn').attr('disabled', true);
+	    	$('#submit-btn').text("{{LANG please_wait}}");
+	    },
+	    success: function(data) {
+	    	if (data.status == 200) {
+	    		$('#video-success').html(data.message);
+          window.location.href = '{{URL}}';
+	    	} else {
+	    		$('#submit-btn').attr('disabled', false);
+	    	    $('#submit-btn').html('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> {{LANG publish}}');
+	    		$('.errors').removeClass('hidden').html(data.message);
+	    	}
+	    }
+	});
+});
+<?php if (PT_IsAdmin()) { ?>
+$('#assign_to_user').keyup(function(event) {
+	var search_value = $(this).val();
+	var search_dropdown = $('.search-dropdown_');
+	if (search_value == '') {
+		search_dropdown.addClass('hidden');
+		search_dropdown.empty();
+		return false;
+	} else {
+		search_dropdown.removeClass('hidden');
+	}
+    $.post('{{LINK aj/search_users}}', {search_value: search_value}, function(data, textStatus, xhr) {
+    	if (data.status == 200) {
+    		search_dropdown.html(data.html);
+    	} else {
+	       search_dropdown.addClass('hidden');
+		   search_dropdown.empty();
+		   return false;
+    	}
+    });
+});
+
+function add_to_input(username) {
+	$('#assign_to_user').val(username);
+	var search_dropdown = $('.search-dropdown_');
+	search_dropdown.addClass('hidden');
+    search_dropdown.empty();
+}
+<?php } ?>
+</script>

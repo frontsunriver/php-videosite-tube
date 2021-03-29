@@ -1,0 +1,52 @@
+<div class="page-margin">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="settings-sidebar">
+				<ul class="list-group">
+					<li class="list-group-item <?php echo ($pt->setting_page == 'general') ? 'active': '';?>">
+						<a href="{{LINK settings/general/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=general"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg> {{LANG general}}</a>
+					</li>
+					<li class="list-group-item <?php echo ($pt->setting_page == 'profile') ? 'active': '';?>">
+						<a href="{{LINK settings/profile/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=profile&user=<?php echo $pt->settings->username; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> {{LANG profile}}</a>
+					</li>
+					<?php if ($pt->config->usr_v_mon == 'on' && ($pt->settings->id == $pt->user->id)): ?>
+						<li class="list-group-item <?php echo ($pt->setting_page == 'monetization') ? 'active': '';?>">
+							<a href="{{LINK settings/monetization/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=monetization&user=<?php echo $pt->settings->username; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg> {{LANG monetization}}</a>
+						</li>
+					<?php endif; ?>
+					<li class="list-group-item <?php echo ($pt->setting_page == 'password') ? 'active': '';?>">
+						<a href="{{LINK settings/password/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=password&user=<?php echo $pt->settings->username; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> {{LANG password}}</a>
+					</li>
+					<?php if (($pt->config->usr_v_mon == 'on' && $pt->config->sell_videos_system == 'on') || ($pt->config->usr_v_mon == 'off' && $pt->config->sell_videos_system == 'on') || ($pt->config->usr_v_mon == 'on' && $pt->config->sell_videos_system == 'off') ) { ?>
+					<li class="list-group-item <?php echo (in_array($pt->setting_page, array('withdrawals','balance'))) ? 'active': '';?>">
+						<a href="{{LINK settings/balance/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=balance&user=<?php echo $pt->settings->username; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg> {{LANG balance_}}</a>
+					</li>
+					<?php } ?>
+					<li class="list-group-item <?php echo ($pt->setting_page == 'avatar') ? 'active': '';?>">
+						<a href="{{LINK settings/avatar/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=avatar&user=<?php echo $pt->settings->username; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg> {{LANG avatar_and_cover}}</a>
+					</li>
+					<?php if ($pt->config->two_factor_setting == 'on'): ?>  
+						<li class="list-group-item <?php echo ($pt->setting_page == 'two_factor') ? 'active': '';?>">
+							<a href="{{LINK settings/two_factor/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=two_factor&user=<?php echo $pt->settings->username; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> {{LANG two_factor}}</a>
+						</li>
+					<?php endif ?>
+					<?php if ($pt->config->verification_badge == 'on'): ?>  
+						<li class="list-group-item <?php echo ($pt->setting_page == 'verification') ? 'active': '';?>">
+							<a href="{{LINK settings/verification/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=verification&user=<?php echo $pt->settings->username; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z"></path></svg> {{LANG verification}}</a>
+						</li>
+					<?php endif ?>
+					<?php if ($pt->config->delete_account == 'on') { ?>
+					<li class="list-group-item <?php echo ($pt->setting_page == 'delete') ? 'active': '';?>">
+						<a href="{{LINK settings/delete/<?php echo $pt->settings->username; ?>}}" data-load="?link1=settings&page=delete&user=<?php echo $pt->settings->username; ?>"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg> {{LANG delete_account}}</a>
+					</li>
+					<?php } ?>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-12">
+        {{SETTINGSPAGE}}
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<br>

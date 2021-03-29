@@ -1,0 +1,173 @@
+<?php 
+$page = (!empty($_GET['page-id'])) ? $_GET['page-id'] : 1;
+$filter_keyword = (!empty($_GET['query'])) ? PT_Secure($_GET['query']) : '';
+$filter_type    = '';
+$db->pageLimit  = 50;
+$type           = 'all';
+
+if (!empty($filter_keyword)) {
+    $sql   = " (text LIKE '%$filter_keyword%') ";
+	$comments = $db->where($sql)->orderBy('id', 'DESC')->objectbuilder()->paginate(T_COMMENTS, $page);
+} 
+
+else {
+	$comments = $db->objectbuilder()->orderBy('id', 'DESC')->paginate(T_COMMENTS, $page);
+
+    // print_r($users);
+    // exit();
+}
+
+$get_online_users = $db->where('last_active', time() - 60, '>')->getValue(T_USERS, 'COUNT(*)');
+
+if (($page > $db->totalPages) && !empty($_GET['page-id'])) {
+	header("Location: " . PT_LoadAdminLinkSettings('manage-comments'));
+	exit();
+}
+?>
+<div class="container-fluid">
+    <div class="block-header">
+        <h2>Users > Manage Comments</h2>
+    </div>
+    <!-- Vertical Layout -->
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h2>Manage Comments</h2>
+                </div>
+                <div class="body">
+                   <div class="row">
+                       <div class="col-md-6" style="margin-bottom:0;">
+                            <form method="get" action="<?php echo PT_LoadAdminLinkSettings('manage-comments'); ?>">
+                              <div class="row">
+                              	<div class="col-md-8">
+	                              	<div class="form-group form-float">
+	                                    <div class="form-line">
+	                                        <input type="text" name="query" id="query" class="form-control" value="<?php echo(!empty($_GET['query']) ? $_GET['query'] : '') ?>">
+	                                        <label class="form-label search-form">Search for Keyword</label>
+	                                    </div>
+	                                </div>
+	                              </div>
+	                              <div class="col-md-1">
+	                              	 <button class="btn btn-info">Search</button>
+	                              </div>
+                              </div>
+
+                              <div class="clearfix"></div>
+                           </form>
+                       </div>
+                   </div>
+                   <div class="clearfix"></div>
+                   <div class="table-responsive1">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                      <th>ID</th>
+					                  <th>Text</th>
+                                      <th>Video</th>
+					                  <th>Articles</th>
+					                  <th>Posted On</th>
+					                  <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                foreach ($comments as $key => $comment) {
+                                    $video_link = '';
+                                    $video_id = '';
+                                    $articles_link = '';
+                                    $articles_title = '';
+                                    if (!empty($comment->video_id)) {
+                                        $get_video = PT_GetVideoByID($comment->video_id, 1, 1,2);
+                                        $video_link = $get_video->url;
+                                        $video_id = $get_video->video_id;
+                                    }
+                                    if (!empty($comment->post_id)) {
+                                        $article = $db->where('id',$comment->post_id)->getOne(T_POSTS);
+                                        $art_id   = $article->id;
+                                        $articles_link = PT_Link("articles/read/$art_id");
+                                        $articles_title = PT_ShortText($article->title,50);
+                                    }
+                                	echo PT_LoadAdminPage('manage-comments/list', array('TIME' => date('F-d-Y',$comment->time) ,'ARTICLES_LINK' => $articles_link ,'ARTICLES_TITLE' => $articles_title ,'VIDEO_LINK' => $video_link ,'VIDEO_ID' => $video_id ,'ID' => $comment->id ,'TEXT' => PT_Markup($comment->text)));
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pull-left">
+                    	<?php echo "Showing $page out of " . $db->totalPages; ?>
+                    </div>
+                    <div class="pull-right">
+                    	<nav>
+                            <ul class="pagination">
+                            	<li>
+                                    <a href="<?php echo PT_LoadAdminLinkSettings('manage-comments?page-id=1'); ?>" class="waves-effect" title='First Page'>
+                                        <i class="material-icons">first_page</i>
+                                    </a>
+                                </li>
+                                <?php if ($page > 1) {  ?>
+                                <li>
+                                    <a href="<?php echo PT_LoadAdminLinkSettings('manage-comments?page-id=' . ($page - 1)); ?>" class="waves-effect" title='Previous Page'>
+                                        <i class="material-icons">chevron_left</i>
+                                    </a>
+                                </li>
+                                <?php  } ?>
+                                <?php 
+                                $nums = 0;
+                                $nums_pages = ($page > 4) ? ($page - 4) : $page;
+                                for ($i=$nums_pages; $i <= $db->totalPages; $i++) { 
+                                	if ($nums < 20) {
+                                	?>
+                                	<li class="<?php echo ($page == $i) ? 'active' : ''; ?>"><a href="<?php echo PT_LoadAdminLinkSettings('manage-comments?page-id=' . ($i)); ?>" class="waves-effect"><?php echo $i ?></a></li>
+                                	<?php
+                                	}
+                                	$nums++;
+                                }
+                                ?>
+                                <?php if ($db->totalPages > $page) { ?>
+                                <li>
+                                    <a href="<?php echo PT_LoadAdminLinkSettings('manage-comments?page-id=' . ($page + 1)); ?>" class="waves-effect" title="Next Page">
+                                        <i class="material-icons">chevron_right</i>
+                                    </a>
+                                </li>
+                                <?php } ?>
+                                <li>
+                                    <a href="<?php echo PT_LoadAdminLinkSettings('manage-comments?page-id=' . ($db->totalPages)); ?>" class="waves-effect" title='Last Page'>
+                                        <i class="material-icons">last_page</i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!-- #END# Vertical Layout -->
+<div id="delete-modal" class="modal fade" role="dialog" data-id="">
+  <div class="modal-dialog">
+    <div class="modal-content modal-col-red">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">DELETE COMMENT</h4>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to continue? this action can't be undo</p>
+      </div>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-link waves-effect delete-button" data-dismiss="modal" data-type="comment">DELETE</button>
+        <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+$(function () {
+	$('.delete-content').on('click', function(event) {
+		event.preventDefault();
+		$('#delete-modal').attr('data-id', $(this).attr('data-id')).modal('show');
+	});
+});
+</script>

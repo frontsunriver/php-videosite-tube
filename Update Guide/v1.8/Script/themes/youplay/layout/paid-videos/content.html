@@ -1,0 +1,43 @@
+<div class="content">
+	<div class="col-md-12">
+		<div class="upload-head">
+			<h4 class="page_head"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg> {{LANG purchased}}</h4>
+			<ul class="list-unstyled vid_stud_links">
+				<li <?php echo empty($_GET['type']) || $_GET['type'] == 'videos' ? 'class="active"' : ''; ?>>
+					<a href="{{LINK paid-videos?type=videos}}" data-load="?link1=paid-videos&type=videos"><svg class="feather feather-video" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg> {{LANG videos}}</a>
+				</li>
+				<?php if ($pt->config->movies_videos == 'on') { ?>
+				<li <?php echo !empty($_GET['type']) && $_GET['type'] == 'movies' ? 'class="active"' : ''; ?>>
+					<a href="{{LINK paid-videos?type=movies}}" data-load="?link1=paid-videos&type=movies"><svg class="feather feather-video" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg> {{LANG movies}}</a>
+				</li>
+				<li <?php echo !empty($_GET['type']) && $_GET['type'] == 'rented_movies' ? 'class="active"' : ''; ?>>
+					<a href="{{LINK paid-videos?type=rented_movies}}" data-load="?link1=paid-videos&type=rented_movies"><svg class="feather feather-video" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg> {{LANG rented_movies}}</a>
+				</li>
+				<?php } ?>
+				<li <?php echo !empty($_GET['type']) && $_GET['type'] == 'rented_videos' ? 'class="selected"' : ''; ?>>
+					<a href="{{LINK paid-videos?type=rented_videos}}" data-load="?link1=paid-videos&type=rented_videos"><svg class="feather feather-video" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg> {{LANG rented_videos}}</a>
+				</li>
+			</ul>
+			<div class="clear"></div>
+			<hr>
+		</div>
+		
+		
+		
+		<!-- If Rented Videos -->
+		<!-- End If Rented Videos -->
+		
+		
+		
+      	<div class="videos-latest-list row">
+      		{{PAID_LIST}}
+      	</div>
+      	<?php if (count($pt->videos) > 0) { ?>
+            <div class="watch-video-show-more desc load-more" data-type="paid_videos" data-video-type="<?php echo($_GET['type']) ?>">
+                {{LANG show_more}}
+            </div>
+      	<?php } ?>
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+</div>

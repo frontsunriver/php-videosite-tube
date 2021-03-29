@@ -1,0 +1,10 @@
+<tr id="list-{{ID}}">
+  <td>{{ID}}</td>
+  <td id="sub_name_{{ID}}">{{CAT_NAME}}</td>
+  <td>
+    <button class="btn bg-cyan waves-effect waves-light"onclick="edit_category('{{ID}}')">EDIT</button>
+    <?php if ($pt->category_key != 'other') { ?>
+      <button class="btn btn-danger waves-effect waves-light delete-content" data-id="{{ID}}">DELETE</button>
+    <?php } ?>
+  </td>
+</tr>

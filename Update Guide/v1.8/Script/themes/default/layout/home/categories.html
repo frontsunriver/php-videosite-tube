@@ -1,0 +1,35 @@
+<div class="pt_home_vid_content pt_hmpg_hr_last">
+	<div class="home-page-categories pt_hmpg_vidlst">
+		<div class="title">
+			<h4><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#384047" d="M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 1.99 2 1.99L16 19c.67 0 1.27-.33 1.63-.84l3.96-5.58c.25-.35.25-.81 0-1.16l-3.96-5.58z"></path></svg> {{CATEGORY_ONE_NAME}}
+				<span class="view_more_link"><a data-load="<?php echo (!empty($pt->subscriptions)) ? '?link1=subscriptions' : '?link1=videos&page=category&id={{CATEGORY_ONE_ID}}' ?>" href="<?php echo (!empty($pt->subscriptions)) ? "{{LINK subscriptions}}" : "{{LINK videos/category/{{CATEGORY_ONE_ID}}}}" ?>">{{LANG explore_more}}</a></span>
+			</h4>
+		</div>
+		<div class="videos">
+			<div class="row pt_cat_vid_list">
+				<?php 
+					foreach ($pt->cat_videos as $key => $video) {
+						$video = PT_GetVideoByID($video, 0, 0, 0);
+						echo PT_LoadPage('home/list', array(
+							'ID' => $video->id,
+							'TITLE' => $video->title,
+							'VIEWS' => $video->views,
+							'VIEWS_NUM' => number_format($video->views),
+							'USER_DATA' => $video->owner,
+							'THUMBNAIL' => $video->thumbnail,
+							'URL' => $video->url,
+							'TIME' => $video->time_ago,
+							'DURATION' => $video->duration,
+							'VIDEO_ID' => $video->video_id_,
+							'VIDEO_ID_' => PT_Slug($video->title, $video->video_id),
+							'GIF' => $video->gif
+						));
+					}
+				?>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<hr class="pt_hmpg_hr">
+</div>

@@ -1,0 +1,91 @@
+<?php 
+$pt->config->ffmpeg  = is_executable($pt->config->ffmpeg_binary_file);
+function isEnabled($func) {
+    return is_callable($func) && false === stripos(ini_get('disable_functions'), $func);
+}
+$enabled = true;
+if (!isEnabled('shell_exec')) {
+    $enabled = false;
+}
+
+?>
+
+<div class="container-fluid">
+    <div class="block-header">
+        <h2>Videos > Paid Videos</h2>
+    </div>
+    <!-- Vertical Layout -->
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="card">
+                <div class="header">
+                    <h2>Paid Videos</h2>
+                </div>
+                <div class="body">
+                    <div class="alert alert-success video-settings-alert"></div>
+                    <form class="video-settings" method="POST">
+                        <label for="sell_videos_system">Paid videos system</label>
+                        <div class="form-group">
+                            <input type="radio" name="sell_videos_system" id="sell_videos_system-enabled" value="on" <?php echo ($pt->config->sell_videos_system == 'on') ? 'checked': '';?>>
+                            <label for="sell_videos_system-enabled">Enabled</label>
+                            <input type="radio" name="sell_videos_system" id="sell_videos_system-disabled" value="off" <?php echo ($pt->config->sell_videos_system == 'off') ? 'checked': '';?>>
+                            <label for="sell_videos_system-disabled" class="m-l-20">Disabled</label>
+                        </div>
+                        <label for="who_sell">Who can sell videos</label>
+                        <div class="form-group">
+                            <input type="radio" name="who_sell" id="who_sell-enabled" value="users" <?php echo ($pt->config->who_sell == 'users') ? 'checked': '';?>>
+                            <label for="who_sell-enabled">All users</label>
+                            <input type="radio" name="who_sell" id="who_sell-disabled" value="pro_users" <?php echo ($pt->config->who_sell == 'pro_users') ? 'checked': '';?>>
+                            <label for="who_sell-disabled" class="m-l-20">Pro members</label>
+                        </div>
+                        <label for="auto_approve_">Auto approve selling videos?</label>
+                        <div class="form-group">
+                            <input type="radio" name="auto_approve_" id="auto_approve_-enabled" value="yes" <?php echo ($pt->config->auto_approve_ == 'yes') ? 'checked': '';?>>
+                            <label for="auto_approve_-enabled">yes</label>
+                            <input type="radio" name="auto_approve_" id="auto_approve_-disabled" value="no" <?php echo ($pt->config->auto_approve_ == 'no') ? 'checked': '';?>>
+                            <label for="auto_approve_-disabled" class="m-l-20">no</label>
+                        </div>
+                        <label for="com_type">Commission Type</label>
+                        <div class="form-group">
+                            <input type="radio" name="com_type" id="com_type-enabled" value="0" <?php echo ($pt->config->com_type == '0') ? 'checked': '';?>>
+                            <label for="com_type-enabled">Fixed Price</label>
+                            <input type="radio" name="com_type" id="com_type-disabled" value="1" <?php echo ($pt->config->com_type == '1') ? 'checked': '';?>>
+                            <label for="com_type-disabled" class="m-l-20">Percentage</label>
+                        </div>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" id="admin_com_sell_videos" name="admin_com_sell_videos" class="form-control" value="<?php echo ($pt->config->admin_com_sell_videos);?>">
+                                <label class="form-label">Get Commission from sell videos (please put 0 if you wont that )</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!-- #END# Vertical Layout -->
+<script>
+
+$(function() {
+    var form_videos_settings = $('form.video-settings');
+
+    form_videos_settings.ajaxForm({
+        url: '{{LINK aj/ap/save-settings}}',
+        beforeSend: function() {
+            form_videos_settings.find('button').text("{{LANG please_wait}}");
+        },
+        success: function(data) {
+            if (data.status == 200) {
+                form_videos_settings.find('button').text('Save');
+                $('.video-settings-alert').html('<i class="fa fa-check"></i> Settings updated successfully');
+                setTimeout(function () {
+                    $('.video-settings-alert').empty();
+                }, 2000);
+            }
+        }
+    });
+
+});
+</script>

@@ -1,0 +1,115 @@
+<form class="form-horizontal user-setting-panel pt_forms pt_shadow" id="avatar-settings" method="POST">
+    <div class="setting-avatar-alert"></div>
+    <div class="row pt_upload_vdo">
+        <div class="progress hidden">
+            <span class="percent">0%</span>
+            <div class="progress_bar_parent">
+                <div class="bar upload-progress-bar progress-bar active"></div> 
+            </div>
+            <div class="clear"></div>
+            <div class="text-center pt_prcs_vdo"></div>
+        </div>
+        <!-- Text input-->
+        <div class="form-group col-lg-6">
+            <label class="col-md-12" for="avatar">{{LANG avatar}}</label>
+            <div class="col-md-12">
+                <span class="btn btn-file pt_design_button" onclick="$('#avatar').trigger('click'); return false;">
+                    <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-camera"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg></span>
+                </span>
+                <input type="file" class="hidden" id="avatar" accept="image/x-png, image/gif, image/jpeg" name="avatar" multiple="multiple">
+            </div>
+			<div class="form-group avatar-read" id="photo-form">
+            <label class="col-md-12"></label>
+            <div class="col-md-12">
+                <input type="text" class="form-control input-md" readonly>
+            </div>
+        </div>
+        </div>
+        
+        <!-- Text input-->
+        <div class="form-group col-lg-6">
+            <label class="col-md-12" for="Cover">{{LANG cover}}</label>
+            <div class="col-md-12">
+                <span class="btn btn-file pt_design_button" onclick="$('#cover').trigger('click'); return false;">
+                    <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg></span>
+                </span>
+                <input type="file" class="hidden" id="cover" accept="image/x-png, image/gif, image/jpeg" name="cover" multiple="multiple">
+            </div>
+			<div class="form-group avatar-read" id="cover-form">
+            <label class="col-md-12"></label>
+            <div class="col-md-12">
+                <input type="text" class="form-control input-md" readonly>
+            </div>
+        </div>
+        </div>
+	</div>
+	<input type="hidden" name="hash_id" value="<?php echo PT_CreateSession()?>">
+	<input type="hidden" name="user_id" value="{{USER id}}">
+	<!-- Button (Double) -->
+	<div class="last-sett-btn modal-footer" style="margin: 0px -30px -10px -30px;">
+		<button id="submit" name="submit" class="btn btn-main setting-panel-mdbtn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> {{LANG save}}</button>
+	</div>
+</form>
+
+<script>
+    $(function() {
+        var bar         = $('.bar');
+        var percent     = $('.percent');
+        var prcsvdo      = $('.pt_prcs_vdo');
+        $("#avatar").change(function() {
+            var filename = $(this).val().replace(/C:\\fakepath\\/i, '');
+            $("#photo-form input").val(filename);
+            $("#photo-form").slideDown(200);
+        });
+        $("#cover").change(function() {
+            var filename = $(this).val().replace(/C:\\fakepath\\/i, '');
+            $("#cover-form input").val(filename);
+            $("#cover-form").slideDown(200);
+        });
+        var form = $('form#avatar-settings');
+        form.ajaxForm({
+            url: '{{LINK aj/user/avatar}}?hash=' + $('.main_session').val(),
+            beforeSend: function() {
+                form.find('button').text("{{LANG please_wait}}");
+                $('.progress').removeClass('hidden');
+                var percentVal = '0%';
+                bar.width(percentVal);
+                percent.html(percentVal);
+                // FL_progressIconLoader(form.find('button'));
+            },
+            uploadProgress: function(event, position, total, percentComplete) {
+                 if(percentComplete > 50) {
+                    percent.addClass('white');
+                 }
+                var percentVal = percentComplete + '%';
+                bar.width(percentVal);
+                percent.html(percentVal);
+
+                if (percentComplete == 100) {
+                   prcsvdo.html('<svg width="30" height="10" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg" fill="#000"><circle cx="15" cy="15" r="15"><animate attributeName="r" from="15" to="15" begin="0s" dur="0.8s" values="15;9;15" calcMode="linear" repeatCount="indefinite" /><animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="0.8s" values="1;.5;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="60" cy="15" r="9" fill-opacity="0.3"><animate attributeName="r" from="9" to="9" begin="0s" dur="0.8s" values="9;15;9" calcMode="linear" repeatCount="indefinite" /><animate attributeName="fill-opacity" from="0.5" to="0.5" begin="0s" dur="0.8s" values=".5;1;.5" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="105" cy="15" r="15"><animate attributeName="r" from="15" to="15" begin="0s" dur="0.8s" values="15;9;15" calcMode="linear" repeatCount="indefinite" /><animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="0.8s" values="1;.5;1" calcMode="linear" repeatCount="indefinite" /></circle></svg> {{LANG porcessing_image}}');
+                   $('.progress').find('.bar').removeClass('upload-progress-bar');
+                }
+            },
+            success: function(data) {
+                percentVal = '0%';
+                bar.width(percentVal);
+                $('.progress').addClass('hidden');
+                scrollToTop();
+                if (data.status == 200) {
+                    $('.setting-avatar-alert').html('<div class="alert alert-success">' + data.message + '</div>');
+                    $('.alert-success').fadeIn('fast', function() {
+                        $(this).delay(2500).slideUp(500, function() {
+                            $(this).remove();
+                        });
+                    });
+                } else if (data.errors) {
+                    var errors = data.errors.join("<br>");
+                    $('.setting-avatar-alert').html('<div class="alert alert-danger">' + errors + '</div>');
+                    $('.alert-danger').fadeIn(300);
+                }
+                form.find('button').html('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> {{LANG save}}');
+                // FL_progressIconLoader(form.find('button'));
+            }
+        });
+    });
+</script>

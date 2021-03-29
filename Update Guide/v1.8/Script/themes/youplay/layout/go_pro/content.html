@@ -1,0 +1,416 @@
+<?php if ($pt->user->is_pro ==  0): ?>
+<?php if ($pt->config->credit_card == 'yes') { ?>
+<!-- <script src="https://checkout.stripe.com/checkout.js"></script> -->
+<script type="text/javascript" charset="utf8" src="{{CONFIG theme_url}}/js/stripe.js"></script>
+<?php } ?>
+<div class="go-pro-container">
+	<div class="go-pro-head">
+		<h4> {{LANG buy_pro_pkg}} 🎉</h4>
+	</div>
+	<div class="go-pro-body">
+		<div class="go-pro-packages row">
+			<?php if ($pt->config->require_subcription == 'off') { ?>
+			<div class="go-pro-pkg">
+				<div>
+					<div class="free-bg">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,2.5L8.42,8.06L2,9.74L6.2,14.88L5.82,21.5L12,19.09L18.18,21.5L17.8,14.88L22,9.74L15.58,8.06L12,2.5M9.38,10.5C10,10.5 10.5,11 10.5,11.63A1.12,1.12 0 0,1 9.38,12.75C8.75,12.75 8.25,12.25 8.25,11.63C8.25,11 8.75,10.5 9.38,10.5M14.63,10.5C15.25,10.5 15.75,11 15.75,11.63A1.12,1.12 0 0,1 14.63,12.75C14,12.75 13.5,12.25 13.5,11.63C13.5,11 14,10.5 14.63,10.5M9,15H15C14.5,16.21 13.31,17 12,17C10.69,17 9.5,16.21 9,15Z" /></svg>
+						<span class="go-pro-pkg-price">{{LANG free_mbr}}</span> 
+						<h5 class="package-price"><span>{{CURRENCY}}</span><b>0</b></h5>
+					</div>
+					<div class="go-pro-pkg-features">
+						<div class="go-pro-features-list">
+							<p><?php if ($pt->unlimited_free == true ) { ?>
+								{{LANG upload_up_no_limit}}
+							<?php } else{ ?>  {{LANG upload_up}} <?php echo $pt->max_upload_users_; ?> <?php } ?></p>
+							<p>{{LANG ads_will_show_up}}</p>
+							<p>{{LANG not_featured_videos}}</p>
+							<p>{{LANG no_verified_badge}}</p>
+						</div>
+						<div class="go-pro-pkg-purchase">
+							<button class="btn btn-main free-bg" onclick="window.location.href= '{{LINK }}'">
+								{{LANG stay_free}}
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php } ?>
+			<div class="go-pro-pkg">
+				<div>
+					<div class="pro-bg">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M5,16L3,5L8.5,12L12,5L15.5,12L21,5L19,16H5M19,19A1,1 0 0,1 18,20H6A1,1 0 0,1 5,19V18H19V19Z" /></svg>
+						<span class="go-pro-pkg-price">{{LANG pro_mbr}}</span> 
+						<h5 class="package-price"><span>{{CURRENCY}}</span><b>{{CONFIG pro_pkg_price}}</b></h5>
+					</div>
+					<div class="go-pro-pkg-features">
+						<div class="go-pro-features-list">
+							<p><?php if ($pt->unlimited_pro == true ) { ?>
+								{{LANG upload_up_no_limit}}
+							<?php } else{ ?>  {{LANG upload_up}} <?php echo $pt->max_upload_users_pro; ?> <?php } ?></p>
+							<p>{{LANG ads_wont_show_up}}</p>
+							<p>{{LANG ur_are_featured}}</p>
+							<p>{{LANG verified_badge}}</p>
+							<?php if ($pt->config->sell_videos_system == 'on') { ?>
+								<p>{{LANG sell_videos}}</p>
+							<?php } ?>
+						</div>
+						<div class="go-pro-pkg-purchase">
+							<button class="btn btn-main pro-bg" onclick="PT_ShowMethods('pro');">
+								{{LANG upgrade}}
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<?php echo PT_LoadPage('modals/stripe_modal'); ?>
+
+
+
+
+<script>
+
+	<?php if ($pt->config->credit_card == 'yes') { ?>
+	var stripe_array = [];
+	Stripe.setPublishableKey('{{CONFIG stripe_id}}');
+
+	function SH_StripeCardRequest() {
+		$('#stripe_btn').text("{{LANG please_wait}}");
+		$('#stripe_btn').attr('disabled', 'true');
+		if ($("#stripe_name").val() != '' && $("#stripe_email").val() != '' && $("#stripe_number").val() != '' && $("#stripe_month").val() != '' && $("#stripe_year").val() != '' && $("#stripe_cvc").val() != '') {
+
+			stripe_array['stripe_name'] = $('#stripe_name').val();
+			stripe_array['stripe_email'] = $('#stripe_email').val();
+			stripe_array['stripe_number'] = $('#stripe_number').val();
+			stripe_array['stripe_month'] = $('#stripe_month').val();
+			stripe_array['stripe_year'] = $('#stripe_year').val();
+			stripe_array['stripe_cvc'] = $('#stripe_cvc').val();
+			Stripe.createToken({
+	            number: $('#stripe_number').val(),
+	            exp_month: $('#stripe_month').val(),
+	            exp_year: $('#stripe_year').val(),
+	            cvc: $('#stripe_cvc').val()
+	        }, SH_StripeCardResponseHandler);
+		}
+		else{
+			$('#stripe_alert').html('<div class="alert alert-danger">{{LANG please_check_details}}</div>');
+			$('#stripe_btn').text("{{LANG pay}}");
+			$('#stripe_btn').removeAttr('disabled');
+		}
+	}
+	function SH_StripeCardResponseHandler(status, response) {
+	    if (response.error) {
+	    	$('#stripe_alert').html('<div class="alert alert-danger">'+response.error.message+'</div>');
+			$('#stripe_btn').text("{{LANG pay}}");
+			$('#stripe_btn').removeAttr('disabled');
+	    } else {
+	    	stripe_array['token'] = response.id;
+	    	$.post('{{LINK aj/go_pro/stripe}}', {'stripe_name': stripe_array['stripe_name'],'stripe_email': stripe_array['stripe_email'],'stripe_number': stripe_array['stripe_number'],'stripe_month': stripe_array['stripe_month'],'stripe_year': stripe_array['stripe_year'],'stripe_cvc': stripe_array['stripe_cvc'],stripeToken:stripe_array['token']}, function (data) {
+	          	if (data.status == 200) {
+	          	 	window.location.href = data.url;
+	          	} else {
+	          	 	$('#stripe_alert').html('<div class="alert alert-danger"><i class="fa fa-spin fa-spinner"></i> {{LANG payment_declined}}</div>');
+	          	}
+	        });
+	    }
+	}
+
+<?php } ?>
+
+
+
+
+
+
+
+	<?php if ($pt->config->checkout_payment == 'yes') { ?>
+	// Called when token created successfully.
+	var successCallback = function(data) {
+	    var myForm = document.getElementById('2checkout_form');
+	    $.post('{{LINK aj/go_pro/checkout}}', {card_number: $("#card_number").val(),card_cvc: $("#card_cvc").val(),card_month: $("#card_month").val(),card_year: $("#card_year").val(),card_name: $("#card_name").val(),card_address: $("#card_address").val(),card_city: $("#card_city").val(),card_state: $("#card_state").val(),card_zip: $("#card_zip").val(),card_country: $("#card_country").val(),card_email: $("#card_email").val(),card_phone: $("#card_phone").val(),type: 'pro',token: data.response.token.token}, function(data, textStatus, xhr) {
+	    	$('#2checkout_btn').html("{{LANG pay}}");
+	    	$('#2checkout_btn').attr('disabled');
+	    	$('#2checkout_btn').removeAttr('disabled');
+	    	$('#2checkout_form').find('.ball-pulse').fadeOut(100);
+	    	if (data.status == 200) {
+	      	 	window.location.href = data.url;
+	      	} else {
+	      	 	$('#2checkout_alert').html("<div class='alert alert-danger'>"+data.error+"</div>");
+				setTimeout(function () {
+					$('#2checkout_alert').html("");
+				},3000);
+	      	}
+	    	/*optional stuff to do after success */
+	    });
+	};
+
+	// Called when token creation fails.
+	var errorCallback = function(data) {
+		$('#2checkout_btn').html("{{LANG pay}}");
+		$('#2checkout_btn').removeAttr('disabled');
+		$('#2checkout_form').find('.ball-pulse').fadeOut(100);
+	    if (data.errorCode === 200) {
+	        tokenRequest();
+	    } else {
+	    	$('#2checkout_alert').html("<div class='alert alert-danger'>"+data.errorMsg+"</div>");
+			setTimeout(function () {
+				$('#2checkout_alert').html("");
+			},3000);
+	    }
+	};
+
+	var tokenRequest = function() {
+		$('#card_number').val($('#_number_').val());
+		$('#2checkout_btn').html("{{LANG please_wait}}");
+		$('#2checkout_btn').attr('disabled','true');
+		if ($("#card_number").val() != '' && $("#card_cvc").val() != '' && $("#card_month").val() != '' && $("#card_year").val() != '' && $("#card_name").val() != '' && $("#card_address").val() != '' && $("#card_city").val() != '' && $("#card_state").val() != '' && $("#card_zip").val() != '' && $("#card_country").val() != 0 && $("#card_email").val() != '' && $("#card_phone").val() != '') {
+			$('#2checkout_form').find('.ball-pulse').fadeIn(100);
+			// Setup token request arguments
+		    var args = {
+		        sellerId: "<?php echo($pt->config->checkout_seller_id) ?>",
+		        publishableKey: "<?php echo($pt->config->checkout_publishable_key) ?>",
+		        ccNo: $("#card_number").val(),
+		        cvv: $("#card_cvc").val(),
+		        expMonth: $("#card_month").val(),
+		        expYear: $("#card_year").val()
+		    };
+
+		    // Make the token request
+		    TCO.requestToken(successCallback, errorCallback, args);
+		}
+		else{
+			$('#2checkout_btn').html("{{LANG pay}}");
+			$('#2checkout_btn').removeAttr('disabled');
+			$('#2checkout_alert').html("<div class='alert alert-danger'>{{LANG please_check_details}}</div>");
+			setTimeout(function () {
+				$('#2checkout_alert').html("");
+			},3000);
+
+		}
+		
+	    
+	};
+
+	$(function() {
+	    // Pull in the public encryption key for our environment
+	    TCO.loadPubKey("<?php echo($pt->config->checkout_mode) ?>");
+	});
+	<?php } ?>
+
+	function PT_OpenStripe(pkg,self,video_id = 0,price = 0){
+	    $('#pay-go-pro').modal('hide');
+		$('#stripe_modal').modal('show');
+	 }
+
+	 function PT_OpenBank(pkg,self,video_id = 0,price = 0){
+	    if (!pkg || !self) {
+	      return false;
+	    }
+	    $(self).text("{{LANG please_wait}}").attr('disabled', 'true');
+	    $('#pay-go-pro').modal('hide');
+	    $('#configreset').click();
+		$("#blog-alert").html('');
+    	$('#pay-go-pro').modal('hide');
+    	$('#bank_transfer_modal').modal({
+             show: true
+            });
+	}
+
+	 $(document).on('click', '#select-img', function(event) {
+		$("#thumbnail").click()
+	});
+	$(document).on('change', '#thumbnail', function(event) {
+		let imgPath = $(this)[0].files[0].name;
+	    if (typeof(FileReader) != "undefined") {
+	        let reader = new FileReader();
+	        reader.onload = function(e) {
+				$('#receipt_img_preview').attr('src', e.target.result);
+	        }
+	        reader.readAsDataURL(this.files[0]);
+	    }
+		$('#bank_transfer_modal').addClass('up_rec_img_ready');
+	});
+
+	jQuery(document).ready(function($) {
+		$('#bank_transfer_form').ajaxForm({
+		  url: '{{LINK aj/go_pro/bank}}',
+		  beforeSend: function() {
+		    $('#bank_transfer_form').find('.ball-pulse').fadeIn(100);
+		  },
+		  success: function(data) {
+		    if (data['status'] == 200) {
+		    	$("#blog-alert").html('<div class="alert alert-success">'+ data['message'] +'</div>');
+		    	setTimeout(function () {
+		    		window.location = "<?php echo $pt->config->site_url;?>";
+		    		$(".prv-img").html('<div class="thumbnail-rendderer"><div><div class="error-text-renderer"></div><div><p>{{LINK browse_to_upload}}</p></div></div> </div>');
+		    		$("#blog-alert").html('');
+		    		$('#configreset').click();
+
+		    	},3000)
+		    } else if (data['message']) {
+		      $("#blog-alert").html('<div class="alert alert-danger">' + data['message'] + '</div>');
+		    } 
+		    $('#bank_transfer_form').find('.ball-pulse').fadeOut(100);
+		}});
+	});
+
+</script>
+
+
+
+<div class="modal fade matdialog" id="2checkout_modal" role="dialog" data-keyboard="false" style="overflow-y: auto;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></button>
+				<h4 class="modal-title">{{LANG checkout_text}}</h4>
+			</div>
+			<form class="form form-horizontal" method="post" id="2checkout_form" action="#">
+				<div class="modal-body twocheckout_modal">
+					<div id="2checkout_alert"></div>
+					<div class="clear"></div>
+					<div class="sun_input col-md-6">
+						<input id="card_name" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG name}}" value="<?php echo($pt->user->name) ?>">
+					</div>
+					<div class="sun_input col-md-6">
+						<input id="card_address" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG address}}" value="<?php echo($pt->user->address) ?>">
+					</div>
+					<div class="sun_input col-md-6">
+						<input id="card_city" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG city}}" value="<?php echo($pt->user->city) ?>">
+					</div>
+					<div class="sun_input col-md-6">
+						<input id="card_state" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG state}}" value="<?php echo($pt->user->state) ?>">
+					</div>
+					<div class="sun_input col-md-6">
+						<input id="card_zip" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG zip}}" value="<?php echo($pt->user->zip) ?>">
+					</div>
+			        <div class="sun_input col-md-6">
+			             <select id="card_country" name="card_country" class="form-control">{{COUNTRIES}}</select>
+			        </div>
+					<div class="sun_input col-md-6">
+						<input id="card_email" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG email}}" value="<?php echo($pt->user->email) ?>">
+					</div>
+					<div class="sun_input col-md-6">
+						<input id="card_phone" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG phone_number}}" value="<?php echo($pt->user->phone_number) ?>">
+					</div>
+					<div class="clear"></div>
+					<hr>
+					<div class="row two_check_card">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M20,8H4V6H20M20,18H4V12H20M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" /></svg>
+						<div class="sun_input col-xs-12">
+							<input id="_number_" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG card_number}}">
+							<input id="card_number" name="card_number" type="hidden" class="form-control input-md" autocomplete="off">
+						</div>
+						<div class="sun_input col-xs-4">
+							<select id="card_month" name="card_month" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG month}} (01)">
+								<option value="01">01</option>
+								<option value="02">02</option>
+								<option value="03">03</option>
+								<option value="04">04</option>
+								<option value="05">05</option>
+								<option value="06">06</option>
+								<option value="07">07</option>
+								<option value="08">08</option>
+								<option value="09">09</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+							</select>
+						</div>
+						<div class="sun_input col-xs-4 no-padding-both">
+							<select id="card_year" name="card_year" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG year}} (2019)">
+				                <?php for ($i=date('Y'); $i <= date('Y')+15; $i++) {  ?>
+									<option value="<?php echo($i) ?>"><?php echo($i) ?></option>
+								<?php } ?>
+				            </select>
+						</div>
+						<div class="sun_input col-xs-4">
+							<input id="card_cvc" name="card_cvc" type="text" class="form-control input-md" autocomplete="off" placeholder="CVC" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+						</div>
+					</div>
+					<div class="clear"></div>
+					<input type="text" id="2checkout_type" class="hidden" name="type">
+					<input id="card_token" name="token" type="hidden" value="">
+				</div>
+				<div class="clear"></div>
+				<div class="modal-footer">
+					<div class="ball-pulse"><div></div><div></div><div></div></div>
+					<button type="button" class="btn btn-main" onclick="tokenRequest()" id="2checkout_btn">{{LANG pay}}</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade matdialog" id="bank_transfer_modal" role="dialog" data-keyboard="false" style="overflow-y: auto;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></button>
+				<h4 class="modal-title">{{LANG bank_transfer}}</h4>
+			</div>
+			<form class="form form-horizontal" method="post" id="bank_transfer_form" action="#">
+				<div class="modal-body dt_bank_trans_modal">
+					<div id="blog-alert"></div>
+					
+					<?php echo html_entity_decode($pt->config->bank_description);?>
+					
+					<?php if (!empty($pt->config->bank_transfer_note)) { ?>
+						<div class="dt_user_profile hide_alert_info_bank_trans">
+							<span class="valign-wrapper">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg> Note:
+							</span>
+							<ul class="dt_prof_vrfy">
+								<li><?php echo $pt->config->bank_transfer_note;?></li>
+							</ul>
+						</div>
+					<?php } ?>
+					<p class="dt_bank_trans_upl_rec"><a href="javascript:void(0);" onclick="$('#bank_transfer_modal').addClass('up_rec_active'); return false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M13.5,16V19H10.5V16H8L12,12L16,16H13.5M13,9V3.5L18.5,9H13Z"></path></svg> {{LANG upload}}</a></p>
+					<div class="upload_bank_receipts">
+						<div onclick="document.getElementById('thumbnail').click(); return false">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M13.5,16V19H10.5V16H8L12,12L16,16H13.5M13,9V3.5L18.5,9H13Z"></path></svg>
+							<p>{{LANG browse_to_upload}}</p>
+							<img id="receipt_img_preview" src="">
+						</div>
+					</div>
+					<input type="file" class="hidden" id="thumbnail" name="thumbnail" accept="image/*">
+					<input name="image" type="file" id="upload" class="hidden">
+					<input name="type" type="hidden" id="bank_transfer_type" class="hidden">
+					<input name="description" type="hidden" id="bank_transfer_des" class="hidden">
+					<input type="reset" id="configreset" value="Reset" class="hidden">
+				</div>
+				<div class="modal-footer">
+					<div class="ball-pulse"><div></div><div></div><div></div></div>
+					<button type="submit" class="btn btn-main">{{LANG publish}}</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<?php else: ?>
+<div class="go-pro-container">
+	<div class="go-pro-head-upgraded">
+		<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
+		<h4>{{LANG congratulations}}</h4>
+		<p class="text-center">{{LANG uare_pro}}</p>
+	</div>
+	<div class="go-pro-body-upgraded">
+		<div class="upgraded-features">
+			<p><span><i class="fa fa-check"></i></span> {{LANG upload_1tr_limit}}</p>
+			<p><span><i class="fa fa-check"></i></span> {{LANG ads_wont_show_up}}</p>
+			<p><span><i class="fa fa-check"></i></span> {{LANG ur_are_featured}}</p>
+			<p><span><i class="fa fa-check"></i></span> {{LANG verified_badge}}</p>
+		</div>
+	</div>
+	<div class="go-pro-footer-upgraded">
+		<button class="btn-main btn">
+			<a href="{{LINK }}">{{LANG start_features}}</a>
+		</button>
+	</div>
+</div>
+<?php endif; ?>

@@ -1,0 +1,433 @@
+<?php if ($pt->user->is_pro ==  0): ?>
+<?php if ($pt->config->credit_card == 'yes') { ?>
+<!-- <script src="https://checkout.stripe.com/checkout.js"></script> -->
+<script type="text/javascript" charset="utf8" src="{{CONFIG theme_url}}/js/stripe.js"></script>
+<?php } ?>
+<?php echo PT_LoadPage('third-party/paypal-demo'); ?>
+<svg class="pt_svg_squiggle" tabindex="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 114 24" aria-label="Squiggle"><defs><linearGradient id="67787231-268e-4988-be2a-d6340fac9eab" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#6d47d9"></stop><stop offset="100%" stop-color="#f93d66"></stop></linearGradient></defs><path d="M114 22c0 1.1-.9 2-2 2-3.2 0-5.8-1.3-8-3.8-1.6-1.7-2.6-3.4-4.7-7.3-3.8-6.8-5.7-9-9.2-9-3.5 0-5.5 2.1-9.2 9-2.1 3.9-3.2 5.5-4.8 7.3-2.2 2.5-4.8 3.8-8 3.8s-5.8-1.3-8-3.8c-1.6-1.7-2.6-3.4-4.8-7.3-3.8-6.8-5.7-9-9.2-9-3.5 0-5.5 2.1-9.2 9-2.1 3.9-3.2 5.5-4.8 7.3-2.2 2.5-4.8 3.8-8 3.8s-5.8-1.3-8-3.8c-1.6-1.7-2.6-3.4-4.7-7.3C7.5 6.1 5.5 4 2 4 .9 4 0 3.1 0 2s.9-2 2-2c3.2 0 5.8 1.3 8 3.8 1.6 1.7 2.6 3.4 4.7 7.3 3.8 6.9 5.7 9 9.2 9 3.5 0 5.5-2.1 9.2-9 2.2-3.9 3.2-5.5 4.8-7.3C40.2 1.3 42.8 0 46 0s5.8 1.3 8 3.8c1.6 1.7 2.6 3.4 4.8 7.3 3.8 6.9 5.7 9 9.2 9 3.5 0 5.5-2.1 9.2-9 2.2-3.9 3.2-5.5 4.8-7.3C84.2 1.3 86.8 0 90 0s5.8 1.3 8 3.8c1.6 1.7 2.6 3.4 4.8 7.3 3.8 6.9 5.7 9 9.2 9 1.1-.1 2 .8 2 1.9z" fill="url(#67787231-268e-4988-be2a-d6340fac9eab)"></path></svg><svg class="pt_svg_lines" tabindex="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134.9 70.1" aria-label="Lines"><defs><linearGradient id="eed89beb-684d-466b-9a87-91d2ebaf480f" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#00dcaf"></stop><stop offset="100%" stop-color="#6d47d9"></stop></linearGradient></defs><path d="M2 70.1c-.5 0-1-.2-1.4-.6-.8-.8-.8-2 0-2.8L66.7.6c.8-.8 2-.8 2.8 0s.8 2 0 2.8L3.4 69.5c-.4.4-.9.6-1.4.6zM33.1 70.1c-.5 0-1-.2-1.4-.6-.8-.8-.8-2 0-2.8L97.7.6c.8-.8 2-.8 2.8 0s.8 2 0 2.8l-66 66.1c-.4.4-.9.6-1.4.6zM66.8 70.1c-.5 0-1-.2-1.4-.6-.8-.8-.8-2 0-2.8L131.5.6c.8-.8 2-.8 2.8 0s.8 2 0 2.8L68.2 69.5c-.4.4-.9.6-1.4.6z" fill="url(#eed89beb-684d-466b-9a87-91d2ebaf480f)"></path></svg><svg class="pt_svg_spiral" tabindex="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 51" aria-label="Spiral"><defs><linearGradient id="8332a4c0-73dd-4f9c-a3d5-67b448fbfa7d" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f7bc28"></stop><stop offset="100%" stop-color="#f93d66"></stop></linearGradient></defs><path d="M46.2 34.2C42.5 44.3 33 50.6 23.1 50.6c-2.7 0-5.4-.5-8-1.4-5.6-2.1-10.3-6.4-12.8-11.9C-.1 31.9-.3 26 1.7 20.7c2-5.1 6-9.4 11-11.6 4.8-2.1 10-2.3 14.8-.5 4.6 1.8 8.4 5.5 10.3 10 1.9 4.3 1.9 9 .2 13.2-1.6 4.1-4.9 7.4-8.9 9.1-3.8 1.6-7.9 1.6-11.6 0-3.5-1.5-6.3-4.4-7.7-8-1.3-3.3-1.3-6.9.1-10 1.3-3 3.8-5.3 6.9-6.4 2.8-1 5.8-.9 8.4.3 2.5 1.2 4.4 3.4 5.2 6 .7 2.3.5 4.7-.6 6.7-.9 1.8-2.7 3.2-4.8 3.8-1.9.5-3.8.2-5.4-.8-1.5-1-2.4-2.7-2.5-4.4-.1-1.3.4-2.6 1.4-3.4 1-1 3-1.2 4.2-.4 1.1.7 1.5 1.9 1.1 3.1-.3 1-1.4 1.6-2.4 1.3.1.2.3.4.5.5.7.5 1.6.4 2.1.3 1-.2 1.8-.9 2.2-1.8.8-1.4.6-2.8.3-3.7-.5-1.5-1.6-2.9-3.1-3.6-1.6-.8-3.5-.8-5.3-.2-2 .7-3.7 2.3-4.6 4.3-.9 2.1-1 4.6-.1 6.9 1 2.6 3 4.7 5.5 5.7 2.7 1.1 5.7 1.1 8.5 0 3-1.3 5.5-3.8 6.7-6.9 1.3-3.2 1.2-6.8-.2-10.1-1.5-3.6-4.5-6.4-8.1-7.9-3.8-1.5-7.9-1.3-11.7.4-3.9 2-7.1 5.4-8.7 9.5-1.6 4.3-1.4 9.1.6 13.5 2.1 4.5 5.9 8.1 10.4 9.8 10.2 3.7 22.1-2.1 26-12.6 4-11.3-2.3-24.3-13.9-28.5-1-.4-1.6-1.5-1.2-2.6.4-1 1.5-1.6 2.6-1.2 13.6 5 21.1 20.4 16.3 33.7z" fill="url(#8332a4c0-73dd-4f9c-a3d5-67b448fbfa7d)"></path></svg><svg class="pt_svg_triangle" tabindex="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 50" aria-label="Triangle"><defs><linearGradient id="11c0361a-b3e4-4cf4-ae1b-efbdfc814224" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#6d47d9"></stop><stop offset="100%" stop-color="#00dcaf"></stop></linearGradient></defs><path d="M50.3,17.6l-15.5-2.3l-7-14.2c-0.7-1.5-2.9-1.5-3.6,0l-7,14.2L1.7,17.6c-1.6,0.2-2.3,2.2-1.1,3.4l11.3,11L9.2,47.7	c-0.3,1.6,1.4,2.9,2.9,2.1L26,42.4l13.9,7.4c1.5,0.8,3.2-0.5,2.9-2.1L40.2,32l11.2-11C52.6,19.8,51.9,17.8,50.3,17.6z M36.6,29.9	c-0.5,0.5-0.7,1.1-0.6,1.8l2.1,12.6l-11.2-6c-0.6-0.3-1.3-0.3-1.9,0l-11.2,6L16,31.7c0.1-0.6-0.1-1.3-0.6-1.8l-9.1-9l12.6-1.8	c0.7-0.1,1.2-0.5,1.5-1.1L26,6.5L31.6,18c0.3,0.6,0.9,1,1.5,1.1L45.7,21L36.6,29.9z" fill="url(#11c0361a-b3e4-4cf4-ae1b-efbdfc814224)"></path></svg>
+
+<div class="go-pro-container">
+	<div class="go-pro-head">
+		<h4> {{LANG buy_pro_pkg}} 🎉</h4>
+	</div>
+	<div class="go-pro-body">
+		<div class="go-pro-packages row">
+			<?php if ($pt->config->require_subcription == 'off') { ?>
+			<div class="col-md-6 col-sm-12 col-xs-12 go-pro-pkg">
+				<div>
+					<div class="free-bg">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star" style="background: linear-gradient(141deg, #60d1ff 0%, #0992f3 51%, #0976f3 75%);"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+						<span class="go-pro-pkg-price">{{LANG free_mbr}}</span> 
+						<h5 class="package-price"><span>{{CURRENCY}}</span><b>0</b></h5>
+					</div>
+					<div class="go-pro-pkg-features">
+						<div class="go-pro-features-list">
+							<p><?php if ($pt->unlimited_free == true ) { ?>
+								{{LANG upload_up_no_limit}}
+							<?php } else{ ?>  {{LANG upload_up}} <?php echo $pt->max_upload_users_; ?> <?php } ?></p>
+							<p>{{LANG ads_will_show_up}}</p>
+							<p>{{LANG not_featured_videos}}</p>
+							<p>{{LANG no_verified_badge}}</p>
+						</div>
+						<div class="go-pro-pkg-purchase">
+							<button class="btn btn-main free-bg" onclick="window.location.href= '{{LINK }}'">
+								{{LANG stay_free}}
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php } ?>
+			
+			<?php if ($pt->config->require_subcription == 'off') { ?>
+			<?php } else { ?>
+				<div class="col-md-3 col-sm-12 col-xs-12"></div>
+			<?php } ?>
+
+			<div class="col-md-6 col-sm-12 col-xs-12 go-pro-pkg">
+				<div>
+					<div class="pro-bg">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star" style="background: linear-gradient( -43deg, #9135fa 27%, #bc37e0 66%, #b723de 82%, #b10edb 100%);"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+						<span class="go-pro-pkg-price">{{LANG pro_mbr}}</span> 
+						<h5 class="package-price"><span>{{CURRENCY}}</span><b>{{CONFIG pro_pkg_price}}</b></h5>
+					</div>
+					<div class="go-pro-pkg-features">
+						<div class="go-pro-features-list">
+							<p><?php if ($pt->unlimited_pro == true ) { ?>
+								{{LANG upload_up_no_limit}}
+							<?php } else{ ?>  {{LANG upload_up}} <?php echo $pt->max_upload_users_pro; ?> <?php } ?></p>
+							<p>{{LANG ads_wont_show_up}}</p>
+							<p>{{LANG ur_are_featured}}</p>
+							<p>{{LANG verified_badge}}</p>
+							<?php if ($pt->config->sell_videos_system == 'on') { ?>
+								<p>{{LANG sell_videos}}</p>
+							<?php } ?>
+						</div>
+						<div class="go-pro-pkg-purchase">
+							<button class="btn btn-main pro-bg" onclick="PT_ShowMethods('pro');">
+								{{LANG upgrade}}
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<?php if ($pt->config->require_subcription == 'off') { ?>
+			<?php } else { ?>
+				<div class="col-md-3 col-sm-12 col-xs-12"></div>
+			<?php } ?>
+
+		</div>
+	</div>
+</div>
+
+
+
+<div class="modal fade matdialog" id="2checkout_modal" role="dialog" data-keyboard="false" style="overflow-y: auto;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></button>
+				<h4 class="modal-title">{{LANG checkout_text}}</h4>
+			</div>
+			<form class="form form-horizontal" method="post" id="2checkout_form" action="#">
+				<div class="modal-body twocheckout_modal">
+					<div id="2checkout_alert"></div>
+					<div class="clear"></div>
+					<div class="sun_input col-md-6">
+						<input id="card_name" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG name}}" value="<?php echo($pt->user->name) ?>">
+					</div>
+					<div class="sun_input col-md-6">
+						<input id="card_address" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG address}}" value="<?php echo($pt->user->address) ?>">
+					</div>
+					<div class="sun_input col-md-6">
+						<input id="card_city" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG city}}" value="<?php echo($pt->user->city) ?>">
+					</div>
+					<div class="sun_input col-md-6">
+						<input id="card_state" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG state}}" value="<?php echo($pt->user->state) ?>">
+					</div>
+					<div class="sun_input col-md-6">
+						<input id="card_zip" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG zip}}" value="<?php echo($pt->user->zip) ?>">
+					</div>
+			        <div class="sun_input col-md-6">
+			             <select id="card_country" name="card_country" class="form-control">{{COUNTRIES}}</select>
+			        </div>
+					<div class="sun_input col-md-6">
+						<input id="card_email" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG email}}" value="<?php echo($pt->user->email) ?>">
+					</div>
+					<div class="sun_input col-md-6">
+						<input id="card_phone" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG phone_number}}" value="<?php echo($pt->user->phone_number) ?>">
+					</div>
+					<div class="clear"></div>
+					<hr>
+					<div class="row two_check_card">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M20,8H4V6H20M20,18H4V12H20M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" /></svg>
+						<div class="sun_input col-xs-12">
+							<input id="_number_" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG card_number}}">
+							<input id="card_number" name="card_number" type="hidden" class="form-control input-md" autocomplete="off">
+						</div>
+						<div class="sun_input col-xs-4">
+							<select id="card_month" name="card_month" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG month}} (01)">
+								<option value="01">01</option>
+								<option value="02">02</option>
+								<option value="03">03</option>
+								<option value="04">04</option>
+								<option value="05">05</option>
+								<option value="06">06</option>
+								<option value="07">07</option>
+								<option value="08">08</option>
+								<option value="09">09</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+							</select>
+						</div>
+						<div class="sun_input col-xs-4 no-padding-both">
+							<select id="card_year" name="card_year" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG year}} (2019)">
+				                <?php for ($i=date('Y'); $i <= date('Y')+15; $i++) {  ?>
+									<option value="<?php echo($i) ?>"><?php echo($i) ?></option>
+								<?php } ?>
+				            </select>
+						</div>
+						<div class="sun_input col-xs-4">
+							<input id="card_cvc" name="card_cvc" type="text" class="form-control input-md" autocomplete="off" placeholder="CVC" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+						</div>
+					</div>
+					<div class="clear"></div>
+					<input type="text" id="2checkout_type" class="hidden" name="type">
+					<input id="card_token" name="token" type="hidden" value="">
+				</div>
+				<div class="clear"></div>
+				<div class="modal-footer">
+					<div class="ball-pulse"><div></div><div></div><div></div></div>
+					<button type="button" class="btn btn-main" onclick="tokenRequest()" id="2checkout_btn">{{LANG pay}}</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<?php echo PT_LoadPage('modals/stripe_modal'); ?>
+
+
+<script>
+<?php if ($pt->config->credit_card == 'yes') { ?>
+	var stripe_array = [];
+	Stripe.setPublishableKey('{{CONFIG stripe_id}}');
+
+	function SH_StripeCardRequest() {
+		$('#stripe_btn').text("{{LANG please_wait}}");
+		$('#stripe_btn').attr('disabled', 'true');
+		if ($("#stripe_name").val() != '' && $("#stripe_email").val() != '' && $("#stripe_number").val() != '' && $("#stripe_month").val() != '' && $("#stripe_year").val() != '' && $("#stripe_cvc").val() != '') {
+
+			stripe_array['stripe_name'] = $('#stripe_name').val();
+			stripe_array['stripe_email'] = $('#stripe_email').val();
+			stripe_array['stripe_number'] = $('#stripe_number').val();
+			stripe_array['stripe_month'] = $('#stripe_month').val();
+			stripe_array['stripe_year'] = $('#stripe_year').val();
+			stripe_array['stripe_cvc'] = $('#stripe_cvc').val();
+			Stripe.createToken({
+	            number: $('#stripe_number').val(),
+	            exp_month: $('#stripe_month').val(),
+	            exp_year: $('#stripe_year').val(),
+	            cvc: $('#stripe_cvc').val()
+	        }, SH_StripeCardResponseHandler);
+		}
+		else{
+			$('#stripe_alert').html('<div class="alert alert-danger">{{LANG please_check_details}}</div>');
+			$('#stripe_btn').text("{{LANG pay}}");
+			$('#stripe_btn').removeAttr('disabled');
+		}
+	}
+	function SH_StripeCardResponseHandler(status, response) {
+	    if (response.error) {
+	    	$('#stripe_alert').html('<div class="alert alert-danger">'+response.error.message+'</div>');
+			$('#stripe_btn').text("{{LANG pay}}");
+			$('#stripe_btn').removeAttr('disabled');
+	    } else {
+	    	stripe_array['token'] = response.id;
+	    	$.post('{{LINK aj/go_pro/stripe}}', {'stripe_name': stripe_array['stripe_name'],'stripe_email': stripe_array['stripe_email'],'stripe_number': stripe_array['stripe_number'],'stripe_month': stripe_array['stripe_month'],'stripe_year': stripe_array['stripe_year'],'stripe_cvc': stripe_array['stripe_cvc'],stripeToken:stripe_array['token']}, function (data) {
+	          	if (data.status == 200) {
+	          	 	window.location.href = data.url;
+	          	} else {
+	          	 	$('#stripe_alert').html('<div class="alert alert-danger"><i class="fa fa-spin fa-spinner"></i> {{LANG payment_declined}}</div>');
+	          	}
+	        });
+	    }
+	}
+
+<?php } ?>
+
+
+
+
+
+
+
+	<?php if ($pt->config->checkout_payment == 'yes') { ?>
+	// Called when token created successfully.
+	var successCallback = function(data) {
+	    var myForm = document.getElementById('2checkout_form');
+	    $.post('{{LINK aj/go_pro/checkout}}', {card_number: $("#card_number").val(),card_cvc: $("#card_cvc").val(),card_month: $("#card_month").val(),card_year: $("#card_year").val(),card_name: $("#card_name").val(),card_address: $("#card_address").val(),card_city: $("#card_city").val(),card_state: $("#card_state").val(),card_zip: $("#card_zip").val(),card_country: $("#card_country").val(),card_email: $("#card_email").val(),card_phone: $("#card_phone").val(),type: 'pro',token: data.response.token.token}, function(data, textStatus, xhr) {
+	    	$('#2checkout_btn').html("{{LANG pay}}");
+	    	$('#2checkout_btn').attr('disabled');
+	    	$('#2checkout_btn').removeAttr('disabled');
+	    	$('#2checkout_form').find('.ball-pulse').fadeOut(100);
+	    	if (data.status == 200) {
+	      	 	window.location.href = data.url;
+	      	} else {
+	      	 	$('#2checkout_alert').html("<div class='alert alert-danger'>"+data.error+"</div>");
+				setTimeout(function () {
+					$('#2checkout_alert').html("");
+				},3000);
+	      	}
+	    	/*optional stuff to do after success */
+	    });
+	};
+
+	// Called when token creation fails.
+	var errorCallback = function(data) {
+		$('#2checkout_btn').html("{{LANG pay}}");
+		$('#2checkout_btn').removeAttr('disabled');
+		$('#2checkout_form').find('.ball-pulse').fadeOut(100);
+	    if (data.errorCode === 200) {
+	        tokenRequest();
+	    } else {
+	    	$('#2checkout_alert').html("<div class='alert alert-danger'>"+data.errorMsg+"</div>");
+			setTimeout(function () {
+				$('#2checkout_alert').html("");
+			},3000);
+	    }
+	};
+
+	var tokenRequest = function() {
+		$('#card_number').val($('#_number_').val());
+		$('#2checkout_btn').html("{{LANG please_wait}}");
+		$('#2checkout_btn').attr('disabled','true');
+		if ($("#card_number").val() != '' && $("#card_cvc").val() != '' && $("#card_month").val() != '' && $("#card_year").val() != '' && $("#card_name").val() != '' && $("#card_address").val() != '' && $("#card_city").val() != '' && $("#card_state").val() != '' && $("#card_zip").val() != '' && $("#card_country").val() != 0 && $("#card_email").val() != '' && $("#card_phone").val() != '') {
+			$('#2checkout_form').find('.ball-pulse').fadeIn(100);
+			// Setup token request arguments
+		    var args = {
+		        sellerId: "<?php echo($pt->config->checkout_seller_id) ?>",
+		        publishableKey: "<?php echo($pt->config->checkout_publishable_key) ?>",
+		        ccNo: $("#card_number").val(),
+		        cvv: $("#card_cvc").val(),
+		        expMonth: $("#card_month").val(),
+		        expYear: $("#card_year").val()
+		    };
+
+		    // Make the token request
+		    TCO.requestToken(successCallback, errorCallback, args);
+		}
+		else{
+			$('#2checkout_btn').html("{{LANG pay}}");
+			$('#2checkout_btn').removeAttr('disabled');
+			$('#2checkout_alert').html("<div class='alert alert-danger'>{{LANG please_check_details}}</div>");
+			setTimeout(function () {
+				$('#2checkout_alert').html("");
+			},3000);
+
+		}
+		
+	    
+	};
+
+	$(function() {
+	    // Pull in the public encryption key for our environment
+	    TCO.loadPubKey("<?php echo($pt->config->checkout_mode) ?>");
+	});
+<?php } ?>
+	function PT_OpenStripe(pkg,self,video_id = 0,price = 0){
+		$('#pay-go-pro').modal('hide');
+		$('#stripe_modal').modal('show');
+	 }
+
+	 function PT_OpenBank(pkg,self,video_id = 0,price = 0){
+	    if (!pkg || !self) {
+	      return false;
+	    }
+	    $(self).text("{{LANG please_wait}}").attr('disabled', 'true');
+	    $('#pay-go-pro').modal('hide');
+	    $('#configreset').click();
+		$("#blog-alert").html('');
+    	$('#pay-go-pro').modal('hide');
+    	$('#bank_transfer_modal').modal({
+             show: true
+            });
+	}
+
+	 $(document).on('click', '#select-img', function(event) {
+		$("#thumbnail").click()
+	});
+	$(document).on('change', '#thumbnail', function(event) {
+		let imgPath = $(this)[0].files[0].name;
+	    if (typeof(FileReader) != "undefined") {
+	        let reader = new FileReader();
+	        reader.onload = function(e) {
+				$('#receipt_img_preview').attr('src', e.target.result);
+	        }
+	        reader.readAsDataURL(this.files[0]);
+	    }
+		$('#bank_transfer_modal').addClass('up_rec_img_ready');
+	});
+
+	jQuery(document).ready(function($) {
+		$('#bank_transfer_form').ajaxForm({
+		  url: '{{LINK aj/go_pro/bank}}',
+		  beforeSend: function() {
+		    $('#bank_transfer_form').find('.ball-pulse').fadeIn(100);
+		    $('#bank_transfer_form').find('.btn-main').text("{{LANG please_wait}}").attr('disabled', 'true');
+		  },
+		  success: function(data) {
+		    if (data['status'] == 200) {
+		    	$("#blog-alert").html('<div class="alert alert-success">'+ data['message'] +'</div>');
+		    	setTimeout(function () {
+		    		window.location = "<?php echo $pt->config->site_url;?>";
+		    		$(".prv-img").html('<div class="thumbnail-rendderer"><div><div class="error-text-renderer"></div><div><p>{{LINK browse_to_upload}}</p></div></div> </div>');
+		    		$("#blog-alert").html('');
+		    		$('#configreset').click();
+
+		    	},3000)
+		    } else if (data['message']) {
+		      $("#blog-alert").html('<div class="alert alert-danger">' + data['message'] + '</div>');
+		    } 
+		    $('#bank_transfer_form').find('.ball-pulse').fadeOut(100);
+		    $('#bank_transfer_form').find('.btn-main').text("{{LANG publish}}");
+            $('#bank_transfer_form').find('.btn-main').removeAttr('disabled');
+		}});
+	});
+
+
+</script>
+
+
+<div class="modal fade matdialog" id="bank_transfer_modal" role="dialog" data-keyboard="false" style="overflow-y: auto;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></button>
+				<h4 class="modal-title">{{LANG bank_transfer}}</h4>
+			</div>
+			<form class="form form-horizontal" method="post" id="bank_transfer_form" action="#">
+				<div id="blog-alert"></div>
+				<div class="modal-body dt_bank_trans_modal">
+					
+					
+					<?php echo html_entity_decode($pt->config->bank_description);?>
+					
+					<?php if (!empty($pt->config->bank_transfer_note)) { ?>
+						<div class="dt_user_profile hide_alert_info_bank_trans">
+							<span class="valign-wrapper">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg> Note:
+							</span>
+							<ul class="dt_prof_vrfy">
+								<li><?php echo $pt->config->bank_transfer_note;?></li>
+							</ul>
+						</div>
+					<?php } ?>
+					<p class="dt_bank_trans_upl_rec"><a href="javascript:void(0);" onclick="$('#bank_transfer_modal').addClass('up_rec_active'); return false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M13.5,16V19H10.5V16H8L12,12L16,16H13.5M13,9V3.5L18.5,9H13Z"></path></svg> {{LANG upload}}</a></p>
+					<div class="upload_bank_receipts">
+						<div onclick="document.getElementById('thumbnail').click(); return false">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M13.5,16V19H10.5V16H8L12,12L16,16H13.5M13,9V3.5L18.5,9H13Z"></path></svg>
+							<p>{{LANG browse_to_upload}}</p>
+							<img id="receipt_img_preview" src="">
+						</div>
+					</div>
+					<input type="file" class="hidden" id="thumbnail" name="thumbnail" accept="image/*">
+					<input name="image" type="file" id="upload" class="hidden">
+					<input name="type" type="hidden" id="bank_transfer_type" class="hidden">
+					<input name="description" type="hidden" id="bank_transfer_des" class="hidden">
+					<input type="reset" id="configreset" value="Reset" class="hidden">
+				</div>
+				<div class="modal-footer">
+					<div class="ball-pulse"><div></div><div></div><div></div></div>
+					<button type="submit" class="btn btn-main">{{LANG publish}}</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<?php else: ?>
+<svg class="pt_svg_squiggle" tabindex="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 114 24" aria-label="Squiggle"><defs><linearGradient id="67787231-268e-4988-be2a-d6340fac9eab" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#6d47d9"></stop><stop offset="100%" stop-color="#f93d66"></stop></linearGradient></defs><path d="M114 22c0 1.1-.9 2-2 2-3.2 0-5.8-1.3-8-3.8-1.6-1.7-2.6-3.4-4.7-7.3-3.8-6.8-5.7-9-9.2-9-3.5 0-5.5 2.1-9.2 9-2.1 3.9-3.2 5.5-4.8 7.3-2.2 2.5-4.8 3.8-8 3.8s-5.8-1.3-8-3.8c-1.6-1.7-2.6-3.4-4.8-7.3-3.8-6.8-5.7-9-9.2-9-3.5 0-5.5 2.1-9.2 9-2.1 3.9-3.2 5.5-4.8 7.3-2.2 2.5-4.8 3.8-8 3.8s-5.8-1.3-8-3.8c-1.6-1.7-2.6-3.4-4.7-7.3C7.5 6.1 5.5 4 2 4 .9 4 0 3.1 0 2s.9-2 2-2c3.2 0 5.8 1.3 8 3.8 1.6 1.7 2.6 3.4 4.7 7.3 3.8 6.9 5.7 9 9.2 9 3.5 0 5.5-2.1 9.2-9 2.2-3.9 3.2-5.5 4.8-7.3C40.2 1.3 42.8 0 46 0s5.8 1.3 8 3.8c1.6 1.7 2.6 3.4 4.8 7.3 3.8 6.9 5.7 9 9.2 9 3.5 0 5.5-2.1 9.2-9 2.2-3.9 3.2-5.5 4.8-7.3C84.2 1.3 86.8 0 90 0s5.8 1.3 8 3.8c1.6 1.7 2.6 3.4 4.8 7.3 3.8 6.9 5.7 9 9.2 9 1.1-.1 2 .8 2 1.9z" fill="url(#67787231-268e-4988-be2a-d6340fac9eab)"></path></svg><svg class="pt_svg_lines" tabindex="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134.9 70.1" aria-label="Lines"><defs><linearGradient id="eed89beb-684d-466b-9a87-91d2ebaf480f" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#00dcaf"></stop><stop offset="100%" stop-color="#6d47d9"></stop></linearGradient></defs><path d="M2 70.1c-.5 0-1-.2-1.4-.6-.8-.8-.8-2 0-2.8L66.7.6c.8-.8 2-.8 2.8 0s.8 2 0 2.8L3.4 69.5c-.4.4-.9.6-1.4.6zM33.1 70.1c-.5 0-1-.2-1.4-.6-.8-.8-.8-2 0-2.8L97.7.6c.8-.8 2-.8 2.8 0s.8 2 0 2.8l-66 66.1c-.4.4-.9.6-1.4.6zM66.8 70.1c-.5 0-1-.2-1.4-.6-.8-.8-.8-2 0-2.8L131.5.6c.8-.8 2-.8 2.8 0s.8 2 0 2.8L68.2 69.5c-.4.4-.9.6-1.4.6z" fill="url(#eed89beb-684d-466b-9a87-91d2ebaf480f)"></path></svg><svg class="pt_svg_spiral" tabindex="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 51" aria-label="Spiral"><defs><linearGradient id="8332a4c0-73dd-4f9c-a3d5-67b448fbfa7d" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f7bc28"></stop><stop offset="100%" stop-color="#f93d66"></stop></linearGradient></defs><path d="M46.2 34.2C42.5 44.3 33 50.6 23.1 50.6c-2.7 0-5.4-.5-8-1.4-5.6-2.1-10.3-6.4-12.8-11.9C-.1 31.9-.3 26 1.7 20.7c2-5.1 6-9.4 11-11.6 4.8-2.1 10-2.3 14.8-.5 4.6 1.8 8.4 5.5 10.3 10 1.9 4.3 1.9 9 .2 13.2-1.6 4.1-4.9 7.4-8.9 9.1-3.8 1.6-7.9 1.6-11.6 0-3.5-1.5-6.3-4.4-7.7-8-1.3-3.3-1.3-6.9.1-10 1.3-3 3.8-5.3 6.9-6.4 2.8-1 5.8-.9 8.4.3 2.5 1.2 4.4 3.4 5.2 6 .7 2.3.5 4.7-.6 6.7-.9 1.8-2.7 3.2-4.8 3.8-1.9.5-3.8.2-5.4-.8-1.5-1-2.4-2.7-2.5-4.4-.1-1.3.4-2.6 1.4-3.4 1-1 3-1.2 4.2-.4 1.1.7 1.5 1.9 1.1 3.1-.3 1-1.4 1.6-2.4 1.3.1.2.3.4.5.5.7.5 1.6.4 2.1.3 1-.2 1.8-.9 2.2-1.8.8-1.4.6-2.8.3-3.7-.5-1.5-1.6-2.9-3.1-3.6-1.6-.8-3.5-.8-5.3-.2-2 .7-3.7 2.3-4.6 4.3-.9 2.1-1 4.6-.1 6.9 1 2.6 3 4.7 5.5 5.7 2.7 1.1 5.7 1.1 8.5 0 3-1.3 5.5-3.8 6.7-6.9 1.3-3.2 1.2-6.8-.2-10.1-1.5-3.6-4.5-6.4-8.1-7.9-3.8-1.5-7.9-1.3-11.7.4-3.9 2-7.1 5.4-8.7 9.5-1.6 4.3-1.4 9.1.6 13.5 2.1 4.5 5.9 8.1 10.4 9.8 10.2 3.7 22.1-2.1 26-12.6 4-11.3-2.3-24.3-13.9-28.5-1-.4-1.6-1.5-1.2-2.6.4-1 1.5-1.6 2.6-1.2 13.6 5 21.1 20.4 16.3 33.7z" fill="url(#8332a4c0-73dd-4f9c-a3d5-67b448fbfa7d)"></path></svg><svg class="pt_svg_triangle" tabindex="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 50" aria-label="Triangle"><defs><linearGradient id="11c0361a-b3e4-4cf4-ae1b-efbdfc814224" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#6d47d9"></stop><stop offset="100%" stop-color="#00dcaf"></stop></linearGradient></defs><path d="M50.3,17.6l-15.5-2.3l-7-14.2c-0.7-1.5-2.9-1.5-3.6,0l-7,14.2L1.7,17.6c-1.6,0.2-2.3,2.2-1.1,3.4l11.3,11L9.2,47.7	c-0.3,1.6,1.4,2.9,2.9,2.1L26,42.4l13.9,7.4c1.5,0.8,3.2-0.5,2.9-2.1L40.2,32l11.2-11C52.6,19.8,51.9,17.8,50.3,17.6z M36.6,29.9	c-0.5,0.5-0.7,1.1-0.6,1.8l2.1,12.6l-11.2-6c-0.6-0.3-1.3-0.3-1.9,0l-11.2,6L16,31.7c0.1-0.6-0.1-1.3-0.6-1.8l-9.1-9l12.6-1.8	c0.7-0.1,1.2-0.5,1.5-1.1L26,6.5L31.6,18c0.3,0.6,0.9,1,1.5,1.1L45.7,21L36.6,29.9z" fill="url(#11c0361a-b3e4-4cf4-ae1b-efbdfc814224)"></path></svg>
+
+<div class="go-pro-container">
+	<div class="go-pro-head-upgraded">
+		<h4>{{LANG congratulations}}</h4>
+		<p class="text-center">{{LANG uare_pro}}</p>
+	</div>
+	<div class="go-pro-body-upgraded">
+		<div class="upgraded-features">
+			<p><span><i class="fa fa-check"></i></span> {{LANG upload_1tr_limit}}</p>
+			<p><span><i class="fa fa-check"></i></span> {{LANG ads_wont_show_up}}</p>
+			<p><span><i class="fa fa-check"></i></span> {{LANG ur_are_featured}}</p>
+			<p><span><i class="fa fa-check"></i></span> {{LANG verified_badge}}</p>
+		</div>
+	</div>
+	<div class="go-pro-footer-upgraded">
+		<button class="btn-main btn">
+			<a href="{{LINK }}">{{LANG start_features}}</a>
+		</button>
+	</div>
+</div>
+<?php endif; ?>

@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html id="html">
+<head>
+	<meta charset="UTF-8">
+	<title>{{CONTAINER_TITLE}}</title>
+	<meta name="title" content="{{CONTAINER_TITLE}}">
+	<meta name="description" content="{{CONTAINER_DESC}}">
+	<meta name="keywords" content="{{CONTAINER_KEYWORDS}}">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta property="fb:app_id" content="1643990952546825" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <?php if (!empty($pt->config->dailymotion_id)) { ?>
+      <meta name="dailymotion-domain-verification" content="{{CONFIG dailymotion_id}}" />
+    <?php } ?>
+    {{OG_METATAGS}}
+    <link rel="shortcut icon" type="image/png" href="{{CONFIG theme_url}}/img/icon.png"/>
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/css/jquery.tagit.css">
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/css/twemoji-awesome.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/js/lib/sweetalert2/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/js/lib/notifIt/notifIt/css/notifIt.min.css">
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/css/style.css" id="style-css">
+    <?php if ($pt->mode == 'night' || $pt->config->night_mode == 'night'): ?>
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/css/night-mode.css" class="night-mode-css">      
+    <?php endif; ?>  
+
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/css/custom.style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,500" rel="stylesheet">
+    <script src="{{CONFIG theme_url}}/js/jquery-3.min.js"></script>
+    <script src="{{CONFIG theme_url}}/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="{{CONFIG theme_url}}/js/jquery.form.min.js"></script>
+    <script type="text/javascript" src="{{CONFIG theme_url}}/js/tag-it.min.js"></script>
+    <?php if ($pt->config->player_type == 'fluidPlayer') { ?>
+      <link rel="stylesheet" href="{{CONFIG theme_url}}/player/css/fluidplayer/fluidplayer.min.css" type="text/css"/>
+      <script src="{{CONFIG theme_url}}/player/js/fluidplayer/fluidplayer.min.js"></script>
+      <link rel="stylesheet" href="{{CONFIG theme_url}}/player/css/mediaelementplayer.min.css" />
+      <script src="{{CONFIG theme_url}}/player/js/mediaelement-and-player.min.js"></script>
+    <?php }elseif ($pt->config->player_type == 'videojs') { ?>
+    <!-- <script src="http://imasdk.googleapis.com/js/sdkloader/ima3.js"></script> -->
+      <link href="{{CONFIG theme_url}}/player/css/video_js/video-js.css" rel="stylesheet">
+      <link href="{{CONFIG theme_url}}/player/css/video_js/videojs-contrib-ads.min.css" rel="stylesheet">
+      <link href="{{CONFIG theme_url}}/player/css/video_js/videojs-resolution-switcher.css" rel="stylesheet">
+      <link href="{{CONFIG theme_url}}/player/css/video_js/videojs.ima.css" rel="stylesheet">
+      <link rel="stylesheet" href="{{CONFIG theme_url}}/player/css/mediaelementplayer.min.css" />
+      <script src="{{CONFIG theme_url}}/player/js/mediaelement-and-player.min.js"></script>
+    <?php }else{ ?>
+      <link rel="stylesheet" href="{{CONFIG theme_url}}/player/css/mediaelementplayer.min.css" />
+      <script src="{{CONFIG theme_url}}/player/js/mediaelement-and-player.min.js"></script>
+  <?php } ?>
+    
+	<link rel="stylesheet" href="{{CONFIG theme_url}}/player/css/mejs-dark.css" />
+
+    <script src="{{CONFIG theme_url}}/js/lib/sweetalert2/dist/sweetalert2.js"></script>
+    <script src="{{CONFIG theme_url}}/js/lib/notifIt/notifIt/js/notifIt.min.js"></script>
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/css/bootstrap-select.min.css">
+    <script src="{{CONFIG theme_url}}/js/bootstrap-select.min.js"></script>
+    <script src="{{CONFIG theme_url}}/js/emoji/emojionearea/dist/emojionearea.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{CONFIG theme_url}}/js/emoji/emojionearea/dist/emojionearea.min.css"/>
+
+
+    
+	<?php if ($pt->language_type == 'rtl') { ?>
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/css/bootsrap-rtl.min.css">
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/css/rtl.style.css">
+    <?php } ?>
+    <script src="{{CONFIG theme_url}}/player/plugins/speed/speed.min.js"></script>
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/player/plugins/speed/speed.min.css" />
+    <script src="{{CONFIG theme_url}}/player/plugins/speed/speed-i18n.js"></script>
+    <script src="{{CONFIG theme_url}}/player/plugins/jump/jump-forward.min.js"></script>
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/player/plugins/jump/jump-forward.min.css" />
+    <script src="{{CONFIG theme_url}}/player/plugins/ads/ads.min.js"></script>
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/player/plugins/ads/ads.min.css" />
+    <script src="{{CONFIG theme_url}}/player/plugins/ads/ads-i18n.js"></script>
+    <script src="{{CONFIG theme_url}}/player/plugins/vast/ads-vast-vpaid.js"></script>
+    <script src="{{CONFIG theme_url}}/player/plugins/quality/quality.min.js"></script>
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/player/plugins/quality/quality.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/renderers/facebook.min.js"></script>
+
+	<script src="{{CONFIG theme_url}}/player/plugins/context-menu/context-menu.min.js"></script>
+    <script src="{{CONFIG theme_url}}/player/plugins/context-menu/context-menu-i18n.js"></script>
+
+    <link rel="stylesheet" href="{{CONFIG theme_url}}/player/plugins/context-menu/context-menu.min.css" />
+    <script src="{{CONFIG theme_url}}/js/Fingerprintjs2/fingerprint2.js"></script>
+
+    <?php if ($pt->config->checkout_payment == 'yes') { ?>
+        <script type="text/javascript" src="https://www.2checkout.com/checkout/api/2co.min.js"></script>
+      <?php } ?>
+
+    <!-- <script src="{{CONFIG theme_url}}/js/highcharts/highcharts.js"></script>
+    <script src="{{CONFIG theme_url}}/js/highcharts/exporting.js"></script> -->
+
+    <script src= "https://player.twitch.tv/js/embed/v1.js"></script>
+    
+    <?php if ($pt->page == 'login' && $pt->config->recaptcha == 'on') { ?>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <?php } ?>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <?php if (!empty($pt->config->google)) { ?>
+     <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', '{{CONFIG google}}', 'auto');
+      ga('send', 'pageview');
+    </script> 
+    <?php } ?>
+    <script>
+      function RunLiveAgora(channelName,DIV_ID) {
+        var agoraAppId = '<?php echo($pt->config->agora_app_id) ?>'; 
+        var token = null;
+
+        var client = AgoraRTC.createClient({mode: 'live', codec: 'vp8'}); 
+        client.init(agoraAppId, function () {
+
+
+            client.setClientRole('audience', function() {
+          }, function(e) {
+          });
+          
+          client.join(token, channelName, 0, function(uid) {
+          }, function(err) {
+          });
+          }, function (err) {
+          });
+
+          client.on('stream-added', function (evt) {
+          var stream = evt.stream;
+          var streamId = stream.getId();
+          
+          client.subscribe(stream, function (err) {
+          });
+        });
+        client.on('stream-subscribed', function (evt) {
+          var video_id = $('#video-id').val();
+         if (!video_id) {
+            return false;
+         }
+          $('#'+DIV_ID).html('<div class="wow_liv_counter"><span id="live_word_'+video_id+'">{{LANG live}}</span> <span id="live_count_'+video_id+'"> 0</span></div><div id="live_post_comments_'+video_id+'" class="wow_liv_comments_feed user-comments"></div>');
+          var remoteStream = evt.stream;
+          remoteStream.play(DIV_ID);
+          $('#player_'+remoteStream.getId()).find('video').css('position', 'relative');
+        });
+      }
+        <?php if (IS_LOGGED == true && $pt->config->server == 'nodejs') {?>
+           const socket = io('{{CONFIG hostname}}:{{CONFIG server_port}}');
+           socket.on('connect_error', function (error) {
+              console.log(error);
+           });
+           setTimeout(function () {
+             getNotifications();
+           }, 500);
+           function getNotifications() {
+               socket.emit('get notifications and messages');
+               setTimeout(function () {
+                 getNotifications();
+               }, 500);
+           }
+           socket.on('get notifications results', function (data) {
+              if (data.status == 200) {
+                 if (data.messages > 0) {
+                    var default_messages = $('body').attr('data-messages');
+
+                    if (!default_messages) {
+                       $('body').attr('data-messages', data.messages);
+                    }
+
+                    var default_messages = $('body').attr('data-messages');
+
+                    if (default_messages != data.messages) {
+                       $('#message-sound')[0].play();
+                       
+                    }
+
+                    $('body').attr('data-messages', data.messages);
+                    $('#new-messages').html('<b>' + data.messages + '</b>');
+                 } else {
+                    $('#new-messages').html("");
+                 }
+                 if (data.notifications > 0) {
+                    $('#new-notifications').html('<b>' + data.notifications + '</b>');
+                 } else {
+                     $('#new-notifications').html('');
+                 }
+                
+              }
+           });
+        <?php } ?>
+        var site_url = '{{CONFIG site_url}}';
+        function PT_Ajax_Requests_File() {
+          return site_url + '/';
+        }
+        function PT_Page_Loading_File() {
+          return site_url + '/page_loading.php';
+        }
+        function OpenShareWindow(url, windowName) {
+           newwindow = window.open(url, windowName, 'height=600,width=800');
+           if (window.focus) {
+              newwindow.focus();
+           }
+           return false;
+        }
+        function getCookie(name) {
+          var value = "; " + document.cookie;
+          var parts = value.split("; " + name + "=");
+          if (parts.length == 2) return parts.pop().split(";").shift();
+        }
+    </script>
+
+    <script src="{{CONFIG theme_url}}/js/header.js"></script>
+
+    <?php if($pt->config->player_type == 'cloudinary'){ ?>
+      <link href="{{CONFIG theme_url}}/css/cld-video-player.min.css" rel="stylesheet">
+
+<script src="{{CONFIG theme_url}}/js/cloudinary/cloudinary-core-shrinkwrap.min.js" type="text/javascript"></script>
+<script src="{{CONFIG theme_url}}/js/cloudinary/cld-video-player.min.js" type="text/javascript"></script>
+
+    <?php } ?>
+    <script src="https://imasdk.googleapis.com/js/sdkloader/ima3.js" type="text/javascript"></script>
+    <?php if ($pt->config->agora_live_video == 1 && !empty($pt->config->agora_app_id)) { ?>
+      <script src="{{CONFIG theme_url}}/js/agora.js"></script>
+    <?php } ?>
+
+</head>
+<script type="text/javascript">
+  $(document).on('click', 'a[data-load]', function(event) {
+    if ($('#live_post_id').length > 0) {
+          DeleteLive();
+          window.location = $(this).attr('href');
+          return false;
+    }
+    
+    if ($('video').length > 0) {
+        $('video')[0].pause();
+      }
+    $('#bar_loading').show();
+      event.preventDefault();
+      var url = $(this).attr('data-load');
+      $.ajax({
+        url: PT_Page_Loading_File()+url,
+        type: 'GET',
+        dataType: 'html'
+      })
+      .done(function(data_html) {
+        if ($(data_html).filter('#json-data').length > 0) {
+            data = JSON.parse($(data_html).filter('#json-data').val());
+            if (data.is_movie == true) {
+              $('.toggle-mode').hide();
+              $('.logo-img img').attr('src', '{{CONFIG theme_url}}/img/logo-light.png');
+            }
+            else{
+              if ($('#toggle-mode').prop( "checked" ) === true) {
+                $('.logo-img img').attr('src', '{{CONFIG theme_url}}/img/logo-light.png');
+              }
+              else{
+                $('.logo-img img').attr('src', '{{CONFIG theme_url}}/img/logo.png');
+              }
+              $('.toggle-mode').show();
+            }
+
+            (data.page == 'home') ? $('#home_menu_').addClass('active') : $('#home_menu_').removeClass('active');
+            (data.page == 'history') ? $('#history_menu_').addClass('active') : $('#history_menu_').removeClass('active');
+            (data.page == 'articles') ? $('#articles_menu_').addClass('active') : $('#articles_menu_').removeClass('active');
+            (data.page == 'latest') ? $('#latest_menu_').addClass('active') : $('#latest_menu_').removeClass('active');
+            (data.page == 'trending') ? $('#trending_menu_').addClass('active') : $('#trending_menu_').removeClass('active');
+            (data.page == 'paid-videos') ? $('#paid_videos_').addClass('active') : $('#paid_videos_').removeClass('active');
+            (data.page == 'top') ? $('#top_menu_').addClass('active') : $('#top_menu_').removeClass('active');
+            (data.page == 'movies') ? $('#movies_menu_').addClass('active') : $('#movies_menu_').removeClass('active');
+            (data.page == 'stock') ? $('#stock_menu_').addClass('active') : $('#stock_menu_').removeClass('active');
+            (data.page == 'popular_channels') ? $('#popular_channels_menu_').addClass('active') : $('#popular_channels_menu_').removeClass('active');
+
+            window.history.pushState({state:'new'},'', data.url);
+            $('#container_content').html(data_html);
+            $('meta[name=title]').attr('content', data.title);
+            $('meta[name=description]').attr('content', data.description);
+            $('meta[name=keywords]').attr('content', data.keyword);
+            $('title').text(data.title);
+            var main_container_class = 'main-content ';
+            (data.page != 'login') ? main_container_class += ' container ' : main_container_class += ' welcome-page ';
+            (data.page == 'home') ? main_container_class += ' watch_full_cont ' : main_container_class += ' ';
+            (data.page == 'watch') ? main_container_class += ' watch_full_cont ' : main_container_class += ' ';
+            (data.page == 'messages') ? main_container_class += ' m_cont_full ' : main_container_class += ' ';
+            $('#main-container').attr('class',main_container_class);
+
+
+            (data.page == 'messages') ? $('#header_ad_').attr('class','hidden') : $('#header_ad_').attr('class','ads-placment');
+            (data.page == 'messages') ? $('#footer_ad_').attr('class','hidden') : $('#footer_ad_').attr('class','ads-placment');
+          }
+          else{
+            window.location.href = site_url+'/login';
+          }
+
+      })
+      .fail(function() {
+        if (typeof(getCookie('user_id')) == 'undefined') {
+          window.location.href = site_url+'/login';
+        }
+        else{
+          window.location.href = site_url+'/404';
+        }
+        
+      })
+      .always(function() {
+        window.scrollTo(0,0);
+        $('#bar_loading').delay(300).fadeOut(300);
+        $(".video-player").hover(
+            function(e){
+              $('.watermark').css('display', 'block');
+             }, 
+            function(e){
+              setTimeout(function () {
+                if ($('.video-player:hover').length == 0) {
+                  $('.watermark').css('display', 'none');
+                }
+              }, 1000);
+             } 
+        );
+      });
+  });
+  function load_more_sub() {
+    var id = $('.subscribers_').last().attr('data_subscriber_id');
+    var user_id = '{{ME id}}';
+    $.post(PT_Ajax_Requests_File()+'aj/user/get_more_subscribers_', {id: id,user_id:user_id}, function(data, textStatus, xhr) {
+      if (data.status == 200) {
+        if (data.html != '') {
+          $('.user_subscribers_').append(data.html);
+        }
+        else{
+          $('#user_subscribers__load').text("{{LANG no_more_s_to_show}}");
+        }
+        
+      }
+      
+    });
+  }
+</script>
+<body itemscope itemtype="http://schema.org/Organization" id="pt-body">
+  <?php echo PT_LoadPage('third-party/theme-changer'); ?>
+	<div id="pop_up_18" class="modal matdialog et_plus" data-backdrop="static" data-keyboard="false"> 
+		<div class="modal-dialog">
+			<div class="modal-content">     
+				<div class="modal-body">
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 328.863 328.863" height="120" width="120" xml:space="preserve"> <g id="_x34_4-18Plus_movie"> <g> <path fill="currentColor" d="M104.032,220.434V131.15H83.392V108.27h49.121v112.164H104.032z"/> </g> <g> <path fill="currentColor" d="M239.552,137.23c0,9.76-5.28,18.4-14.08,23.201c12.319,5.119,20,15.84,20,28.32c0,20.16-17.921,32.961-45.921,32.961 c-28.001,0-45.921-12.641-45.921-32.48c0-12.801,8.32-23.682,21.28-28.801c-9.44-5.281-15.52-14.24-15.52-24 c0-17.922,15.681-29.281,40.001-29.281C224.031,107.15,239.552,118.83,239.552,137.23z M180.51,186.352 c0,9.441,6.721,14.721,19.041,14.721c12.32,0,19.2-5.119,19.2-14.721c0-9.279-6.88-14.561-19.2-14.561 C187.23,171.791,180.51,177.072,180.51,186.352z M183.391,138.83c0,8.002,5.76,12.48,16.16,12.48c10.4,0,16.16-4.479,16.16-12.48 c0-8.318-5.76-12.959-16.16-12.959C189.15,125.871,183.391,130.512,183.391,138.83z"/> </g> <g> <path fill="currentColor" d="M292.864,120.932c4.735,13.975,7.137,28.592,7.137,43.5c0,74.752-60.816,135.568-135.569,135.568 S28.862,239.184,28.862,164.432c0-74.754,60.816-135.568,135.569-135.568c14.91,0,29.527,2.4,43.5,7.137V5.832 C193.817,1.963,179.24,0,164.432,0C73.765,0,0.001,73.764,0.001,164.432s73.764,164.432,164.431,164.432 S328.862,255.1,328.862,164.432c0-14.807-1.962-29.385-5.831-43.5H292.864z"/> </g> <g> <polygon fill="currentColor" points="284.659,44.111 284.659,12.582 261.987,12.582 261.987,44.111 230.647,44.111 230.647,66.781 261.987,66.781 261.987,98.309 284.659,98.309 284.659,66.781 316.186,66.781 316.186,44.111 "/> </g> </g> </svg>
+					<h4>{{LANG age_block_extra}}</h4> 
+					<p>{{LANG age_block_modal}}</p>		  
+				</div> 
+				<div class="modal-footer">  
+					<button class="btn btn-success matbtn" id="pop_up_18_yes">{{LANG yes}}</button>  
+					<button class="btn matbtn" id="pop_up_18_no">{{LANG no}}</button>  
+				</div>
+			</div>          
+		</div>
+	</div>
+  <a href="" id="link_redirect_to_page"  data-load=""></a>
+  <div id="bar_loading"></div>
+	<?php if ($pt->page == 'upload-video-api'): ?>
+	<style>.wo_about_wrapper_parent {top: 0 !important;}</style>
+	<?php endif; ?>
+	<input type="hidden" class="main_session" value="<?php echo PT_CreateMainSession();?>">
+	<?php if ($pt->page != 'upload-video-api'): ?>
+	<header class="navbar-fixed-top">
+		{{HEADER_LAYOUT}}
+		<div class="clear"></div>
+	</header>
+	<?php endif; ?>
+
+	<div class="yp_side_menu <?php if ($pt->page != 'login') { ?>has_side_menu<?php } ?>">
+		<div id="main-container" class="<?php echo ($pt->page != 'login') ? 'container' : 'welcome-page';?> <?php echo ($pt->page == 'home') ? 'watch_full_cont' : '';?> <?php echo ($pt->page == 'watch') ? 'watch_full_cont' : '';?> <?php echo ($pt->page == 'messages') ? 'm_cont_full' : '';?> main-content" {{IS_LOGGED}}>
+      <?php if ($pt->page != 'login') { ?>
+			<div class="<?php echo ($pt->page == 'messages') ? 'hidden' : 'ads-placment';?>" id="header_ad_">{{HEADER_AD}}</div>
+      <?php } ?>
+			<div class="announcement-renderer">
+				{{ANNOUNCEMENT}}
+			</div>
+      <div id="container_content">
+			{{CONTAINER_CONTENT}}
+      </div>
+			<input type="hidden" id="main-url" value="{{MAIN_URL}}">
+      <?php if ($pt->page != 'login') { ?>
+			<div class="<?php echo ($pt->page == 'messages') ? 'hidden' : 'ads-placment';?>" id="footer_ad_">{{FOOTER_AD}}</div>
+      <?php } ?>
+		</div>
+		<?php if ($pt->page != 'upload-video-api'): ?>
+			<footer class="pt_footer">
+				{{FOOTER_LAYOUT}}
+			</footer>
+		<?php endif; ?>
+	</div>
+	<?php if ($pt->page != 'login') { ?>
+	<div class="yp_side_drawer">
+		<span class="open_side_menu_head">
+			<?php if ($pt->config->night_mode == 'both' || $pt->config->night_mode == 'night_default'): ?>
+				<div class="toggle-mode top-header">
+					<label class="switch" title="{{LANG mode}}">
+						<input type="checkbox" {{MODE}} id="toggle-mode-side">
+						<span class="slider round">
+							<svg fill="#009da0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" class="feather feather-bulb"><path d="M12,6A6,6 0 0,1 18,12C18,14.22 16.79,16.16 15,17.2V19A1,1 0 0,1 14,20H10A1,1 0 0,1 9,19V17.2C7.21,16.16 6,14.22 6,12A6,6 0 0,1 12,6M14,21V22A1,1 0 0,1 13,23H11A1,1 0 0,1 10,22V21H14M20,11H23V13H20V11M1,11H4V13H1V11M13,1V4H11V1H13M4.92,3.5L7.05,5.64L5.63,7.05L3.5,4.93L4.92,3.5M16.95,5.63L19.07,3.5L20.5,4.93L18.37,7.05L16.95,5.63Z" /></svg>
+						</span>
+					</label>
+				</div>
+			<?php endif; ?>
+			<span onclick="javascript:$('body').removeClass('side_open');">
+				<svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+			</span>
+		</span>
+		<ul class="sections">
+			<li class="<?php echo ($pt->page == 'home') ? 'active': '';?>" id="home_menu_"> 
+				<a href="{{LINK }}" data-load="?link1=home"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" /></svg> {{LANG home}}</a>
+			</li>
+			<?php if (IS_LOGGED == true && $pt->config->history_system == 'on') { ?>
+				<li class="<?php echo ($pt->page == 'history') ? 'active': '';?>" id="history_menu_">
+					<a href="{{LINK history}}" data-load="?link1=history">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.5,8H12V13L16.28,15.54L17,14.33L13.5,12.25V8M13,3A9,9 0 0,0 4,12H1L4.96,16.03L9,12H6A7,7 0 0,1 13,5A7,7 0 0,1 20,12A7,7 0 0,1 13,19C11.07,19 9.32,18.21 8.06,16.94L6.64,18.36C8.27,20 10.5,21 13,21A9,9 0 0,0 22,12A9,9 0 0,0 13,3" /></svg> {{LANG history}}
+					</a>
+				</li>
+			<?php } ?>
+      <?php if (IS_LOGGED == true && $pt->config->sell_videos_system == 'on') {  ?>
+      <li class="<?php echo ($pt->page == 'paid-videos') ? 'active': '';?>" id="paid_videos_">
+          <a href="{{LINK paid-videos}}" data-load="?link1=paid-videos">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M11,17V16H9V14H13V13H10A1,1 0 0,1 9,12V9A1,1 0 0,1 10,8H11V7H13V8H15V10H11V11H14A1,1 0 0,1 15,12V15A1,1 0 0,1 14,16H13V17H11Z" /></svg> {{LANG purchased}}
+          </a>
+        </li>
+        <?php } ?>
+			<?php if ($pt->config->article_system == 'on'): ?>
+				<li class="hide-from-mobile <?php echo ($pt->page == 'articles') ? 'active': '';?>" id="articles_menu_">
+					<a href="{{LINK articles}}" data-load="?link1=articles"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 3H2.99a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1H21a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm-1 16H3.99V5H20v14z"/><path d="M7 13h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1zm1-4h3v2H8V9zM6 15h12v2H6zM15 7h3v2h-3zM15 11h3v2h-3z" /></svg> {{LANG articles}}</a>
+				</li>
+			<?php endif ?>
+		</ul>
+		<ul class="sections">
+			<li class="hide-from-mobile <?php echo ($pt->page == 'latest') ? 'active': '';?>" id="latest_menu_">
+				<a href="{{LINK videos/latest}}" data-load="?link1=videos&page=latest"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17,10.5V7A1,1 0 0,0 16,6H4A1,1 0 0,0 3,7V17A1,1 0 0,0 4,18H16A1,1 0 0,0 17,17V13.5L21,17.5V6.5L17,10.5Z" /></svg> {{LANG latest_videos}}</a>
+			</li>
+			<li class="<?php echo ($pt->page == 'trending') ? 'active': '';?>" id="trending_menu_">
+				<a href="{{LINK videos/trending}}" data-load="?link1=videos&page=trending"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16,6L18.29,8.29L13.41,13.17L9.41,9.17L2,16.59L3.41,18L9.41,12L13.41,16L19.71,9.71L22,12V6H16Z" /></svg> {{LANG trending}}</a>
+			</li>
+			<li class="hide-from-mobile <?php echo ($pt->page == 'top') ? 'active': '';?>" id="top_menu_">
+				<a href="{{LINK videos/top}}" data-load="?link1=videos&page=top"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 6h2v11h-2zM17 3h2v14h-2zM9 9h2v8H9zM5 12h2v5H5zM4 19h16v2H4z" /></svg> {{LANG top_videos}}</a>
+			</li>
+      <?php if ($pt->config->movies_videos == 'on') { ?>
+      <li class="hide-from-mobile <?php echo ($pt->page == 'movies') ? 'active': '';?>" id="movies_menu_">
+      <a href="{{LINK movies}}" data-load="?link1=movies">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18,9H16V7H18M18,13H16V11H18M18,17H16V15H18M8,9H6V7H8M8,13H6V11H8M8,17H6V15H8M18,3V5H16V3H8V5H6V3H4V21H6V19H8V21H16V19H18V21H20V3H18Z" /></svg> {{LANG movies}}
+      </a>
+    </li>
+    <?php } ?>
+      <?php if ($pt->config->stock_videos == 'on') { ?>
+      <li class="hide-from-mobile <?php echo ($pt->page == 'stock') ? 'active': '';?>" id="stock_menu_">
+      <a href="{{LINK videos/stock}}" data-load="?link1=videos&page=stock">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17,10.5V7A1,1 0 0,0 16,6H4A1,1 0 0,0 3,7V17A1,1 0 0,0 4,18H16A1,1 0 0,0 17,17V13.5L21,17.5V6.5L17,10.5Z" /></svg> {{LANG stock_videos}}
+      </a>
+    </li>
+    <?php } ?>
+      <?php if ( $pt->config->popular_channels == 'on') { ?>
+      <li class="hide-from-mobile <?php echo ($pt->page == 'popular_channels') ? 'active': '';?>" id="popular_channels_menu_">
+        <a href="{{LINK popular_channels}}" data-load="?link1=popular_channels">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg> {{LANG popular_channels}}
+          </a>
+      </li>
+      <?php } ?>
+		</ul>
+    <?php if (!empty($pt->subscribers_) && IS_LOGGED == true) { ?>
+      <ul class="sections">
+        <h3>{{LANG subscriptions}}</h3>
+        <div class="user_subscribers_">
+          <?php 
+          foreach ($pt->subscribers_ as $key => $user_) {
+            $user_subscribers_ = PT_UserData($user_->user_id); 
+            if (!empty($user_subscribers_)) {
+            ?>
+            <li data_subscriber_id="<?php echo($user_->id) ?>" class="subscribers_"><a  href="<?php echo($user_subscribers_->url) ?>" data-load="?link1=timeline&id=<?php echo($user_subscribers_->username) ?>"><img class="header-image subscribers_img_" src="<?php echo($user_subscribers_->avatar) ?>" alt="{{ME name}} avatar" /><?php echo mb_substr($user_subscribers_->name, 0,20).'..' ; ?></a></li>
+          <?php } } ?>
+        </div>
+        
+        <li><a href="javascript:void(0)" onclick="load_more_sub()" id="user_subscribers__load">{{LANG show_more}}</a></li>
+      </ul>
+    <?php } ?>
+		<ul class="sections">
+			<h3>{{LANG categories}}</h3>
+			<?php foreach($pt->categories as $key => $category) { 
+					if (1) { ?>
+				<li><a class="category" href="{{LINK videos/category/<?php echo $key?>}}" data-load="?link1=videos&page=category&id=<?php echo $key?>"><?php echo $category?></a></li>
+			<?php } }?>
+		</ul>
+    
+	</div>
+	<?php } ?>
+	<!-- JS FILES -->
+    <?php if ($pt->page == 'watch') {?>
+    <div id="fb-root"></div>
+    <script>
+      
+      (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.10&appId=1755264744788554";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <?php } ?>
+    {{EXTRA_JS}}
+	<script type="text/javascript" src="{{CONFIG theme_url}}/js/script.js"></script>
+    <script type="text/javascript" src="{{CONFIG theme_url}}/js/bootstrap.min.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="{{CONFIG theme_url}}/js/footer.js"></script>
+    <link rel="" ="">
+    <script>
+      $(window).on("popstate", function (e) {
+          location.reload();
+      });
+	$(document).ready(function() {
+		$("img[data-src]").unveil(200);
+	});
+
+    $(document).ready(function(){
+        $('.share-video a').click(function (e) {
+            e.preventDefault();
+        });
+        $('.dropdown-toggle').dropdown()
+
+        $("#toggle-mode,#toggle-mode-side").change(function(event) {
+            var mode = 'day';
+
+            if ($(this).prop( "checked" ) === true) {
+              mode = 'night';
+              $('<link>',{
+                rel:'stylesheet',
+                href:'{{CONFIG theme_url}}/css/night-mode.css',
+                class:'night-mode-css'
+              }).insertAfter('link#style-css');
+              $('.logo-img img').attr('src', '{{CONFIG theme_url}}/img/logo-light.png');
+            }
+            else{
+              $(".night-mode-css").remove();
+              $('.logo-img img').attr('src', '{{CONFIG theme_url}}/img/logo.png');
+            }
+
+
+            $.post('{{LINK }}', {mode: mode}, function(data, textStatus, xhr) { /* pass */ });
+        });
+
+        $("li.toggle-mobile-mode").click(function(event) {
+            var mode = $(this).attr('data-mode');
+
+            $.post('{{LINK }}', {mode: mode}, function(data, textStatus, xhr) {
+              location.reload();
+            });
+        });
+    });
+   </script>
+	<?php if (IS_LOGGED == true) { ?>
+	<audio id="message-sound" class="sound-controls" preload="auto">
+		<source src="{{CONFIG theme_url}}/mp3/unconvinced.mp3" type="audio/mpeg">
+		<source src="{{CONFIG theme_url}}/mp3/unconvinced.ogg" type="audio/ogg">
+	</audio>
+	<?php } ?> 
+	<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+      <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+      <script>
+      window.addEventListener("load", function(){
+      window.cookieconsent.initialise({
+        "palette": {
+		  <?php if ($pt->config->night_mode == 'night_default') { ?>
+		  "popup": {
+            "background": "#212121",
+            "text": "#eee"
+          },
+		  <?php } else {?> 
+		  "popup": {
+            "background": "#fff",
+            "text": "#333"
+          },
+		  <?php }?> 
+          "button": {
+            "background": "#04abf2",
+            "text": "#fff"
+          }
+        },
+        "theme": "edgeless",
+        "position": "right-bottom",
+        "content": {
+          "message": "{{LANG cookie_message}}",
+          "dismiss": "{{LANG cookie_dismiss}}",
+          "link": "{{LANG cookie_link}}",
+          "href": "{{LINK terms/privacy-policy}}"
+        }
+      })});
+      </script>
+	  <?php if (!$pt->user->suspend_upload || !$pt->user->suspend_import) { ?>
+		<div class="fixed-action-btn">
+			<span id="btn-fab-main" class="btn-fab-floating">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
+			</span>
+			<ul>
+				<?php if ($pt->config->upload_system == 'on' && !$pt->user->suspend_upload) { ?> 
+				<li>
+					<a href="{{LINK upload-video}}" class="btn-floating">
+						<p class="btn_color">{{LANG upload}}</p>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#009688" d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z"></path></svg>
+					</a>
+				</li>
+				<?php } ?>
+				<?php if ($pt->config->import_system == 'on' && !$pt->user->suspend_import) { ?> 
+				<li>
+					<a href="{{LINK import-video}}" class="btn-floating">
+						<p class="btn_color">{{LANG import}}</p>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#03a9f4" d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"></path></svg>
+					</a>
+				</li>
+				<?php } ?>
+				<?php if ($pt->config->live_video == 1 && ($pt->config->who_use_live == 'all' || ($pt->config->who_use_live == 'admin' && PT_IsAdmin()) || ($pt->config->who_use_live == 'pro' && $pt->user->is_pro > 0))) { ?>
+					<li>
+						<a href="{{LINK live}}" class="btn-floating">
+							<p class="btn_color">{{LANG live}}</p>
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#e91e63" d="M17,10.5L21,6.5V17.5L17,13.5V17A1,1 0 0,1 16,18H4A1,1 0 0,1 3,17V7A1,1 0 0,1 4,6H16A1,1 0 0,1 17,7V10.5M14,16V15C14,13.67 11.33,13 10,13C8.67,13 6,13.67 6,15V16H14M10,8A2,2 0 0,0 8,10A2,2 0 0,0 10,12A2,2 0 0,0 12,10A2,2 0 0,0 10,8Z"></path></svg>
+						</a>
+					</li>
+				<?php } ?>
+			</ul>
+		</div>
+    <?php } ?>
+	  
+	  <?php if ($pt->page != 'login') { ?><div class="sidenav-overlay" onclick="javascript:$('body').removeClass('side_open');"></div><?php } ?>
+	  
+	  <div class="fab-overlay"></div>
+	  
+	  <script>
+      $(document).on('click', '#pop_up_18_yes', function(event) {
+        event.preventDefault();
+        $.post('{{LINK aj/main/yes_18}}?hash=' + $('.main_session').val(), function(data, textStatus, xhr) {
+          $('#pop_up_18').modal('hide');
+        });
+      });
+
+      $(document).on('click', '#pop_up_18_no', function(event) {
+        event.preventDefault();
+        $.post('{{LINK aj/main/no_18}}?hash=' + $('.main_session').val(), function(data, textStatus, xhr) {
+          if (data.status == 200) {
+            $('#pop_up_18').modal('hide');
+            window.location.href = data.url
+          }
+        });
+      });
+
+      <?php if (empty($_COOKIE['pop_up_18']) && !IS_LOGGED && $pt->page != 'age_block' && $pt->page != 'login' && $pt->config->pop_up_18 == 'on') { ?>
+        $('#pop_up_18').modal('show');
+      <?php } ?>
+		$('#btn-fab-main').on('touchstart click', function() {
+			if ($(this).hasClass('active')) {
+				$(this).removeClass('active');
+				$('body').removeClass('fab_open');
+				$(this).addClass('reverse-animation');
+			} else {
+				$(this).removeClass('reverse-animation');
+				$(this).addClass('active');
+				$('body').addClass('fab_open');
+			}
+			return false;
+		});
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires="+d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    <?php if (empty($_COOKIE['r']) || !in_array(base64_decode($_COOKIE['r']), $pt->continents)) { ?>
+      $.ajax({
+        url: 'https://extreme-ip-lookup.com/json/',
+        type: 'GET',
+        dataType: 'json'
+      })
+      .done(function(data) {
+        if (data.status == 'success') {
+          setCookie('r', window.btoa(data.continent), 1);
+          <?php if ($pt->page == 'watch') { ?>
+            $('#redirect_to_video_page').click();
+          <?php } ?>
+        }
+        else{
+          setCookie('r', window.btoa('string'), 1);
+          <?php if ($pt->page == 'watch') { ?>
+            $('#redirect_to_video_page').click();
+          <?php } ?>
+        }
+      })
+      .fail(function() {
+        setCookie('r', window.btoa('string'), 1);
+        <?php if ($pt->page == 'watch') { ?>
+          $('#redirect_to_video_page').click();
+        <?php } ?>
+      })
+      .always(function() {
+      });
+
+          // $.get('https://extreme-ip-lookup.com/json/', function(data) {
+          //   if (data.status == 'success') {
+          //     setCookie('r', window.btoa(data.continent), 1);
+          //     <?php if ($pt->page == 'watch') { ?>
+          //       $('#redirect_to_video_page').click();
+          //     <?php } ?>
+          //   }
+          //   else{
+          //     setCookie('r', window.btoa('string'), 1);
+          //     <?php if ($pt->page == 'watch') { ?>
+          //       $('#redirect_to_video_page').click();
+          //     <?php } ?>
+          //   }
+          // });
+        <?php } ?>
+	</script>
+  <?php 
+      if (empty($_SESSION['finger']) && $pt->page != 'watch') {
+      ?>
+      <script>
+         var fingerprintReport = function () {
+            Fingerprint2.get(function(components) {
+              var murmur = Fingerprint2.x64hash128(components.map(function (pair) { return pair.value }).join(), 31)
+              $.post('{{LINK aj/views}}?hash=' + $('.main_session').val()+'&type_=set', {finger: murmur}, function(data, textStatus, xhr) {
+              });
+            })
+         }
+         fingerprintReport();
+      </script>
+    <?php } ?>
+
+    <script type="text/javascript">
+      var myTimeout;
+
+      function show_gif(self,gif) {
+        if (gif && gif != '') {
+          myTimeout = setTimeout(function() {
+              $(self).append('<img src="'+gif+'">');
+          }, 1000);
+        }
+      }
+
+      function hide_gif(self) {
+        $(self).find('img').remove();
+        clearTimeout(myTimeout);
+      }
+      function block_user(user_id,self,redirect = true) {
+        $.post('{{LINK aj/user/block}}?hash=' + $('.main_session').val(), {user_id: user_id}, function(data, textStatus, xhr) {
+          if (redirect == true) {
+            location.reload();
+          }
+          else{
+            $(self).find('span').text(data.message);
+          }
+        });
+      }
+
+      setTimeout(function (argument) {
+        $('#select-language').modal('show');
+      },2000);
+    </script>
+    <div id="pay-go-pro" class="modal matdialog"> 
+		<div class="modal-dialog">
+			<div class="modal-content payment_box">     
+				<div class="modal-header">  
+					<h3 class="modal-title">{{LANG choose_payment_method}}<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></button></h3>  
+				</div> 
+				<div class="payment_method"></div>
+			</div>          
+		</div>
+		<input id="wallet_amount" type="hidden">
+	</div>
+
+
+<?php if (empty($_COOKIE['lang_modal']) && !IS_LOGGED && $pt->page != 'login' && $pt->config->lang_modal == 'on') { ?>
+<div id="select-language" class="modal matdialog et_plus lang_select_modal" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-body" id="pt_language_modal">
+				<div class="modal-header">
+					<h3 class="modal-title">{{LANG language}}</h3>
+				</div>
+				<div class="modal-body">
+					<ul class="lang_modal">
+						<?php echo $pt->langs; ?>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+  $('#select-language').modal('show');
+  setCookie('lang_modal','1', 10);
+</script>
+<?php } ?>
+<?php if ($pt->config->paystack_payment == 'yes') { ?>
+
+<div class="modal fade" id="paystack_wallet_modal" role="dialog" data-keyboard="false" style="overflow-y: auto;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></button>
+        <h4 class="modal-title">{{LANG paystack}}</h4>
+      </div>
+      <form class="form form-horizontal" method="post" id="paystack_wallet_form" action="#">
+        <div class="modal-body twocheckout_modal">
+          <div id="paystack_wallet_alert"></div>
+          <div class="clear"></div>
+          <div class="sun_input col-md-12">
+            <label class="plr15" for="paystack_wallet_email">{{LANG email}}</label>
+            <input id="paystack_wallet_email" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG email}}" value="<?php echo($pt->user->email) ?>">
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        <div class="modal-footer">
+          <div class="ball-pulse"><div></div><div></div><div></div></div>
+          <input id="paystack_type" name="paystack_type" type="hidden" value="">
+          <input id="paystack_video_id" name="paystack_video_id" type="hidden" value="">
+          <input id="paystack_price" name="paystack_price" type="hidden" value="">
+          <input id="paystack_user_id" name="paystack_user_id" type="hidden" value="">
+          <button type="button" class="btn btn-main" id="paystack_btn" onclick="InitializeWalletPaystack()">{{LANG pay}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<?php } ?>
+<?php if ($pt->config->cashfree_payment == 'yes') { ?>
+<div class="modal fade" id="cashfree_modal_box" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content add_money_modal add_address_modal">
+      <h5 class="modal-title text-center">{{LANG Cashfree}}</h5>
+      <div class="modal-body">
+        <div id="cashfree_alert"></div>
+        <form id="cashfree_form" method="post">
+          <div class="form-group">
+            <label class="plr15" for="cashfree_name">{{LANG name}}</label>
+            <input class="form-control shop_input" type="text" placeholder="{{LANG name}}" value="{{ME name}}" id="cashfree_name" name="name">
+          </div>
+          <div class="form-group">
+            <label class="plr15" for="cashfree_email">{{LANG email}}</label>
+            <input class="form-control shop_input" type="email" placeholder="{{LANG email}}" value="{{ME email}}" id="cashfree_email" name="email">
+          </div>
+          <div class="form-group">
+            <label class="plr15" for="cashfree_phone">{{LANG phone_number}}</label>
+            <input class="form-control shop_input" type="text" placeholder="{{LANG phone_number}}" id="cashfree_phone" name="phone">
+          </div>
+          <input id="cashfree_type" name="cashfree_type" type="hidden" value="">
+          <input id="cashfree_video_id" name="cashfree_video_id" type="hidden" value="">
+          <input id="cashfree_price" name="cashfree_price" type="hidden" value="">
+          <input id="cashfree_user_id" name="cashfree_user_id" type="hidden" value="">
+          <div class="modal-footer">
+            <button class="btn btn-main" id="cashfree_button" type="button" onclick="InitializeCashfree()">{{LANG pay}}</button>
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">{{LANG cancel}}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<?php } ?>
+<?php if ($pt->config->razorpay_payment == 'yes') { ?>
+<div class="modal fade" id="razorpay_modal_box" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content add_money_modal add_address_modal">
+      <h5 class="modal-title text-center">{{LANG Razorpay}}</h5>
+      <div class="modal-body">
+        <div id="razorpay_alert"></div>
+        <form id="razorpay_form" method="post">
+          <div class="form-group">
+            <label class="plr15" for="razorpay_name">{{LANG name}}</label>
+            <input class="form-control shop_input" type="text" placeholder="{{LANG name}}" value="{{ME name}}" id="razorpay_name" name="name">
+          </div>
+          <div class="form-group">
+            <label class="plr15" for="razorpay_email">{{LANG email}}</label>
+            <input class="form-control shop_input" type="email" placeholder="{{LANG email}}" value="{{ME email}}" id="razorpay_email" name="email">
+          </div>
+          <div class="form-group">
+            <label class="plr15" for="razorpay_phone">{{LANG phone_number}}</label>
+            <input class="form-control shop_input" type="text" placeholder="{{LANG phone_number}}" id="razorpay_phone" name="phone">
+          </div>
+          <input id="razorpay_type" name="razorpay_type" type="hidden" value="">
+          <input id="razorpay_video_id" name="razorpay_video_id" type="hidden" value="">
+          <input id="razorpay_price" name="razorpay_price" type="hidden" value="">
+          <input id="razorpay_user_id" name="razorpay_user_id" type="hidden" value="">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-main" onclick="SignatureRazorpay()" id="razorpay_button">{{LANG pay}}</button>
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">{{LANG cancel}}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<?php } ?>
+<?php if ($pt->config->razorpay_payment == 'yes') { ?>
+<div id="iyzipay_content"></div>
+<?php } ?>
+
+</body>
+</html>
